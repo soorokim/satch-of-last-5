@@ -2,13 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import reactLogo from './assets/react.svg';
 import './App.css';
-
-const Wrapper = styled.div`
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-`;
+import Layout from './components/Layout';
 
 const Card = styled.div`
   padding: 2em;
@@ -48,7 +42,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <Wrapper>
+    <Layout>
       <div>
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <Logo src="/vite.svg" alt="Vite logo" />
@@ -67,7 +61,7 @@ function App() {
         </p>
       </Card>
       <ReadTheDocs>Click on the Vite and React logos to learn more</ReadTheDocs>
-    </Wrapper>
+    </Layout>
   );
 }
 
