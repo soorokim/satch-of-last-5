@@ -9,6 +9,7 @@ import ToAchieve from './ToAchieve';
 const Wrapper = styled.div`
   margin-top: 10%;
 `;
+
 const TotalSatch = styled.div`
   display: flex;
   justify-content: space-between;
@@ -26,6 +27,7 @@ const TotalPrice = styled.div`
   letter-spacing: 0.04em;
   color: #000000;
 `;
+
 const TotalTitle = styled.div`
   color: #000000;
   font-family: 'LINE Seed Sans KR';
@@ -34,9 +36,11 @@ const TotalTitle = styled.div`
   font-size: 18px;
   line-height: 150%;
 `;
+
 const Main = () => {
   const [satchItem] = useState(['']);
   const [totalPrice] = useState(100000);
+
   return (
     <Wrapper>
       <ToAchieve />
@@ -46,8 +50,10 @@ const Main = () => {
         <TotalPrice>{`총 ${totalPrice.toLocaleString('ko-KR')}원`}</TotalPrice>
       </TotalSatch>
       {satchItem && satchItem.length === 0 ? <NonStachList /> : <SatchList />}
+
       <Footer />
     </Wrapper>
   );
 };
+
 export default Main;
