@@ -5,6 +5,7 @@ const Main = () => (
   <div>
     <ProgressBar satchPrice={50000} totalPrice={100000} />
     <SatchList totalPrice={100000} />
+    push test
   </div>
 );
 
