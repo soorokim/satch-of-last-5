@@ -1,4 +1,4 @@
-import Initial from '../../components/Inital';
+import Initial from '../../components/Initial';
 
 const InitialPage = () => (
   <div>
