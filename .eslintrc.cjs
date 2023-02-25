@@ -8,8 +8,6 @@ module.exports = {
     'airbnb',
     'airbnb/hooks',
     'eslint:recommended',
-    'plugin:import/errors',
-    'plugin:import/warnings',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
     'plugin:@typescript-eslint/recommended',

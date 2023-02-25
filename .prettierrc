@@ -1,13 +1,10 @@
 {
-  "printWidth": 120,
+  "printWidth": 100,
   "semi": true,
   "singleQuote": true,
   "trailingComma": "all",
   "tabWidth": 2,
   "bracketSpacing": true,
   "endOfLine": "auto",
-  "useTabs": false,
-  "importOrder": ["^(react|styled-components|recoil)", "<THIRD_PARTY_MODULES>", "^[./]"],
-  "importOrderSeparation": true,
-  "importOrderGroupNamespaceSpecifiers": true
+  "useTabs": false
 }

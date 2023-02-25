@@ -6,7 +6,7 @@ const ProgressLabel = styled.span`
   bottom: -19px;
   left: 0;
   font-size: 10px;
-  color: #79BCF6;
+  color: #79bcf6;
 `;
 
 const TotalLabel = styled.span`
@@ -14,7 +14,7 @@ const TotalLabel = styled.span`
   bottom: -19px;
   left: 90%;
   font-size: 10px;
-  color: #79BCF6;
+  color: #79bcf6;
 `;
 
 const ProgressBarWrapper = styled.div`
@@ -22,44 +22,45 @@ const ProgressBarWrapper = styled.div`
   height: 30px;
   background-color: #f2f2f2;
   border-radius: 20px;
-`
+`;
 
 const ProgressBarPercent = styled.div<{ width: number }>`
   height: 30px;
-  background-color: #79BCF6;
+  background-color: #79bcf6;
   border-radius: 20px;
   width: ${(props) => `${props.width}%`};
 `;
 
 const PercentLabel = styled.div`
   position: absolute;
-  height:30px;
+  height: 30px;
   left: 47%;
   font-size: 20px;
   color: black;
 `;
 
 const ProgressBar: React.FC<{
-    totalPrice: number;
-    satchPrice: number;
+  totalPrice: number;
+  satchPrice: number;
 }> = ({ totalPrice, satchPrice }) => {
-    const [width, setWidth] = useState(0)
+  const [width, setWidth] = useState(0);
 
-    useEffect(() => {
-        const progress = (satchPrice / totalPrice) * 100
-        setWidth(progress)
-    }, [totalPrice, satchPrice])
+  useEffect(() => {
+    const progress = (satchPrice / totalPrice) * 100;
+    setWidth(progress);
+  }, [totalPrice, satchPrice]);
 
-    return (
-        <div style={{ position: 'relative' }}>
-            <ProgressLabel>{`${satchPrice.toLocaleString('ko-KR')}`}</ProgressLabel>
-            <TotalLabel>{`${totalPrice.toLocaleString('ko-KR')}`}</TotalLabel>
-            <ProgressBarWrapper>
-                <ProgressBarPercent width={width}>
-                    <PercentLabel>{`${width}%`}</PercentLabel>
-                </ProgressBarPercent>
-            </ProgressBarWrapper>
-        </div>);
+  return (
+    <div style={{ position: 'relative' }}>
+      <ProgressLabel>{`${satchPrice.toLocaleString('ko-KR')}`}</ProgressLabel>
+      <TotalLabel>{`${totalPrice.toLocaleString('ko-KR')}`}</TotalLabel>
+      <ProgressBarWrapper>
+        <ProgressBarPercent width={width}>
+          <PercentLabel>{`${width}%`}</PercentLabel>
+        </ProgressBarPercent>
+      </ProgressBarWrapper>
+    </div>
+  );
 };
 
 export default ProgressBar;
