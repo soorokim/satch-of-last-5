@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const TotalSatch = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 30px;
-`;
+const Wrapper = styled.div``;
+
 const ItemListWrapper = styled.div`
   margin-top: 10px;
 `;
@@ -14,21 +10,38 @@ const Item = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 4px;
+  width: 335px;
+  height: 64px;
+  margin-top: 14px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 10px 3px rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
 `;
-const Price = styled.div`
-  width: 87px;
-  text-align: start;
+const Text = styled.div`
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #000000;
+  margin-left: 15px;
 `;
 
-const SatchList: React.FC<{
-  totalPrice: number;
-}> = ({ totalPrice }) => {
+const Price = styled.div`
+  margin-right: 15px;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #000000;
+`;
+
+const SatchList = () => {
   const [satchList, setSatchList] = useState<
     { key: string; price: number; date: string; name: string }[]
   >([]);
-
-  console.log('hi');
   useEffect(() => {
     fetch('http://localhost:5173/data/satch.json', {
       method: 'GET',
@@ -40,23 +53,16 @@ const SatchList: React.FC<{
   }, []);
 
   return (
-    <div>
-      <TotalSatch>
-        <div>삿치 리스트</div>
-        <div>{`총 ${totalPrice.toLocaleString('ko-KR')}원`}</div>
-      </TotalSatch>
+    <Wrapper>
       <ItemListWrapper>
         {satchList.map((item) => (
           <Item key={item.key}>
-            <div key={item.key}>{item.date}</div>
-            <div>{item.name}</div>
-            <div>
-              <Price>{`+ ${item.price.toLocaleString('ko-KR')}`}</Price>
-            </div>
+            <Text>{item.name}</Text>
+            <Price>{`+ ${item.price.toLocaleString('ko-KR')}원`}</Price>
           </Item>
         ))}
       </ItemListWrapper>
-    </div>
+    </Wrapper>
   );
 };
 
