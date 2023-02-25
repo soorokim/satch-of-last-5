@@ -40,6 +40,7 @@ const Footer = () => {
     { src: '/src/assets/calendar.png', title: '달력', link: '/more' },
     { src: '/src/assets/history.png', title: '히스토리', link: '/history' },
   ]);
+
   return (
     <>
       <Wrapper>

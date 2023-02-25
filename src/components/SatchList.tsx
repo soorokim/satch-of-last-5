@@ -42,6 +42,7 @@ const SatchList = () => {
   const [satchList, setSatchList] = useState<
     { key: string; price: number; date: string; name: string }[]
   >([]);
+
   useEffect(() => {
     fetch('http://localhost:5173/data/satch.json', {
       method: 'GET',

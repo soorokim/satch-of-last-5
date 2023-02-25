@@ -63,6 +63,7 @@ const History = () => {
   const PointerHandler = () => {
     navigate('/');
   };
+
   return (
     <div>
       <Wrap>
@@ -78,4 +79,5 @@ const History = () => {
     </div>
   );
 };
+
 export default History;

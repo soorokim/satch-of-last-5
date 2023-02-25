@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, MouseEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 
 interface Satch {
@@ -43,6 +43,7 @@ const SetTargetForm = () => {
 
   useEffect(() => {
     const storedGoals = localStorage.getItem('goals');
+
     if (storedGoals && goals.length === 0) {
       setGoals(JSON.parse(storedGoals));
     } else {
@@ -50,7 +51,7 @@ const SetTargetForm = () => {
     }
   }, [goals]);
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (goal === '') {
       e.preventDefault();
     } else if (typeof price === 'string' || price === 0) {
@@ -65,6 +66,7 @@ const SetTargetForm = () => {
         createdAt: today,
         satchList: [],
       };
+
       setGoals([data, ...goals]);
     }
   };
@@ -75,13 +77,13 @@ const SetTargetForm = () => {
       <Title>목표명</Title>
       <Input
         type="text"
-        onChange={(e: React.FormEvent<HTMLInputElement>) => setGoal(e.currentTarget.value)}
+        onChange={(e: FormEvent<HTMLInputElement>) => setGoal(e.currentTarget.value)}
         placeholder="목표를 입력해주세요."
       />
       <Title>금액</Title>
       <Input
         type="number"
-        onChange={(e: React.FormEvent<HTMLInputElement>) => setPrice(Number(e.currentTarget.value))}
+        onChange={(e: FormEvent<HTMLInputElement>) => setPrice(Number(e.currentTarget.value))}
         placeholder="목표를 이루기 위한 금액을 입력해주세요."
       />
       <Alert>{isValid ? '' : priceFormAlert}</Alert>
