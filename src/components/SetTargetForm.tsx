@@ -1,97 +1,181 @@
-import { useEffect, useState, MouseEvent, FormEvent } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import useGoalList from '../hooks/useGoalList';
 
-interface Satch {
-  id: number;
-  name: string;
-  price: number;
-  date: Date;
-}
+const Container = styled.div`
+  width: 335px;
+  height: 605px;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  padding: 0 25px;
+  box-sizing: border-box;
+  margin-bottom: 38px;
+`;
 
-interface Goal {
-  id: number;
-  emoticon: string;
-  name: string;
-  price: number;
-  percent: number;
-  createdAt: Date;
-  endedAt?: Date;
-  satchList: Satch[];
-}
+const OathTitle = styled.header`
+  margin-top: 26px;
+  font-size: 20px;
+  font-weight: 700;
+`;
 
-const Container = styled.div``;
+const EmoticonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background-color: #ebf5ff;
+  border: 1px solid #79bcf6;
+  border-radius: 100px;
+  margin: 0 auto;
+  margin-top: 14px;
+  margin-bottom: 28px;
+`;
 
-const OathTitle = styled.header``;
+const Emoticon = styled.img``;
 
-const Title = styled.h3``;
+const GoalForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 37px;
+`;
 
-const Input = styled.input``;
+const PriceForm = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 28px;
+`;
 
 const NowDate = styled.div``;
 
-const Alert = styled.p``;
+const Title = styled.span`
+  display: block;
+  text-align: start;
+  margin-bottom: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  color: #191919;
+`;
 
-const SubmitBtn = styled.button``;
+const Input = styled.input`
+  width: 100%;
+  height: 46px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #dbdbdb;
+  font-weight: 700;
+  font-size: 18px;
+  color: #767676;
+`;
+
+const PriceUnit = styled.span`
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  color: #191919;
+  font-weight: 700;
+`;
+
+const OathText = styled.div`
+  font-weight: 700;
+  color: #767676;
+  text-align: start;
+  font-size: 15px;
+  white-space: pre-line;
+  line-height: 1.7;
+  margin-bottom: 38px;
+`;
+
+const Emphasis = styled.span`
+  color: #000000;
+  font-weight: 700;
+`;
+
+const Today = styled.p`
+  font-size: 12px;
+  font-weight: 700;
+  color: #767676;
+`;
+
+const SubmitBtn = styled.button`
+  width: 100%;
+  height: 52px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 16px;
+  background-color: #79bcf6;
+  color: #ffffff;
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    border-color: inherit;
+  }
+`;
+
+const emoticions = [
+  '/src/assets/emoticon_01.png',
+  '/src/assets/emoticon_02.png',
+  '/src/assets/emoticon_03.png',
+];
 
 const SetTargetForm = () => {
-  const [goals, setGoals] = useState<Goal[]>([]);
+  const randomEmoji = Math.floor(Math.random() * emoticions.length);
   const [goal, setGoal] = useState('');
   const [price, setPrice] = useState(0);
-  const [isValid, setIsValid] = useState(true);
-  const priceFormAlert = '숫자를 꼭 입력해주세요.';
+  const [emojiUrl] = useState(() => emoticions[randomEmoji]);
   const today = new Date();
+  const { createGoal } = useGoalList();
 
-  useEffect(() => {
-    const storedGoals = localStorage.getItem('goals');
-
-    if (storedGoals && goals.length === 0) {
-      setGoals(JSON.parse(storedGoals));
-    } else {
-      localStorage.setItem('goals', JSON.stringify(goals));
-    }
-  }, [goals]);
-
-  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
-    if (goal === '') {
-      e.preventDefault();
-    } else if (typeof price === 'string' || price === 0) {
-      setIsValid(false);
-    } else {
-      const data = {
-        id: Date.now(),
-        name: goal,
-        emoticon: '',
-        price,
-        percent: 0,
-        createdAt: today,
-        satchList: [],
-      };
-
-      setGoals([data, ...goals]);
-    }
+  const onClick = () => {
+    createGoal({
+      name: goal,
+      emoticon: '',
+      price,
+      percent: 0,
+      satchList: [],
+    });
   };
 
   return (
-    <Container>
-      <OathTitle>선서</OathTitle>
-      <Title>목표명</Title>
-      <Input
-        type="text"
-        onChange={(e: FormEvent<HTMLInputElement>) => setGoal(e.currentTarget.value)}
-        placeholder="목표를 입력해주세요."
-      />
-      <Title>금액</Title>
-      <Input
-        type="number"
-        onChange={(e: FormEvent<HTMLInputElement>) => setPrice(Number(e.currentTarget.value))}
-        placeholder="목표를 이루기 위한 금액을 입력해주세요."
-      />
-      <Alert>{isValid ? '' : priceFormAlert}</Alert>
-      <NowDate>{today.toISOString().slice(0, 10)}</NowDate>
+    <>
+      <Container>
+        <OathTitle>삿치 선서</OathTitle>
+        <EmoticonWrapper>
+          <Emoticon src={`${emojiUrl}`} alt="Emoticon" />
+        </EmoticonWrapper>
+        <GoalForm>
+          <Title>목표명</Title>
+          <Input
+            type="text"
+            onChange={(e: React.FormEvent<HTMLInputElement>) => setGoal(e.currentTarget.value)}
+            autoFocus
+          />
+        </GoalForm>
+        <PriceForm>
+          <Title>금액</Title>
+          <Input
+            type="text"
+            onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              setPrice(Number(e.currentTarget.value))
+            }
+          />
+          <PriceUnit>원</PriceUnit>
+        </PriceForm>
+        <OathText>
+          유혹이 다가올 때마다 그 물건을
+          <br /> <Emphasis>샀다 치고</Emphasis> 이곳에 기록하여 목표에 꼭 도달할 수 있도록
+          하겠습니다.
+        </OathText>
+        <NowDate>
+          <Today>{today.toISOString().slice(0, 10)}</Today>
+        </NowDate>
+      </Container>
       <SubmitBtn type="button" onClick={onClick}>
         등록하기
       </SubmitBtn>
-    </Container>
+    </>
   );
 };
 
