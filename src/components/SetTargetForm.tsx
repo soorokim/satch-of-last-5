@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useGoalList from '../hooks/useGoalList';
 
@@ -134,6 +135,7 @@ const SetTargetForm = () => {
   const [isValid, setIsValid] = useState(true);
   const today = new Date();
   const { createGoal } = useGoalList();
+  const navigate = useNavigate();
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -144,9 +146,8 @@ const SetTargetForm = () => {
         name: goal,
         emoticon: '',
         price,
-        percent: 0,
-        satchList: [],
       });
+      navigate('/');
     }
   };
 

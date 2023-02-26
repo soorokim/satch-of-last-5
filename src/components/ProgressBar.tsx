@@ -15,35 +15,32 @@ const ReachWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0px 20px;
-`
+`;
 const ReachTitle = styled.span`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 150%;
-color: #000000;
-`
-const ReachPercentWrapper = styled.span`
-`
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #000000;
+`;
+const ReachPercentWrapper = styled.span``;
 const ReachPercent = styled.span`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 700;
-font-size: 18px;
-line-height: 150%;
-color: #79BCF6;
-
-`
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 150%;
+  color: #79bcf6;
+`;
 const TenPercent = styled.span`
-
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 150%;
-color: #000000;
-`
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: #000000;
+`;
 
 const ZeroPercentLabel = styled.span`
   position: absolute;
@@ -58,7 +55,7 @@ const TenPercentLabel = styled.span`
   position: absolute;
   bottom: -19px;
   font-size: 10px;
-  right:0%;
+  right: 0%;
   color: #000000;
   margin: 1px;
 `;
@@ -77,25 +74,25 @@ const ProgressBarPercent = styled.div<{ width: number }>`
   border-radius: 10px;
 `;
 
-const ProgressBar: React.FC<{ goal: Goal }> = ({ goal }) => {
+interface ProgressBarProps {
+  goal: Goal;
+}
 
-  return (
-    <Wrapper>
-      <ReachWrapper>
-        <ReachTitle>도달률</ReachTitle>
-        <ReachPercentWrapper>
-          <ReachPercent>{goal.percent}</ReachPercent>
-          <TenPercent> / 100</TenPercent>
-        </ReachPercentWrapper>
-      </ReachWrapper>
-      <ProgressBarWrapper style={{ position: 'relative' }}>
-        <ProgressBarPercent width={goal.percent} />
-        <ZeroPercentLabel>0</ZeroPercentLabel>
-        <TenPercentLabel>100</TenPercentLabel>
-      </ProgressBarWrapper>
-
-    </Wrapper>
-  );
-};
+const ProgressBar = ({ goal }: ProgressBarProps) => (
+  <Wrapper>
+    <ReachWrapper>
+      <ReachTitle>도달률</ReachTitle>
+      <ReachPercentWrapper>
+        <ReachPercent>{goal.percent}</ReachPercent>
+        <TenPercent> / 100</TenPercent>
+      </ReachPercentWrapper>
+    </ReachWrapper>
+    <ProgressBarWrapper style={{ position: 'relative' }}>
+      <ProgressBarPercent width={goal.percent} />
+      <ZeroPercentLabel>0</ZeroPercentLabel>
+      <TenPercentLabel>100</TenPercentLabel>
+    </ProgressBarWrapper>
+  </Wrapper>
+);
 
 export default ProgressBar;

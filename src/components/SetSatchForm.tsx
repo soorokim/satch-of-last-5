@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { currentGoalState } from '../atoms/goalList';
+import useGoal from '../hooks/useGoal';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -77,8 +81,25 @@ const SubmitBtn = styled.button`
 `;
 
 const SetSatchForm = () => {
+  const currentGoal = useRecoilValue(currentGoalState);
   const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
+  const [name, setName] = useState<string>('');
+  const [price, setPrice] = useState<string>('0');
   const [editable, setEditable] = useState(false);
+  const navigate = useNavigate();
+
+  if (!currentGoal) return null;
+
+  const { createSatch } = useGoal(currentGoal.id);
+
+  const onClick = () => {
+    if (name.length === 0 || parseInt(price, 10) === 0) {
+      return;
+    }
+
+    createSatch({ name, date: new Date(), price: parseInt(price, 10) });
+    navigate('/');
+  };
 
   return (
     <Container>
@@ -87,11 +108,11 @@ const SetSatchForm = () => {
       </Header>
       <SatchGoal>
         <Title>삿치 목표명</Title>
-        <Input type="text" />
+        <Input type="text" value={name} onChange={(e) => setName(e.currentTarget.value)} />
       </SatchGoal>
       <SatchPrice>
         <Title>금액</Title>
-        <Input type="text" />
+        <Input type="text" value={price} onChange={(e) => setPrice(e.currentTarget.value)} />
         <PriceUnit>원</PriceUnit>
       </SatchPrice>
       <SatchDate>
@@ -104,7 +125,7 @@ const SetSatchForm = () => {
           readOnly={!editable}
         />
       </SatchDate>
-      <SubmitBtn>등록하기</SubmitBtn>
+      <SubmitBtn onClick={onClick}>등록하기</SubmitBtn>
     </Container>
   );
 };

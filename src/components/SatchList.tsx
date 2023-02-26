@@ -38,20 +38,21 @@ const Price = styled.div`
   color: #000000;
 `;
 
-const SatchList: React.FC<{ satchList: Satch[] }> = ({ satchList }) => {
-  console.log(satchList)
-  return (
-    <Wrapper>
-      <ItemListWrapper>
-        {/* {satchList?.map((item) => (
-          <Item key={item.id}>
-            <Text>{item.name}</Text>
-            <Price>{`+ ${item.price.toLocaleString('ko-KR')}원`}</Price>
-          </Item>
-        ))} */}
-      </ItemListWrapper>
-    </Wrapper>
-  );
-};
+interface SatchListProps {
+  satchList: Satch[];
+}
+
+const SatchList = ({ satchList }: SatchListProps) => (
+  <Wrapper>
+    <ItemListWrapper>
+      {satchList.map((item) => (
+        <Item key={item.id}>
+          <Text>{item.name}</Text>
+          <Price>{`+ ${item.price.toLocaleString('ko-KR')}원`}</Price>
+        </Item>
+      ))}
+    </ItemListWrapper>
+  </Wrapper>
+);
 
 export default SatchList;
