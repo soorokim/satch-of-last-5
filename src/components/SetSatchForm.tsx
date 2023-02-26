@@ -173,7 +173,7 @@ const SetSatchForm = ({ isEdit }: Edit, { editSatchId, name, price, update }: Ed
     ) {
       setIsValid(false);
     } else {
-      updateSatch(editSatchId);
+      updateSatch(editSatchId)({ name, price, date });
       // navigate('/');
     }
   };
