@@ -81,7 +81,6 @@ const Main = () => {
                 setGoal(currentGoal);
             });
     }, []);
-    console.log(goal)
     return (
         <Wrapper>
             <ToAchieve price={goal.price} satchList={goal.satchList} />
