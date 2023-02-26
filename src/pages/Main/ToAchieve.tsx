@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Satch } from '../../atoms/goalList';
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,15 +39,16 @@ const Achieve = styled.span`
 `;
 const RemainPrice = styled.div``;
 
-const ToAchieve = () => (
-  <Wrapper>
-    <Emoji>🎧</Emoji>
-    <TextWrapper>
-      <Goal>에어맥</Goal>
-      <Achieve> 이루기까지</Achieve>
-      <RemainPrice>1,654,000</RemainPrice>
-    </TextWrapper>
-  </Wrapper>
-);
+const ToAchieve = ({ price, satchList }: { price: number, satchList: Satch[] }) => {
+    const satchTotalPrice = satchList.reduce((acc, cur: Satch) => acc + cur.price, 0);
+    const remainPrice = price - satchTotalPrice
+    return (<Wrapper>
+        <TextWrapper>
+            <Goal>에어맥</Goal>
+            <Achieve> 이루기까지</Achieve>
+            <RemainPrice>총 {`${remainPrice.toLocaleString('ko-KR')}원`}</RemainPrice>
+        </TextWrapper>
+    </Wrapper>)
+};
 
 export default ToAchieve;
