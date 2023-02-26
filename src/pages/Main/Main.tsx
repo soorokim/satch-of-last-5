@@ -35,19 +35,21 @@ const TotalTitle = styled.div`
   line-height: 150%;
 `;
 const Main = () => {
-  const [satchItem] = useState(['']);
-  const [totalPrice] = useState(100000);
-  return (
-    <Wrapper>
-      <ToAchieve />
-      <ProgressBar satchPrice={60000} totalPrice={100000} />
-      <TotalSatch>
-        <TotalTitle>삿치 리스트</TotalTitle>
-        <TotalPrice>{`총 ${totalPrice.toLocaleString('ko-KR')}원`}</TotalPrice>
-      </TotalSatch>
-      {satchItem && satchItem.length === 0 ? <NonStachList /> : <SatchList />}
-      <Footer />
-    </Wrapper>
-  );
+    const [satchItem] = useState(['']);
+    const [totalPrice] = useState(100000);
+
+    return (
+        <Wrapper>
+            <ToAchieve />
+            <ProgressBar satchPrice={60000} totalPrice={100000} />
+            <TotalSatch>
+                <TotalTitle>삿치 리스트</TotalTitle>
+                <TotalPrice>{`총 ${totalPrice.toLocaleString('ko-KR')}원`}</TotalPrice>
+            </TotalSatch>
+            {satchItem && satchItem.length === 0 ? <NonStachList /> : <SatchList />}
+            <Footer />
+        </Wrapper>
+    );
 };
+
 export default Main;

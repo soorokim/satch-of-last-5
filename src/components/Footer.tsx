@@ -35,26 +35,27 @@ const WhitePlace = styled.div`
 `;
 
 const Footer = () => {
-  const [tab] = useState([
-    { src: '/src/assets/home.png', title: '홈', link: '/' },
-    { src: '/src/assets/calendar.png', title: '달력', link: '/more' },
-    { src: '/src/assets/history.png', title: '히스토리', link: '/history' },
-  ]);
-  return (
-    <>
-      <Wrapper>
-        {tab.map((item) => (
-          <Link to={item.link} key={item.title}>
-            <IconWrapper>
-              <Icon key={item.title} src={item.src} />
-              <Title>{item.title}</Title>
-            </IconWrapper>
-          </Link>
-        ))}
-      </Wrapper>
-      <WhitePlace />
-    </>
-  );
+    const [tab] = useState([
+        { src: '/src/assets/home.png', title: '홈', link: '/' },
+        { src: '/src/assets/calendar.png', title: '달력', link: '/more' },
+        { src: '/src/assets/history.png', title: '히스토리', link: '/history' },
+    ]);
+
+    return (
+        <>
+            <Wrapper>
+                {tab.map((item) => (
+                    <Link to={item.link} key={item.title}>
+                        <IconWrapper>
+                            <Icon key={item.title} src={item.src} />
+                            <Title>{item.title}</Title>
+                        </IconWrapper>
+                    </Link>
+                ))}
+            </Wrapper>
+            <WhitePlace />
+        </>
+    );
 };
 
 export default Footer;
