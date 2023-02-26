@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import InitialIcon from '../assets/initial.svg';
+import InitialTem from '../assets/initialicon.svg';
 
 const Wrap = styled.div`
   margin: 0 auto;
@@ -8,16 +9,26 @@ const Wrap = styled.div`
   height: 812px;
   border: none;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 1px soild black;
+`;
+// 아이콘 박스
+const InitialBox = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  position: relative;
+  top: -10%;
 `;
 
 const StartBtn = styled.button`
-  width: 167.5px;
+  width: 335px;
   height: 52px;
   border-radius: 100px;
   color: #ffffff;
-  background-color: #aeadb2;
+  background-color: #79bcf6;
   outline: none;
   border: none;
   :focus {
@@ -25,22 +36,35 @@ const StartBtn = styled.button`
   }
 `;
 const InitialImg = styled.img`
+  width: 146px;
+  height: 137px;
   position: relative;
-  top: 90px;
-  right: 20%;
+  top: -20%;
+`;
+const InitialEmo = styled.img`
+  position: relative;
+  top: -20%;
+  width: 158.36px;
+  height: 133.22px;
 `;
 
 const Initial = () => {
   const navigate = useNavigate();
   const StartClickHandler = () => {
-    navigate('/');
+    navigate('/setsatchitem');
   };
 
   return (
     <div>
-      <InitialImg src={InitialIcon} />
       <Wrap>
-        <StartBtn onClick={StartClickHandler}>시작하기</StartBtn>
+        <InitialBox>
+          <InitialImg src={InitialIcon} />
+          <InitialEmo src={InitialTem} />
+        </InitialBox>
+
+        <div>
+          <StartBtn onClick={StartClickHandler}>시작하기</StartBtn>
+        </div>
       </Wrap>
     </div>
   );
