@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -20,13 +19,6 @@ const Text = styled.div`
   line-height: 150%;
   color: #999999;
 `;
-const Button = styled.button`
-  width: 123px;
-  height: 39px;
-  background-color: #dbdbdb;
-  border-radius: 100px;
-  margin-top: 25px;
-`;
 
 const NonStachList = () => (
   <Wrapper>
@@ -34,9 +26,6 @@ const NonStachList = () => (
       <Text>아직 내역이 없어요.</Text>
       <Text>지금 바로 시작해 보세요!</Text>
     </div>
-    <Link to="/upload">
-      <Button>등록하기</Button>
-    </Link>
   </Wrapper>
 );
 

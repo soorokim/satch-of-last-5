@@ -1,17 +1,10 @@
 import styled from 'styled-components';
-import { Satch } from '../../atoms/goalList';
+import { Goal, Satch } from '../../atoms/goalList';
 
 const Wrapper = styled.div`
   display: flex;
 `;
-const Emoji = styled.span`
-  width: 59px;
-  height: 59px;
-  background: #ebf5ff;
-  border: 1px solid #79bcf6;
-  border-radius: 60px;
-  font-size: 40px;
-`;
+
 const TextWrapper = styled.span`
   font-family: 'LINE Seed Sans KR';
   font-weight: 700;
@@ -21,7 +14,8 @@ const TextWrapper = styled.span`
   text-align: start;
   margin-left: 14px;
 `;
-const Goal = styled.span`
+
+const GoalName = styled.span`
   font-family: 'LINE Seed Sans KR';
   font-style: normal;
   font-weight: 700;
@@ -39,16 +33,28 @@ const Achieve = styled.span`
 `;
 const RemainPrice = styled.div``;
 
-const ToAchieve = ({ price, satchList }: { price: number, satchList: Satch[] }) => {
-    const satchTotalPrice = satchList.reduce((acc, cur: Satch) => acc + cur.price, 0);
-    const remainPrice = price - satchTotalPrice
-    return (<Wrapper>
-        <TextWrapper>
-            <Goal>에어맥</Goal>
-            <Achieve> 이루기까지</Achieve>
-            <RemainPrice>총 {`${remainPrice.toLocaleString('ko-KR')}원`}</RemainPrice>
-        </TextWrapper>
-    </Wrapper>)
+// eslint-disable-next-line no-undef
+const ToAchieve = ({
+  name,
+  price,
+  satchList,
+}: {
+  name: Goal['name'];
+  price: Goal['price'];
+  satchList: Goal['satchList'];
+}) => {
+  const satchTotalPrice = satchList.reduce((acc, cur: Satch) => acc + cur.price, 0);
+  const remainPrice = price - satchTotalPrice;
+
+  return (
+    <Wrapper>
+      <TextWrapper>
+        <GoalName>{name}</GoalName>
+        <Achieve> 이루기까지</Achieve>
+        <RemainPrice>총 {`${remainPrice.toLocaleString('ko-KR')}원`}</RemainPrice>
+      </TextWrapper>
+    </Wrapper>
+  );
 };
 
 export default ToAchieve;
