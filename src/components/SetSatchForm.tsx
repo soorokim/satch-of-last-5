@@ -4,6 +4,18 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { goalListState } from '../atoms/goalList';
 import useGoal from '../hooks/useGoal';
+import TextUnderline from './TextUnderline';
+
+interface Edit {
+  isEdit: boolean;
+}
+
+interface EditSatchInfo {
+  editSatchId: string;
+  name: string;
+  price: number;
+  update: Date;
+}
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -16,12 +28,6 @@ const Container = styled.div`
 const Header = styled.header`
   font-size: 24px;
   margin-bottom: 38px;
-`;
-
-const Emphasis = styled.span`
-  font-size: 24px;
-  font-weight: 700;
-  background: linear-gradient(to top, #79bcf6b2 30%, transparent 30%);
 `;
 
 const SatchGoal = styled.div`
@@ -90,18 +96,55 @@ const Alert = styled.span`
   font-size: 12px;
 `;
 
-const SetSatchForm = () => {
+const SetSatchForm = ({ isEdit }: Edit, { editSatchId, name, price, update }: EditSatchInfo) => {
   const goalList = useRecoilValue(goalListState);
   const goalId = goalList[goalList.length - 1].id;
   const { createSatch } = useGoal(goalId);
+  const { updateSatch } = useGoal(editSatchId);
+
+  // 삿치템 생성
   const [date, setDate] = useState(new Date());
   const [editable] = useState(true);
   const [satchItem, setSatchItem] = useState('');
   const [satchPrice, setSatchPrice] = useState(0);
   const [isValid, setIsValid] = useState(true);
   const navigate = useNavigate();
+  // 삿치템 수정
+  const [editSatch, setEditSatch] = useState(name);
+  const [editPrice, setEditPrice] = useState(price);
+  const [editDate, setEditDate] = useState(update);
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onSatchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+
+    if (!isEdit) {
+      setSatchItem(value);
+    } else {
+      setEditSatch(value);
+    }
+  };
+
+  const onPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+
+    if (!isEdit) {
+      setSatchPrice(Number(value.replace(/,/g, '')));
+    } else {
+      setEditPrice(Number(value.replace(/,/g, '')));
+    }
+  };
+
+  const onDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+
+    if (!isEdit) {
+      setDate(new Date(value));
+    } else {
+      setEditDate(new Date(value));
+    }
+  };
+
+  const onCreate = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (
       satchItem === '' ||
@@ -120,26 +163,39 @@ const SetSatchForm = () => {
     }
   };
 
+  const onEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (
+      satchItem === '' ||
+      Number.isNaN(satchPrice) ||
+      satchPrice === 0 ||
+      satchPrice === undefined
+    ) {
+      setIsValid(false);
+    } else {
+      updateSatch(editSatchId)({ name, price, date });
+      // navigate('/');
+    }
+  };
+
   return (
     <Container>
       <Header>
-        오늘의 <Emphasis>삿치템!</Emphasis>
+        오늘의{' '}
+        <TextUnderline fontSize="24px" fontWeight="700">
+          삿치템!
+        </TextUnderline>
       </Header>
       <SatchGoal>
         <Title>삿치 목표명</Title>
-        <Input
-          type="text"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSatchItem(e.currentTarget.value)}
-        />
+        <Input type="text" value={isEdit ? editSatch : satchItem} onChange={onSatchChange} />
       </SatchGoal>
       <SatchPrice>
         <Title>금액</Title>
         <Input
           type="text"
-          value={satchPrice.toLocaleString()}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setSatchPrice(Number(e.currentTarget.value.replace(/,/g, '')))
-          }
+          value={isEdit ? editPrice.toLocaleString() : satchPrice.toLocaleString()}
+          onChange={onPriceChange}
         />
         <PriceUnit>원</PriceUnit>
       </SatchPrice>
@@ -147,10 +203,10 @@ const SetSatchForm = () => {
         <Title>날짜</Title>
         <Input
           type="date"
-          value={date.toISOString().substring(0, 10)}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setDate(new Date(e.currentTarget.value))
+          value={
+            isEdit ? editDate.toISOString().substring(0, 10) : date.toISOString().substring(0, 10)
           }
+          onChange={onDateChange}
           readOnly={!editable}
         />
         {isValid ? (
@@ -163,7 +219,7 @@ const SetSatchForm = () => {
           </Alert>
         )}
       </SatchDate>
-      <SubmitBtn onClick={onClick}>등록하기</SubmitBtn>
+      <SubmitBtn onClick={isEdit ? onEdit : onCreate}>등록하기</SubmitBtn>
     </Container>
   );
 };

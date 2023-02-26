@@ -80,7 +80,6 @@ const PriceUnit = styled.span`
 `;
 
 const OathText = styled.div`
-  font-weight: 700;
   color: #767676;
   text-align: start;
   font-size: 16px;
@@ -96,7 +95,6 @@ const Emphasis = styled.span`
 
 const Today = styled.p`
   font-size: 12px;
-  font-weight: 700;
   color: #767676;
 `;
 
