@@ -23,33 +23,6 @@ border: 1px solid #EDEDED;
 border-radius: 16px;
 `;
 
-const TotalSatch = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 30px;
-  margin-bottom: 20px;
-`;
-
-const TotalPrice = styled.span`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 30px;
-letter-spacing: 0.04em;
-color: #79BCF6;
-margin-right: 3px;
-`;
-const TodayTotalTitle = styled.span`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 24px;
-letter-spacing: 0.04em;
-color: #000000;
-`;
 
 const PlusWrapper = styled.div`
   position: sticky;
@@ -79,20 +52,6 @@ z-index:9999;
 font-weight: 250;
 color: white;
 `;
-const TotalPriceWrapper = styled.div`
-display: flex;
-align-items: center;
-`;
-const Basic = styled.span`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 20px;
-letter-spacing: 0.04em;
-color: #000000;
-margin-right: 5px;
-`;
 
 const Main = () => {
     const currentGoal = useRecoilValue(currentGoalState);
@@ -121,14 +80,6 @@ const Main = () => {
                 <Encourage />
                 <ProgressBar satchTotalPrice={satchTotalPrice} goalPrice={currentGoal.price} />
             </Card>
-            <TotalSatch>
-                <TodayTotalTitle>오늘의 삿치</TodayTotalTitle>
-                <TotalPriceWrapper>
-                    <Basic>총</Basic>
-                    <TotalPrice>{`${satchTotalPrice.toLocaleString('ko-KR')}`}</TotalPrice>
-                    <Basic>원</Basic>
-                </TotalPriceWrapper>
-            </TotalSatch>
             {
                 currentGoal.satchList.length === 0 ? (
                     <NonStachList />
