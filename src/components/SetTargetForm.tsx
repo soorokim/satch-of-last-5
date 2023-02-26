@@ -115,7 +115,6 @@ const SubmitBtn = styled.button`
 
 const Alert = styled.span`
   position: absolute;
-  top: 6px;
   left: 50px;
   color: red;
   font-size: 12px;
@@ -137,9 +136,7 @@ const SetTargetForm = () => {
   const { createGoal } = useGoalList();
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (goal === '') {
-      e.preventDefault();
-    } else if (Number.isNaN(price) || price === 0 || price === undefined) {
+    if (goal === '' || Number.isNaN(price) || price === 0 || price === undefined) {
       e.preventDefault();
       setIsValid(false);
     } else {
@@ -170,7 +167,14 @@ const SetTargetForm = () => {
         </GoalForm>
         <PriceForm>
           <Title>금액</Title>
-          {isValid ? '' : <Alert>금액은 꼭 숫자를 입력해주세요!</Alert>}
+          {isValid ? (
+            ''
+          ) : (
+            <Alert>
+              목표와 금액은 꼭 설정해주세요. <br />
+              금액은 숫자로 꼭 설정해주세요!
+            </Alert>
+          )}
           <Input
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
