@@ -6,34 +6,29 @@ const Wrapper = styled.div`
 `;
 
 const TextWrapper = styled.span`
-  font-family: 'LINE Seed Sans KR';
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 150%;
-  color: #000000;
   text-align: start;
-  margin-left: 14px;
+  margin-top: 32px;
+  margin-left: 20px;
 `;
 
 const GoalName = styled.span`
   font-family: 'LINE Seed Sans KR';
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 150%;
   color: #000000;
+  text-decoration: underline 5px solid #A2D1F9;;
 `;
 const Achieve = styled.span`
   font-family: 'LINE Seed Sans KR';
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 21px;
   line-height: 150%;
   color: #000000;
 `;
-const RemainPrice = styled.div``;
 
-// eslint-disable-next-line no-undef
 const ToAchieve = ({
   name,
   price,
@@ -46,15 +41,17 @@ const ToAchieve = ({
   const satchTotalPrice = satchList.reduce((acc, cur: Satch) => acc + cur.price, 0);
   const remainPrice = price - satchTotalPrice;
 
-  return (
-    <Wrapper>
-      <TextWrapper>
+  return (<Wrapper>
+    <TextWrapper>
+      <div>
         <GoalName>{name}</GoalName>
         <Achieve> 이루기까지</Achieve>
-        <RemainPrice>총 {`${remainPrice.toLocaleString('ko-KR')}원`}</RemainPrice>
-      </TextWrapper>
-    </Wrapper>
-  );
+      </div>
+      <Achieve>총 </Achieve>
+      <GoalName>{`${remainPrice.toLocaleString('ko-KR')}`}</GoalName>
+      <Achieve>원 남았어요!</Achieve>
+    </TextWrapper >
+  </Wrapper >);
 };
 
 export default ToAchieve;

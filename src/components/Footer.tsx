@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 335px;
+  width: 375px;
   height: 56px;
   margin-top: 35px;
   border-top: 1px solid #dcdee3;
