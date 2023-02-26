@@ -36,6 +36,7 @@ const EmoticonWrapper = styled.div`
 const Emoticon = styled.img``;
 
 const GoalForm = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 37px;
@@ -116,7 +117,7 @@ const SubmitBtn = styled.button`
 
 const Alert = styled.span`
   position: absolute;
-  left: 50px;
+  left: 70px;
   color: red;
   font-size: 12px;
 `;
@@ -160,6 +161,15 @@ const SetTargetForm = () => {
         </EmoticonWrapper>
         <GoalForm>
           <Title>목표명</Title>
+          {isValid ? (
+            ''
+          ) : (
+            <Alert>
+              목표와 금액은 필수입니다!
+              <br />
+              금액은 꼭 숫자를 입력해주세요.
+            </Alert>
+          )}
           <Input
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => setGoal(e.currentTarget.value)}
@@ -168,18 +178,11 @@ const SetTargetForm = () => {
         </GoalForm>
         <PriceForm>
           <Title>금액</Title>
-          {isValid ? (
-            ''
-          ) : (
-            <Alert>
-              목표와 금액은 꼭 설정해주세요. <br />
-              금액은 숫자로 꼭 설정해주세요!
-            </Alert>
-          )}
           <Input
             type="text"
+            value={price.toLocaleString()}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setPrice(Number(e.currentTarget.value))
+              setPrice(Number(e.currentTarget.value.replace(/,/g, '')))
             }
           />
           <PriceUnit>원</PriceUnit>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { currentGoalState } from '../atoms/goalList';
+import { goalListState } from '../atoms/goalList';
 import useGoal from '../hooks/useGoal';
 
 const Container = styled.div`
@@ -61,6 +61,7 @@ const PriceUnit = styled.span`
 `;
 
 const SatchDate = styled.div`
+  position: relative;
   margin-bottom: 268px;
 `;
 
@@ -80,25 +81,41 @@ const SubmitBtn = styled.button`
   }
 `;
 
+const Alert = styled.span`
+  position: absolute;
+  margin-top: 20px;
+  color: red;
+  font-size: 12px;
+`;
+
 const SetSatchForm = () => {
-  const currentGoal = useRecoilValue(currentGoalState);
-  const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
-  const [name, setName] = useState<string>('');
-  const [price, setPrice] = useState<string>('0');
-  const [editable, setEditable] = useState(false);
+  const goalList = useRecoilValue(goalListState);
+  const goalId = goalList[goalList.length - 1].id;
+  const { createSatch } = useGoal(goalId);
+  const [date, setDate] = useState(new Date());
+  const [editable] = useState(true);
+  const [satchItem, setSatchItem] = useState('');
+  const [satchPrice, setSatchPrice] = useState(0);
+  const [isValid, setIsValid] = useState(true);
   const navigate = useNavigate();
 
-  if (!currentGoal) return null;
-
-  const { createSatch } = useGoal(currentGoal.id);
-
-  const onClick = () => {
-    if (name.length === 0 || parseInt(price, 10) === 0) {
-      return;
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (
+      satchItem === '' ||
+      Number.isNaN(satchPrice) ||
+      satchPrice === 0 ||
+      satchPrice === undefined
+    ) {
+      setIsValid(false);
+    } else {
+      createSatch({
+        name: satchItem,
+        price: satchPrice,
+        date,
+      });
+      navigate('/');
     }
-
-    createSatch({ name, date: new Date(), price: parseInt(price, 10) });
-    navigate('/');
   };
 
   return (
@@ -108,22 +125,41 @@ const SetSatchForm = () => {
       </Header>
       <SatchGoal>
         <Title>삿치 목표명</Title>
-        <Input type="text" value={name} onChange={(e) => setName(e.currentTarget.value)} />
+        <Input
+          type="text"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSatchItem(e.currentTarget.value)}
+        />
       </SatchGoal>
       <SatchPrice>
         <Title>금액</Title>
-        <Input type="text" value={price} onChange={(e) => setPrice(e.currentTarget.value)} />
+        <Input
+          type="text"
+          value={satchPrice.toLocaleString()}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setSatchPrice(Number(e.currentTarget.value.replace(/,/g, '')))
+          }
+        />
         <PriceUnit>원</PriceUnit>
       </SatchPrice>
       <SatchDate>
         <Title>날짜</Title>
         <Input
           type="date"
-          value={date}
-          onClick={() => setEditable(true)}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDate(e.currentTarget.value)}
+          value={date.toISOString().substring(0, 10)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setDate(new Date(e.currentTarget.value))
+          }
           readOnly={!editable}
         />
+        {isValid ? (
+          ''
+        ) : (
+          <Alert>
+            삿치템과 금액은 필수입니다!
+            <br />
+            금액은 꼭 숫자를 입력해주세요.
+          </Alert>
+        )}
       </SatchDate>
       <SubmitBtn onClick={onClick}>등록하기</SubmitBtn>
     </Container>
