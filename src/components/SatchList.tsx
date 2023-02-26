@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { Satch } from '../atoms/goalList';
 
 const Wrapper = styled.div``;
 
@@ -38,30 +38,17 @@ const Price = styled.div`
   color: #000000;
 `;
 
-const SatchList = () => {
-  const [satchList, setSatchList] = useState<
-    { key: string; price: number; date: string; name: string }[]
-  >([]);
-
-  useEffect(() => {
-    fetch('http://localhost:5173/data/satch.json', {
-      method: 'GET',
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setSatchList(data);
-      });
-  }, []);
-
+const SatchList: React.FC<{ satchList: Satch[] }> = ({ satchList }) => {
+  console.log(satchList)
   return (
     <Wrapper>
       <ItemListWrapper>
-        {satchList.map((item) => (
-          <Item key={item.key}>
+        {/* {satchList?.map((item) => (
+          <Item key={item.id}>
             <Text>{item.name}</Text>
             <Price>{`+ ${item.price.toLocaleString('ko-KR')}원`}</Price>
           </Item>
-        ))}
+        ))} */}
       </ItemListWrapper>
     </Wrapper>
   );
