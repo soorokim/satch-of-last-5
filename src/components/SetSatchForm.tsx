@@ -10,6 +10,7 @@ const Container = styled.div`
   padding: 55px 20px 0 20px;
   width: 375px;
   text-align: start;
+  font-family: 'LINE Seed Sans KR';
 `;
 
 const Header = styled.header`
@@ -20,6 +21,7 @@ const Header = styled.header`
 const Emphasis = styled.span`
   font-size: 24px;
   font-weight: 700;
+  background: linear-gradient(to top, #79bcf6b2 30%, transparent 30%);
 `;
 
 const SatchGoal = styled.div`

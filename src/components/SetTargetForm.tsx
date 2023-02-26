@@ -11,6 +11,7 @@ const Container = styled.div`
   padding: 0 25px;
   box-sizing: border-box;
   margin-bottom: 38px;
+  font-family: 'LINE Seed Sans KR';
 `;
 
 const OathTitle = styled.header`
@@ -82,7 +83,7 @@ const OathText = styled.div`
   font-weight: 700;
   color: #767676;
   text-align: start;
-  font-size: 15px;
+  font-size: 16px;
   white-space: pre-line;
   line-height: 1.7;
   margin-bottom: 38px;
@@ -102,6 +103,7 @@ const Today = styled.p`
 const SubmitBtn = styled.button`
   width: 100%;
   height: 52px;
+  font-family: 'LINE Seed Sans KR';
   border-radius: 100px;
   font-weight: 700;
   font-size: 16px;
@@ -188,9 +190,8 @@ const SetTargetForm = () => {
           <PriceUnit>원</PriceUnit>
         </PriceForm>
         <OathText>
-          유혹이 다가올 때마다 그 물건을
-          <br /> <Emphasis>샀다 치고</Emphasis> 이곳에 기록하여 목표에 꼭 도달할 수 있도록
-          하겠습니다.
+          유혹이 다가올 때마다 그 물건을&nbsp;
+          <Emphasis>샀다 치고</Emphasis> 이곳에 기록하여 목표에 꼭 도달할 수 있도록 하겠습니다.
         </OathText>
         <NowDate>
           <Today>{today.toISOString().slice(0, 10)}</Today>
