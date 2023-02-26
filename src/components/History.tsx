@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import HistoryItem from '../assets/history.svg';
 import Circle from '../assets/circle.svg';
 import pointerIcon from '../assets/pointer.svg';
 import Footer from './Footer';
@@ -15,10 +14,7 @@ const Wrap = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
 `;
-const HistoryIcon = styled.img`
-  margin-top: 20%;
-  margin-left: 5%;
-`;
+
 const Progreesing = styled.div`
   width: 70px;
   height: 30px;
@@ -45,13 +41,15 @@ const CircleImg = styled.img`
   margin-left: 5%;
 `;
 const ProgreesingTitle = styled.div`
-  margin-left: -40%;
+  margin-left: -13%;
   font-family: 'LINE Seed Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 150%;
   letter-spacing: 0.04em;
+
+  color: #000000;
 
   color: #000000;
 `;
@@ -115,12 +113,57 @@ const SatchComplete = styled.span`
   background-color: rgba(121, 188, 246, 0.7);
   background: linear-gradient(rgba(121, 188, 246, 0.7));
 `;
+
+const goalList = [
+  {
+    name: '유럽여행가기22',
+    emoticon: '0',
+    price: 2000000,
+    percent: 0,
+    satchList: [],
+    id: 'e66e4312-fc45-4de4-bfcc-ccddf12d5968',
+    createdAt: '2023-02-25T18:18:48.352Z',
+    endedAt: '2023-02-25T18:18:57.361Z',
+  },
+  {
+    name: '유럽여행가기22',
+    emoticon: '0',
+    price: 2000000,
+    percent: 0,
+    satchList: [],
+    id: '75cd94f0-3253-4d52-88e5-c6a920570fcb',
+    createdAt: '2023-02-25T18:18:58.229Z',
+    endedAt: '2023-02-25T19:04:32.563Z',
+  },
+  {
+    name: '유럽여행가기22',
+    emoticon: '0',
+    price: 2000000,
+    percent: 0,
+    satchList: [
+      {
+        name: '삿치템',
+        price: 34000,
+        date: '2023-02-25T20:57:24.569Z',
+        id: '350e8ca1-1d59-4a03-9d90-791be4fc5629',
+      },
+    ],
+    id: '83c906cf-aca7-45c0-8270-2782ae0a6da6',
+    createdAt: '2023-02-25T18:19:01.608Z',
+  },
+];
+
+const completeList = goalList.filter((v) => v.endedAt !== undefined);
+const progressingList = goalList.filter((v) => v.endedAt === undefined);
+
 const History = () => {
   const navigate = useNavigate();
-  const ProgreesingHandler = () => {
+
+  const progreesingHandler = () => {
     navigate('/');
   };
-  const CompletedHandler = () => {
+  //  달성 아이템 아직 미정
+  const completedHandler = () => {
     navigate('/');
   };
 
@@ -130,22 +173,26 @@ const History = () => {
         <Satch>
           삿치 <SatchComplete>달성!</SatchComplete> 리스트
         </Satch>
-        {/* <HistoryIcon src={HistoryItem} /> */}
         <Progreesing>진행 중</Progreesing>
         {/* 진행중 아이템 */}
-        <ProgreesingItem>
-          <CircleImg src={Circle} />
-          <ProgreesingTitle>맥북구매</ProgreesingTitle>
-          <Pointer onClick={ProgreesingHandler} src={pointerIcon} />
-        </ProgreesingItem>
+        {progressingList.map((item) => (
+          <ProgreesingItem>
+            <CircleImg src={Circle} />
+            <ProgreesingTitle>{item.name}</ProgreesingTitle>
+            <Pointer onClick={progreesingHandler} src={pointerIcon} />
+          </ProgreesingItem>
+        ))}
+
         <div style={{ height: '10px', backgroundColor: '#F8F8FA' }}>{}</div>
         <Completed>달성</Completed>
         {/* 달성 아이템 */}
-        <CompletedItem>
-          <CircleImg src={Circle} />
-          <CompletedTitle>한강 뷰 아파트 구매</CompletedTitle>
-          <Pointer onClick={CompletedHandler} src={pointerIcon} />
-        </CompletedItem>
+        {completeList.map((item) => (
+          <CompletedItem>
+            <CircleImg src={Circle} />
+            <CompletedTitle>{item.name}</CompletedTitle>
+            <Pointer onClick={completedHandler} src={pointerIcon} />
+          </CompletedItem>
+        ))}
       </Wrap>
       <Footer />
     </div>
