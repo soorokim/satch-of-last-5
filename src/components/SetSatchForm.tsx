@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { goalListState } from '../atoms/goalList';
 import useGoal from '../hooks/useGoal';
+import TextUnderline from './TextUnderline';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -16,12 +17,6 @@ const Container = styled.div`
 const Header = styled.header`
   font-size: 24px;
   margin-bottom: 38px;
-`;
-
-const Emphasis = styled.span`
-  font-size: 24px;
-  font-weight: 700;
-  background: linear-gradient(to top, #79bcf6b2 30%, transparent 30%);
 `;
 
 const SatchGoal = styled.div`
@@ -123,7 +118,10 @@ const SetSatchForm = () => {
   return (
     <Container>
       <Header>
-        오늘의 <Emphasis>삿치템!</Emphasis>
+        오늘의{' '}
+        <TextUnderline fontSize="24px" fontWeight="700">
+          삿치템!
+        </TextUnderline>
       </Header>
       <SatchGoal>
         <Title>삿치 목표명</Title>
