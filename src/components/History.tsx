@@ -14,7 +14,6 @@ const Wrap = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  border: none;
 `;
 const HistoryIcon = styled.img`
   margin-top: 20%;
@@ -94,6 +93,28 @@ const CompletedTitle = styled.div`
 
   color: #000000;
 `;
+const Satch = styled.span`
+  width: 210px;
+  height: 36px;
+  margin-top: 20%;
+  left: 4%;
+  top: 2%;
+  position: relative;
+
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+
+  color: #000000;
+`;
+const SatchComplete = styled.span`
+  font-weight: 700;
+  background-color: rgba(121, 188, 246, 0.7);
+  background: linear-gradient(rgba(121, 188, 246, 0.7));
+`;
 const History = () => {
   const navigate = useNavigate();
   const ProgreesingHandler = () => {
@@ -106,7 +127,10 @@ const History = () => {
   return (
     <div>
       <Wrap>
-        <HistoryIcon src={HistoryItem} />
+        <Satch>
+          삿치 <SatchComplete>달성!</SatchComplete> 리스트
+        </Satch>
+        {/* <HistoryIcon src={HistoryItem} /> */}
         <Progreesing>진행 중</Progreesing>
         {/* 진행중 아이템 */}
         <ProgreesingItem>
