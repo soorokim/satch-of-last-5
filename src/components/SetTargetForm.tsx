@@ -136,8 +136,8 @@ const SetTargetForm = () => {
   const { createGoal } = useGoalList();
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (goal === '' || Number.isNaN(price) || price === 0 || price === undefined) {
-      e.preventDefault();
       setIsValid(false);
     } else {
       createGoal({
