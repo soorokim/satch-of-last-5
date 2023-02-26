@@ -144,8 +144,6 @@ const SetTargetForm = () => {
         name: goal,
         emoticon: '',
         price,
-        percent: 0,
-        satchList: [],
       });
     }
   };

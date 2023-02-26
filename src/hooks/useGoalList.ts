@@ -7,10 +7,10 @@ const useGoalList = () => {
   const setGoalList = useSetRecoilState(goalListState);
 
   const createGoal = useCallback(
-    (newGoal: Omit<Goal, 'id' | 'createdAt' | 'satchList'>) =>
+    (newGoal: Omit<Goal, 'id' | 'createdAt' | 'satchList' | 'percent'>) =>
       setGoalList((prev) => [
         ...prev,
-        { ...newGoal, id: uuidv4(), createdAt: new Date(), satchList: [] },
+        { ...newGoal, id: uuidv4(), createdAt: new Date(), satchList: [], percent: 0 },
       ]),
     [],
   );
