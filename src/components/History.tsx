@@ -50,8 +50,6 @@ const ProgreesingTitle = styled.div`
   letter-spacing: 0.04em;
 
   color: #000000;
-
-  color: #000000;
 `;
 const Pointer = styled.img`
   cursor: pointer;
@@ -111,7 +109,7 @@ const Satch = styled.span`
 const SatchComplete = styled.span`
   font-weight: 700;
   background-color: rgba(121, 188, 246, 0.7);
-  background: linear-gradient(rgba(121, 188, 246, 0.7));
+  background: linear-gradient(to top, #79bcf6b2 30%, transparent 30%);
 `;
 
 const goalList = [

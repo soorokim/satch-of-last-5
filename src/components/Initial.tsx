@@ -11,7 +11,6 @@ const Wrap = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px soild black;
 `;
 // 아이콘 박스
 const InitialBox = styled.div`
@@ -30,6 +29,8 @@ const StartBtn = styled.button`
   background-color: #79bcf6;
   outline: none;
   border: none;
+  position: relative;
+  top: 290%;
   :focus {
     outline: none;
   }
@@ -54,9 +55,9 @@ const InitialTitleBox = styled.div`
 `;
 const InitialEmo = styled.img`
   position: relative;
-  top: -20%;
-  width: 158.36px;
-  height: 133.22px;
+  top: -10%;
+  width: 375px;
+  height: 375px;
 `;
 
 const Initial = () => {
@@ -70,17 +71,16 @@ const Initial = () => {
       <Wrap>
         <InitialBox>
           <InitialTitleBox>
-            <span style={{ marginLeft: '-10%' }}>
+            <span style={{ marginLeft: '-100%' }}>
               내 <span style={{ fontWeight: '700' }}>삿치</span>의
             </span>
             <span>
-              <span style={{ fontWeight: '700', marginLeft: '-35%' }}>목표</span>를
+              <span style={{ fontWeight: '700', marginLeft: '-123%' }}>목표</span>를
             </span>
-            <span style={{ marginLeft: '0%' }}>정해주세요!</span>
+            <span style={{ marginLeft: '-85%' }}>정해주세요!</span>
           </InitialTitleBox>
-
-          <InitialEmo src={InitialTem} />
         </InitialBox>
+        <InitialEmo src={InitialTem} />
 
         <div>
           <StartBtn onClick={StartClickHandler}>시작하기</StartBtn>

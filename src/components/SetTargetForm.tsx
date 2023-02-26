@@ -11,6 +11,7 @@ const Container = styled.div`
   padding: 0 25px;
   box-sizing: border-box;
   margin-bottom: 38px;
+  font-family: 'LINE Seed Sans KR';
 `;
 
 const OathTitle = styled.header`
@@ -36,6 +37,7 @@ const EmoticonWrapper = styled.div`
 const Emoticon = styled.img``;
 
 const GoalForm = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 37px;
@@ -81,7 +83,7 @@ const OathText = styled.div`
   font-weight: 700;
   color: #767676;
   text-align: start;
-  font-size: 15px;
+  font-size: 16px;
   white-space: pre-line;
   line-height: 1.7;
   margin-bottom: 38px;
@@ -101,6 +103,7 @@ const Today = styled.p`
 const SubmitBtn = styled.button`
   width: 100%;
   height: 52px;
+  font-family: 'LINE Seed Sans KR';
   border-radius: 100px;
   font-weight: 700;
   font-size: 16px;
@@ -116,7 +119,7 @@ const SubmitBtn = styled.button`
 
 const Alert = styled.span`
   position: absolute;
-  left: 50px;
+  left: 70px;
   color: red;
   font-size: 12px;
 `;
@@ -160,6 +163,15 @@ const SetTargetForm = () => {
         </EmoticonWrapper>
         <GoalForm>
           <Title>목표명</Title>
+          {isValid ? (
+            ''
+          ) : (
+            <Alert>
+              목표와 금액은 필수입니다!
+              <br />
+              금액은 꼭 숫자를 입력해주세요.
+            </Alert>
+          )}
           <Input
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => setGoal(e.currentTarget.value)}
@@ -168,26 +180,18 @@ const SetTargetForm = () => {
         </GoalForm>
         <PriceForm>
           <Title>금액</Title>
-          {isValid ? (
-            ''
-          ) : (
-            <Alert>
-              목표와 금액은 꼭 설정해주세요. <br />
-              금액은 숫자로 꼭 설정해주세요!
-            </Alert>
-          )}
           <Input
             type="text"
+            value={price.toLocaleString()}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setPrice(Number(e.currentTarget.value))
+              setPrice(Number(e.currentTarget.value.replace(/,/g, '')))
             }
           />
           <PriceUnit>원</PriceUnit>
         </PriceForm>
         <OathText>
-          유혹이 다가올 때마다 그 물건을
-          <br /> <Emphasis>샀다 치고</Emphasis> 이곳에 기록하여 목표에 꼭 도달할 수 있도록
-          하겠습니다.
+          유혹이 다가올 때마다 그 물건을&nbsp;
+          <Emphasis>샀다 치고</Emphasis> 이곳에 기록하여 목표에 꼭 도달할 수 있도록 하겠습니다.
         </OathText>
         <NowDate>
           <Today>{today.toISOString().slice(0, 10)}</Today>
