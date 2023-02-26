@@ -1,17 +1,15 @@
 import styled from 'styled-components';
-import { Goal } from '../atoms/goalList';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 334px;
-  margin-top: 30px;
+  margin: 32px 29px;
 `;
 
 const ReachWrapper = styled.div`
-  width: 305px;
+  width: 300px;
   display: flex;
   justify-content: space-between;
   margin: 0px 20px;
@@ -21,8 +19,9 @@ const ReachTitle = styled.span`
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 150%;
+  line-height: 24px;
   color: #000000;
+  margin-bottom: 9px;
 `;
 const ReachPercentWrapper = styled.span``;
 const ReachPercent = styled.span`
@@ -63,8 +62,8 @@ const TenPercentLabel = styled.span`
 const ProgressBarWrapper = styled.div`
   width: 305px;
   height: 20px;
-  background-color: #f2f2f2;
-  border-radius: 20px;
+  background: #D9D9D9;
+  border-radius: 10px;
 `;
 
 const ProgressBarPercent = styled.div<{ width: number }>`
@@ -75,24 +74,30 @@ const ProgressBarPercent = styled.div<{ width: number }>`
 `;
 
 interface ProgressBarProps {
-  goal: Goal;
+  satchTotalPrice: number;
+  goalPrice: number
 }
 
-const ProgressBar = ({ goal }: ProgressBarProps) => (
-  <Wrapper>
-    <ReachWrapper>
-      <ReachTitle>도달률</ReachTitle>
-      <ReachPercentWrapper>
-        <ReachPercent>{goal.percent}</ReachPercent>
-        <TenPercent> / 100</TenPercent>
-      </ReachPercentWrapper>
-    </ReachWrapper>
-    <ProgressBarWrapper style={{ position: 'relative' }}>
-      <ProgressBarPercent width={goal.percent} />
-      <ZeroPercentLabel>0</ZeroPercentLabel>
-      <TenPercentLabel>100</TenPercentLabel>
-    </ProgressBarWrapper>
-  </Wrapper>
-);
+
+const ProgressBar = ({ satchTotalPrice, goalPrice }: ProgressBarProps) => {
+  const percent = Math.round((satchTotalPrice / goalPrice) * 100);
+
+  return (
+    <Wrapper>
+      <ReachWrapper>
+        <ReachTitle>도달률</ReachTitle>
+        <ReachPercentWrapper>
+          <ReachPercent>{percent}</ReachPercent>
+          <TenPercent> / 100</TenPercent>
+        </ReachPercentWrapper>
+      </ReachWrapper>
+      <ProgressBarWrapper style={{ position: 'relative' }}>
+        <ProgressBarPercent width={percent} />
+        <ZeroPercentLabel>0</ZeroPercentLabel>
+        <TenPercentLabel>100</TenPercentLabel>
+      </ProgressBarWrapper>
+    </Wrapper>
+  );
+};
 
 export default ProgressBar;
