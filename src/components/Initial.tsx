@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import IntialIcon from '../assets/initial.svg';
+import InitialIcon from '../assets/initial.svg';
 
 const Wrap = styled.div`
   margin: 0 auto;
@@ -11,6 +11,7 @@ const Wrap = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 const StartBtn = styled.button`
   width: 167.5px;
   height: 52px;
@@ -23,7 +24,7 @@ const StartBtn = styled.button`
     outline: none;
   }
 `;
-const IntialImg = styled.img`
+const InitialImg = styled.img`
   position: relative;
   top: 90px;
   right: 20%;
@@ -34,13 +35,15 @@ const Initial = () => {
   const StartClickHandler = () => {
     navigate('/');
   };
+
   return (
     <div>
-      <IntialImg src={IntialIcon} />
+      <InitialImg src={InitialIcon} />
       <Wrap>
         <StartBtn onClick={StartClickHandler}>시작하기</StartBtn>
       </Wrap>
     </div>
   );
 };
+
 export default Initial;

@@ -78,6 +78,7 @@ const ProgressBar: React.FC<{
 
   useEffect(() => {
     const progress = (satchPrice / totalPrice) * 100;
+
     setWidth(progress);
   }, [totalPrice, satchPrice]);
 
