@@ -37,7 +37,6 @@ const Input = styled.input`
   border: none;
   outline: none;
   border-bottom: 1px solid #dbdbdb;
-  font-weight: 700;
   font-size: 18px;
   color: #767676;
 `;

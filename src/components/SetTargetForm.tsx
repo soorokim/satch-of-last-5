@@ -6,7 +6,7 @@ const Container = styled.div`
   width: 335px;
   height: 605px;
   border: 1px solid #dbdbdb;
-  border-radius: 8px;
+  border-radius: 20px;
   padding: 0 25px;
   box-sizing: border-box;
   margin-bottom: 38px;
@@ -64,7 +64,6 @@ const Input = styled.input`
   border: none;
   outline: none;
   border-bottom: 1px solid #dbdbdb;
-  font-weight: 700;
   font-size: 18px;
   color: #767676;
 `;
@@ -114,6 +113,14 @@ const SubmitBtn = styled.button`
   }
 `;
 
+const Alert = styled.span`
+  position: absolute;
+  top: 6px;
+  left: 50px;
+  color: red;
+  font-size: 12px;
+`;
+
 const emoticions = [
   '/src/assets/emoticon_01.png',
   '/src/assets/emoticon_02.png',
@@ -125,17 +132,25 @@ const SetTargetForm = () => {
   const [goal, setGoal] = useState('');
   const [price, setPrice] = useState(0);
   const [emojiUrl] = useState(() => emoticions[randomEmoji]);
+  const [isValid, setIsValid] = useState(true);
   const today = new Date();
   const { createGoal } = useGoalList();
 
-  const onClick = () => {
-    createGoal({
-      name: goal,
-      emoticon: '',
-      price,
-      percent: 0,
-      satchList: [],
-    });
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (goal === '') {
+      e.preventDefault();
+    } else if (Number.isNaN(price) || price === 0 || price === undefined) {
+      e.preventDefault();
+      setIsValid(false);
+    } else {
+      createGoal({
+        name: goal,
+        emoticon: '',
+        price,
+        percent: 0,
+        satchList: [],
+      });
+    }
   };
 
   return (
@@ -155,6 +170,7 @@ const SetTargetForm = () => {
         </GoalForm>
         <PriceForm>
           <Title>금액</Title>
+          {isValid ? '' : <Alert>금액은 꼭 숫자를 입력해주세요!</Alert>}
           <Input
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
