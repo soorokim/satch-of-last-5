@@ -18,7 +18,7 @@ const GoalName = styled.span`
   font-size: 22px;
   line-height: 150%;
   color: #000000;
-  text-decoration: underline 5px solid #A2D1F9;;
+  background: linear-gradient(to top, #79bcf6b2 30%, transparent 30%);
 `;
 const Achieve = styled.span`
   font-family: 'LINE Seed Sans KR';
