@@ -16,14 +16,14 @@ const slideUp = keyframes`
 const Wrapper = styled.div`
   position: fixed;
   bottom: 0;
-animation: ${slideUp} 0.3s ease-out;
- width: 377px;
- height: 356px;
- background: #FFFFFF;
- border-radius: 16px 16px 0px 0px;
- text-align: start;
- z-index: 9;
- padding-bottom: 35px;
+  animation: ${slideUp} 0.3s ease-out;
+  width: 377px;
+  height: 356px;
+  background: #FFFFFF;
+  border-radius: 16px 16px 0px 0px;
+  text-align: start;
+  z-index: 9;
+  padding-bottom: 35px;
 `;
 const StringWrapper = styled.div`
     margin-top: 50px;
