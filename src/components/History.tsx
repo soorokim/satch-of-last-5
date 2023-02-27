@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Circle from '../assets/circle.svg';
 import pointerIcon from '../assets/pointer.svg';
-import Footer from './Footer';
 
 const Wrap = styled.div`
   margin: 0 auto;
@@ -192,7 +191,6 @@ const History = () => {
           </CompletedItem>
         ))}
       </Wrap>
-      <Footer />
     </div>
   );
 };
