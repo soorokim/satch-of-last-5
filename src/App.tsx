@@ -11,15 +11,13 @@ import SetGoals from './pages/SetGoals/SetGoals';
 function App() {
   return (
     <Layout>
-      <div>
-        <Routes>
-          <Route path="/setsatchitem" element={<SetSatchItem />} />
-          <Route path="/setgoals" element={<SetGoals />} />
-          <Route path="/" element={<Main />} />
-          <Route path="/initial" element={<InitialPage />} />
-          <Route path="/history" element={<HistoryPage />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/setsatchitem" element={<SetSatchItem />} />
+        <Route path="/setgoals" element={<SetGoals />} />
+        <Route path="/" element={<Main />} />
+        <Route path="/initial" element={<InitialPage />} />
+        <Route path="/history" element={<HistoryPage />} />
+      </Routes>
     </Layout>
   );
 }
