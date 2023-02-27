@@ -18,10 +18,13 @@
     ]
   },
   "dependencies": {
+    "@types/react-calendar": "^3.9.0",
     "@types/react-router-dom": "^5.3.3",
+    "dayjs": "^1.11.7",
     "eslint-plugin-import": "^2.27.5",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
+    "react-calendar": "^4.0.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
     "recoil": "^0.7.6",
