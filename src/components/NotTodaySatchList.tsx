@@ -10,7 +10,7 @@ margin-bottom:40px;
 
 const Dim = styled.div`
   position: fixed;
-  width: 375px;
+  width: 335px;
   top: 0;
   bottom: 0;
   background-color: rgba(245, 245, 245, 0.92);
@@ -26,7 +26,7 @@ const Item = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 375px;
+  width: 335px;
   height: 64px;
   margin-top: 14px;
   background: #FFFFFF;
