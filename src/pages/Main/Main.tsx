@@ -22,7 +22,11 @@ background: #FFFFFF;
 border: 1px solid #EDEDED;
 border-radius: 16px;
 `;
-
+const NonSatchListWrapper = styled.div`
+display: flex;
+justify-content: center;
+margin-top: 50px;
+`;
 
 const PlusWrapper = styled.div`
   position: sticky;
@@ -82,7 +86,10 @@ const Main = () => {
             </Card>
             {
                 currentGoal.satchList.length === 0 ? (
-                    <NonStachList />
+                    <NonSatchListWrapper>
+                        <NonStachList />
+                    </NonSatchListWrapper>
+
                 ) : (
                     <SatchList satchList={currentGoal.satchList} currentGoal={currentGoal} />
                 )

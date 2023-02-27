@@ -92,7 +92,7 @@ const ProgressBar = ({ satchTotalPrice, goalPrice }: ProgressBarProps) => {
         </ReachPercentWrapper>
       </ReachWrapper>
       <ProgressBarWrapper style={{ position: 'relative' }}>
-        <ProgressBarPercent width={percent} />
+        <ProgressBarPercent width={percent > 100 ? 100 : percent} />
         <ZeroPercentLabel>0</ZeroPercentLabel>
         <TenPercentLabel>100</TenPercentLabel>
       </ProgressBarWrapper>
