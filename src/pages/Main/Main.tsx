@@ -13,30 +13,43 @@ const Wrapper = styled.div`
   margin-top: 40px;
   padding: 0 20px;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const Card = styled.div`
   width: 100%;
-  max-width: 375px;
+  width: 375px;
   height: 336px;
   background: #ffffff;
   border: 1px solid #ededed;
   border-radius: 16px;
 `;
+
 const NonSatchListWrapper = styled.div`
 display: flex;
 justify-content: center;
 margin-top: 50px;
+position: relative;
+`;
+
+const PlusButtonFixed = styled.div`
+  position: sticky;
+  float: right;
+  padding: 0px 55px;
+  z-index:7;
 `;
 
 const PlusWrapper = styled.div`
-  position: sticky;
-  bottom: 0;
+  position: fixed;
+  bottom: 68px;
   float: right;
   width: 50px;
   height: 50px;
   border-radius: 100px;
-  padding: 20px;
+  z-index:7;
 `;
 
 const PlusButton = styled.button`
@@ -80,34 +93,40 @@ const Main = () => {
     );
 
     return (
-        <Wrapper>
-            <Card>
-                <ToAchieve
-                    name={currentGoal.name}
-                    price={currentGoal.price}
-                    satchList={currentGoal.satchList}
-                />
-                <Encourage />
-                <ProgressBar satchTotalPrice={satchTotalPrice} goalPrice={currentGoal.price} />
-            </Card>
-            {
-                currentGoal.satchList.length === 0 ? (
-                    <NonSatchListWrapper>
-                        <NonStachList />
-                    </NonSatchListWrapper>
+        <>
+            <Wrapper>
+                <Card>
+                    <ToAchieve
+                        name={currentGoal.name}
+                        price={currentGoal.price}
+                        satchList={currentGoal.satchList}
+                    />
+                    <Encourage />
+                    <ProgressBar satchTotalPrice={satchTotalPrice} goalPrice={currentGoal.price} />
+                </Card>
+                {
+                    currentGoal.satchList.length === 0 ? (
+                        <NonSatchListWrapper>
+                            <NonStachList />
+                        </NonSatchListWrapper>
 
-                ) : (
-                    <SatchList satchList={currentGoal.satchList} currentGoal={currentGoal} />
-                )
-            }
+                    ) : (
+                        <NonSatchListWrapper>
+                            <SatchList satchList={currentGoal.satchList} currentGoal={currentGoal} />
+                        </NonSatchListWrapper>
+                    )
+                }
+            </Wrapper >
             <Link to="/setsatchitem">
-                <PlusWrapper>
-                    <PlusButton>
-                        <Plus>+</Plus>
-                    </PlusButton>
-                </PlusWrapper>
+                <PlusButtonFixed>
+                    <PlusWrapper>
+                        <PlusButton>
+                            <Plus>+</Plus>
+                        </PlusButton>
+                    </PlusWrapper>
+                </PlusButtonFixed>
             </Link>
-        </Wrapper >
+        </>
     );
 };
 

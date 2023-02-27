@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,7 +26,6 @@ const TotalSatch = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 30px;
   margin-bottom: 20px;
 `;
 
@@ -64,7 +65,7 @@ const Basic = styled.span`
 `;
 
 const NonStachList = () => (
-  <>
+  <div>
     <TotalSatch>
       <TodayTotalTitle>오늘의 삿치</TodayTotalTitle>
       <TotalPriceWrapper>
@@ -79,7 +80,7 @@ const NonStachList = () => (
         <Text>지금 바로 시작해 보세요!</Text>
       </div>
     </Wrapper>
-  </>
+  </div>
 );
 
 export default NonStachList;
