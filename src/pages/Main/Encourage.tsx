@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import GomImage from '../../assets/gom.png';
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,12 +32,12 @@ const EncourageTitle = styled.div`
   font-size: 16px;
   color: #000000;
   text-align: center;
-  `;
+`;
 
 const Encourage = () => (
   <Wrapper>
     <EmojiWrapper>
-      <Emoji src="/src/assets/gom.png" />
+      <Emoji src={GomImage} />
     </EmojiWrapper>
     <EncourageTitle>힘을 내요! 으쌰으쌰!</EncourageTitle>
   </Wrapper>
