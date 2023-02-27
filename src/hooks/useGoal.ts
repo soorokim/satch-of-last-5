@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,9 +14,13 @@ const useGoal = (goalId?: Goal['id']) => {
 
         copyData[index] = {
           ...copyData[index],
-          satchList: [...copyData[index].satchList, { ...satch, id: uuidv4() }],
+          satchList: [
+            ...copyData[index].satchList,
+            { ...satch, id: uuidv4(), date: dayjs(satch.date).format() },
+          ],
         };
 
+        console.log(copyData);
         return copyData;
       });
     },

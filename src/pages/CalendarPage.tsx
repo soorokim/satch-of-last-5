@@ -157,6 +157,7 @@ const PrevIcon = () => (
     />
   </svg>
 );
+
 const NextIcon = () => (
   <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
@@ -177,7 +178,7 @@ const CalendarPage = () => {
   if (!currentGoal) return null;
 
   const satchData = useMemo(() => {
-    const groupedData = groupBy(currentGoal?.satchList, (stach: Satch) =>
+    const groupedData = groupBy(currentGoal.satchList, (stach: Satch) =>
       stach.date.toString().substring(0, 10),
     );
 
@@ -190,7 +191,7 @@ const CalendarPage = () => {
       });
 
     return output;
-  }, [currentMonth]);
+  }, [currentMonth, currentGoal]);
 
   const summaryOfMonth = useMemo(() => {
     let summary = 0;
@@ -201,7 +202,7 @@ const CalendarPage = () => {
       }),
     );
     return summary;
-  }, [satchData]);
+  }, [satchData.length, currentMonth]);
 
   const onChangeMonth = ({ activeStartDate }: ViewCallbackProperties) => {
     setCurrentMonth(dayjs(activeStartDate).format('YYYY-MM'));
