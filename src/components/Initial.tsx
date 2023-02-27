@@ -3,34 +3,34 @@ import styled from 'styled-components';
 import InitialTem from '../assets/initialicon.svg';
 
 const Wrap = styled.div`
-  margin: 0 auto;
-  width: 375px;
-  height: 812px;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  box-sizing: border-box;
+  .buttonWrap {
+    margin-top: 64px;
+    padding: 0 20px;
+  }
 `;
 // 아이콘 박스
 const InitialBox = styled.div`
   display: flex;
   flex-direction: row;
-
   position: relative;
   top: -10%;
 `;
 
 const StartBtn = styled.button`
-  width: 335px;
+  width: 100%;
+  max-width: 375px;
   height: 52px;
   border-radius: 100px;
   color: #ffffff;
   background-color: #79bcf6;
   outline: none;
   border: none;
-  position: relative;
-  top: 290%;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
   :focus {
     outline: none;
   }
@@ -38,8 +38,7 @@ const StartBtn = styled.button`
 const InitialTitleBox = styled.div`
   width: 200px;
   height: 160px;
-  position: relative;
-  top: -20%;
+  margin: 72px 20px 0;
   display: flex;
   flex-direction: column;
   font-family: 'LINE Seed Sans KR';
@@ -48,16 +47,13 @@ const InitialTitleBox = styled.div`
   font-size: 30px;
   line-height: 150%;
   border: 1px soild black;
-
   letter-spacing: 0.04em;
-
   color: #000000;
 `;
 const InitialEmo = styled.img`
-  position: relative;
-  top: -10%;
-  width: 375px;
-  height: 375px;
+  margin-top: 32px;
+  width: 100%;
+  max-width: 375px;
 `;
 
 const Initial = () => {
@@ -67,26 +63,24 @@ const Initial = () => {
   };
 
   return (
-    <div>
-      <Wrap>
-        <InitialBox>
-          <InitialTitleBox>
-            <span style={{ marginLeft: '-100%' }}>
-              내 <span style={{ fontWeight: '700' }}>삿치</span>의
-            </span>
-            <span>
-              <span style={{ fontWeight: '700', marginLeft: '-123%' }}>목표</span>를
-            </span>
-            <span style={{ marginLeft: '-85%' }}>정해주세요!</span>
-          </InitialTitleBox>
-        </InitialBox>
-        <InitialEmo src={InitialTem} />
+    <Wrap>
+      <InitialBox>
+        <InitialTitleBox>
+          <span>
+            내 <span style={{ fontWeight: '700' }}>삿치</span>의
+          </span>
+          <span>
+            <span style={{ fontWeight: '700' }}>목표</span>를
+          </span>
+          <span>정해주세요!</span>
+        </InitialTitleBox>
+      </InitialBox>
+      <InitialEmo src={InitialTem} />
 
-        <div>
-          <StartBtn onClick={StartClickHandler}>시작하기</StartBtn>
-        </div>
-      </Wrap>
-    </div>
+      <div className="buttonWrap">
+        <StartBtn onClick={StartClickHandler}>시작하기</StartBtn>
+      </div>
+    </Wrap>
   );
 };
 

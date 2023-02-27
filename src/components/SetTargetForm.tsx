@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useGoalList from '../hooks/useGoalList';
 
+const Wrapper = styled.div`
+  padding: 40px 20px 36px;
+`;
 const Container = styled.div`
-  width: 335px;
-  height: 605px;
+  width: 100%;
+  max-width: 375px;
   border: 1px solid #dbdbdb;
   border-radius: 20px;
   padding: 0 25px;
   box-sizing: border-box;
-  margin-bottom: 38px;
   font-family: 'LINE Seed Sans KR';
 `;
 
@@ -50,7 +52,9 @@ const PriceForm = styled.div`
   margin-bottom: 28px;
 `;
 
-const NowDate = styled.div``;
+const NowDate = styled.div`
+  text-align: center;
+`;
 
 const Title = styled.span`
   display: block;
@@ -94,8 +98,12 @@ const Emphasis = styled.span`
 `;
 
 const Today = styled.p`
-  font-size: 12px;
   color: #767676;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
 `;
 
 const SubmitBtn = styled.button`
@@ -107,11 +115,15 @@ const SubmitBtn = styled.button`
   font-size: 16px;
   background-color: #79bcf6;
   color: #ffffff;
+  margin-top: 38px;
+  border: unset;
+  outline: none;
   &:focus {
     outline: none;
   }
   &:hover {
-    border-color: inherit;
+    outline: none;
+    /* border-color: inherit; */
   }
 `;
 
@@ -153,7 +165,7 @@ const SetTargetForm = () => {
   };
 
   return (
-    <>
+    <Wrapper>
       <Container>
         <OathTitle>삿치 선서</OathTitle>
         <EmoticonWrapper>
@@ -192,13 +204,13 @@ const SetTargetForm = () => {
           <Emphasis>샀다 치고</Emphasis> 이곳에 기록하여 목표에 꼭 도달할 수 있도록 하겠습니다.
         </OathText>
         <NowDate>
-          <Today>{today.toISOString().slice(0, 10)}</Today>
+          <Today>{today.toISOString().slice(0, 10).replaceAll('-', '.')}</Today>
         </NowDate>
       </Container>
       <SubmitBtn type="button" onClick={onClick}>
         등록하기
       </SubmitBtn>
-    </>
+    </Wrapper>
   );
 };
 
