@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useCallback } from 'react';
 import { useSetRecoilState, useRecoilCallback } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,7 +11,7 @@ const useGoalList = () => {
     (newGoal: Omit<Goal, 'id' | 'createdAt' | 'satchList' | 'percent'>) =>
       setGoalList((prev) => [
         ...prev,
-        { ...newGoal, id: uuidv4(), createdAt: new Date(), satchList: [], percent: 0 },
+        { ...newGoal, id: uuidv4(), createdAt: dayjs().format(), satchList: [], percent: 0 },
       ]),
     [],
   );
