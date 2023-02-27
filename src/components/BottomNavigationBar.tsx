@@ -1,13 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+const Spacer = styled.div`
+  margin-top: 57px;
+`;
+
 const Wrapper = styled.div`
   position: fixed;
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto;
   bottom: 0;
   left: 0;
   right: 0;
   height: 57px;
+  background-color: white;
 `;
 const Nav = styled.nav`
   overflow: hidden;
@@ -93,40 +101,27 @@ const tab = [
 
 const BottomNavigationBar = () => {
   const [activeNav, setActiveNav] = useState(0);
-  const [visible, setVisible] = useState<boolean>();
-
-  useEffect(() => {
-    if (
-      window.location.pathname !== '/' &&
-      window.location.pathname !== '/history' &&
-      window.location.pathname !== '/more'
-    ) {
-      setVisible(false);
-      return;
-    }
-
-    setVisible(true);
-  }, []);
-
-  if (!visible) return null;
 
   return (
-    <Wrapper>
-      <Nav>
-        {tab.map(({ Svg, link, title }, index) => (
-          <Link to={link} key={title} onClick={() => setActiveNav(index)}>
-            <NavButton>
-              <IconWrapper>
-                <Svg isActive={activeNav === index} />
-                <Title style={{ color: activeNav === index ? '#79BCF6' : '#999999' }}>
-                  {title}
-                </Title>
-              </IconWrapper>
-            </NavButton>
-          </Link>
-        ))}
-      </Nav>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Nav>
+          {tab.map(({ Svg, link, title }, index) => (
+            <Link to={link} key={title} onClick={() => setActiveNav(index)}>
+              <NavButton>
+                <IconWrapper>
+                  <Svg isActive={activeNav === index} />
+                  <Title style={{ color: activeNav === index ? '#79BCF6' : '#999999' }}>
+                    {title}
+                  </Title>
+                </IconWrapper>
+              </NavButton>
+            </Link>
+          ))}
+        </Nav>
+      </Wrapper>
+      <Spacer />
+    </>
   );
 };
 
