@@ -62,7 +62,7 @@ const TenPercentLabel = styled.span`
 const ProgressBarWrapper = styled.div`
   width: 305px;
   height: 20px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   border-radius: 10px;
 `;
 
@@ -75,9 +75,8 @@ const ProgressBarPercent = styled.div<{ width: number }>`
 
 interface ProgressBarProps {
   satchTotalPrice: number;
-  goalPrice: number
+  goalPrice: number;
 }
-
 
 const ProgressBar = ({ satchTotalPrice, goalPrice }: ProgressBarProps) => {
   const percent = Math.round((satchTotalPrice / goalPrice) * 100);
@@ -92,7 +91,7 @@ const ProgressBar = ({ satchTotalPrice, goalPrice }: ProgressBarProps) => {
         </ReachPercentWrapper>
       </ReachWrapper>
       <ProgressBarWrapper style={{ position: 'relative' }}>
-        <ProgressBarPercent width={percent} />
+        <ProgressBarPercent width={percent > 100 ? 100 : percent} />
         <ZeroPercentLabel>0</ZeroPercentLabel>
         <TenPercentLabel>100</TenPercentLabel>
       </ProgressBarWrapper>
