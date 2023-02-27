@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   background: #ffffff;
   border: 1px solid #ededed;
   border-radius: 16px;
+  margin-bottom: 40px;
 `;
 const Text = styled.div`
   font-family: 'LINE Seed Sans KR';

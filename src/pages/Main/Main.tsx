@@ -20,7 +20,8 @@ const Wrapper = styled.div`
 `;
 
 const Card = styled.div`
-  width: 375px;
+  width: 100%;
+  width: 335px;
   height: 336px;
   background: #ffffff;
   border: 1px solid #ededed;
@@ -73,57 +74,57 @@ const Plus = styled.div`
 `;
 
 const Main = () => {
-  const currentGoal = useRecoilValue(currentGoalState);
-  const navigate = useNavigate();
+    const currentGoal = useRecoilValue(currentGoalState);
+    const navigate = useNavigate();
 
-  useEffect(() => {
+    useEffect(() => {
+        if (currentGoal === undefined) {
+            navigate('/initial');
+        }
+    }, [currentGoal]);
+
     if (currentGoal === undefined) {
-      navigate('/initial');
+        return null;
     }
-  }, [currentGoal]);
 
-  if (currentGoal === undefined) {
-    return null;
-  }
+    const satchTotalPrice = currentGoal.satchList.reduce(
+        (acc: number, cur: Satch) => acc + cur.price,
+        0,
+    );
 
-  const satchTotalPrice = currentGoal.satchList.reduce(
-    (acc: number, cur: Satch) => acc + cur.price,
-    0,
-  );
-
-  return (
-    <>
-      <Wrapper>
-        <Card>
-          <ToAchieve
-            name={currentGoal.name}
-            price={currentGoal.price}
-            satchList={currentGoal.satchList}
-          />
-          <Encourage />
-          <ProgressBar satchTotalPrice={satchTotalPrice} goalPrice={currentGoal.price} />
-        </Card>
-        {currentGoal.satchList.length === 0 ? (
-          <NonSatchListWrapper>
-            <NonStachList />
-          </NonSatchListWrapper>
-        ) : (
-          <NonSatchListWrapper>
-            <SatchList satchList={currentGoal.satchList} currentGoal={currentGoal} />
-          </NonSatchListWrapper>
-        )}
-      </Wrapper>
-      <Link to="/setsatchitem">
-        <PlusButtonFixed>
-          <PlusWrapper>
-            <PlusButton>
-              <Plus>+</Plus>
-            </PlusButton>
-          </PlusWrapper>
-        </PlusButtonFixed>
-      </Link>
-    </>
-  );
+    return (
+        <>
+            <Wrapper>
+                <Card>
+                    <ToAchieve
+                        name={currentGoal.name}
+                        price={currentGoal.price}
+                        satchList={currentGoal.satchList}
+                    />
+                    <Encourage />
+                    <ProgressBar satchTotalPrice={satchTotalPrice} goalPrice={currentGoal.price} />
+                </Card>
+                {currentGoal.satchList.length === 0 ? (
+                    <NonSatchListWrapper>
+                        <NonStachList />
+                    </NonSatchListWrapper>
+                ) : (
+                    <NonSatchListWrapper>
+                        <SatchList satchList={currentGoal.satchList} currentGoal={currentGoal} />
+                    </NonSatchListWrapper>
+                )}
+            </Wrapper>
+            <Link to="/setsatchitem">
+                <PlusButtonFixed>
+                    <PlusWrapper>
+                        <PlusButton>
+                            <Plus>+</Plus>
+                        </PlusButton>
+                    </PlusWrapper>
+                </PlusButtonFixed>
+            </Link>
+        </>
+    );
 };
 
 export default Main;
