@@ -7,6 +7,7 @@ import InitialPage from './pages/Initial/InitialPage';
 import HistoryPage from './pages/Initial/HistoryPage';
 import SetSatchItem from './pages/SetSatchItem/SetSatchItem';
 import SetGoals from './pages/SetGoals/SetGoals';
+import CalendarPage from './pages/CalendarPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/initial" element={<InitialPage />} />
         <Route path="/history" element={<HistoryPage />} />
+        <Route path="/calendar" element={<CalendarPage />} />
       </Routes>
     </Layout>
   );

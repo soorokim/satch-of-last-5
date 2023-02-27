@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import _ from 'lodash';
+import dayjs from 'dayjs';
 import { Goal, Satch } from '../atoms/goalList';
 import SatchItemDetail from '../pages/Main/SatchItemDetail';
 
 const Wrapper = styled.div`
-margin-bottom:40px;
+  margin-bottom: 40px;
 `;
 
 const Dim = styled.div`
@@ -29,44 +30,43 @@ const Item = styled.div`
   width: 335px;
   height: 64px;
   margin-top: 14px;
-  background: #FFFFFF;
-  border: 1px solid #EDEDED;
+  background: #ffffff;
+  border: 1px solid #ededed;
   border-radius: 16px;
 `;
 const Text = styled.div`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-letter-spacing: 0.04em;
-color: #000000;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  color: #000000;
   margin-left: 20px;
 `;
 const ButtonBeside = styled.div`
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 `;
 const Price = styled.div`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 700;
-font-size: 16px;
-line-height: 24px;
-letter-spacing: 0.04em;
-color: #000000;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  color: #000000;
 `;
 
 const Button = styled.button`
   background-color: white;
-  width:15px;
+  width: 15px;
   margin-right: 15px;
 `;
 const ButtonIcon = styled.img`
   width: 7px;
   height: 14px;
 `;
-
 
 const TotalSatch = styled.div`
   display: flex;
@@ -77,40 +77,39 @@ const TotalSatch = styled.div`
 `;
 
 const TotalPrice = styled.span`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 30px;
-letter-spacing: 0.04em;
-color: #79BCF6;
-margin-right: 3px;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0.04em;
+  color: #79bcf6;
+  margin-right: 3px;
 `;
 const TodayTotalTitle = styled.span`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 24px;
-letter-spacing: 0.04em;
-color: #000000;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  color: #000000;
 `;
 
 const TotalPriceWrapper = styled.div`
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 `;
 const Basic = styled.span`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 20px;
-letter-spacing: 0.04em;
-color: #000000;
-margin-right: 5px;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.04em;
+  color: #000000;
+  margin-right: 5px;
 `;
-
 
 interface SatchListProps {
   satchList: Satch[];
@@ -124,7 +123,9 @@ const NotTodaySatchList = ({ satchList, currentGoal }: SatchListProps) => {
     setTarget(item);
     setOpen(true);
   };
-  const satchGroupByDate = _.groupBy(satchList, (satch: Satch) => satch.date.toString().substring(0, 10));
+  const satchGroupByDate = _.groupBy(satchList, (satch: Satch) =>
+    dayjs(satch.date).format('YYYY-MM-DD'),
+  );
 
   return (
     <Wrapper>
@@ -134,7 +135,11 @@ const NotTodaySatchList = ({ satchList, currentGoal }: SatchListProps) => {
             <TodayTotalTitle>{key}</TodayTotalTitle>
             <TotalPriceWrapper>
               <Basic>총</Basic>
-              <TotalPrice>{satchGroupByDate[key].reduce((acc, cur) => acc + cur.price, 0).toLocaleString('ko-KR')}</TotalPrice>
+              <TotalPrice>
+                {satchGroupByDate[key]
+                  .reduce((acc, cur) => acc + cur.price, 0)
+                  .toLocaleString('ko-KR')}
+              </TotalPrice>
               <Basic>원</Basic>
             </TotalPriceWrapper>
           </TotalSatch>
@@ -153,8 +158,16 @@ const NotTodaySatchList = ({ satchList, currentGoal }: SatchListProps) => {
           ))}
         </div>
       ))}
-      {open && <Dim onClick={() => { setOpen(false); }} />}
-      {open && <SatchItemDetail selectedItem={target} currentGoal={currentGoal} setOpen={setOpen} />}
+      {open && (
+        <Dim
+          onClick={() => {
+            setOpen(false);
+          }}
+        />
+      )}
+      {open && (
+        <SatchItemDetail selectedItem={target} currentGoal={currentGoal} setOpen={setOpen} />
+      )}
     </Wrapper>
   );
 };

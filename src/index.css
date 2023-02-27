@@ -129,6 +129,19 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+@font-face {
+  font-family: 'LINESeed';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Th.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
 button {
-  border-style: none;
+  border: none;
+}
+
+button:focus {
+  border: none;
+  outline: none;
 }

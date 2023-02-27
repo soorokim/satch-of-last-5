@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Goal, Satch } from '../atoms/goalList';
 import NotTodaySatchList from './NotTodaySatchList';
 import TodaySatchList from './TodaySatchList';
@@ -9,12 +10,10 @@ interface SatchListProps {
 
 const SatchList = ({ satchList, currentGoal }: SatchListProps) => {
   const notTodaySatch = satchList.filter(
-    (item) =>
-      new Date(item.date).toISOString().slice(0, 10) !== new Date().toISOString().slice(0, 10),
+    (item) => dayjs(item.date).format('YYYY-MM-DD') !== dayjs().format('YYYY-MM-DD'),
   );
   const todaySatch = satchList.filter(
-    (item) =>
-      new Date(item.date).toISOString().slice(0, 10) === new Date().toISOString().slice(0, 10),
+    (item) => dayjs(item.date).format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD'),
   );
 
   return (
