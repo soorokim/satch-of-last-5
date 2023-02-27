@@ -29,17 +29,17 @@ const Card = styled.div`
 `;
 
 const NonSatchListWrapper = styled.div`
-display: flex;
-justify-content: center;
-margin-top: 50px;
-position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  position: relative;
 `;
 
 const PlusButtonFixed = styled.div`
   position: sticky;
   float: right;
   padding: 0px 55px;
-  z-index:7;
+  z-index: 7;
 `;
 
 const PlusWrapper = styled.div`
@@ -49,7 +49,7 @@ const PlusWrapper = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 100px;
-  z-index:7;
+  z-index: 7;
 `;
 
 const PlusButton = styled.button`
@@ -74,60 +74,57 @@ const Plus = styled.div`
 `;
 
 const Main = () => {
-    const currentGoal = useRecoilValue(currentGoalState);
-    const navigate = useNavigate();
+  const currentGoal = useRecoilValue(currentGoalState);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (currentGoal === undefined) {
-            navigate('/initial');
-        }
-    }, [currentGoal]);
-
+  useEffect(() => {
     if (currentGoal === undefined) {
-        return null;
+      navigate('/initial');
     }
+  }, [currentGoal]);
 
-    const satchTotalPrice = currentGoal.satchList.reduce(
-        (acc: number, cur: Satch) => acc + cur.price,
-        0,
-    );
+  if (currentGoal === undefined) {
+    return null;
+  }
 
-    return (
-        <>
-            <Wrapper>
-                <Card>
-                    <ToAchieve
-                        name={currentGoal.name}
-                        price={currentGoal.price}
-                        satchList={currentGoal.satchList}
-                    />
-                    <Encourage />
-                    <ProgressBar satchTotalPrice={satchTotalPrice} goalPrice={currentGoal.price} />
-                </Card>
-                {
-                    currentGoal.satchList.length === 0 ? (
-                        <NonSatchListWrapper>
-                            <NonStachList />
-                        </NonSatchListWrapper>
+  const satchTotalPrice = currentGoal.satchList.reduce(
+    (acc: number, cur: Satch) => acc + cur.price,
+    0,
+  );
 
-                    ) : (
-                        <NonSatchListWrapper>
-                            <SatchList satchList={currentGoal.satchList} currentGoal={currentGoal} />
-                        </NonSatchListWrapper>
-                    )
-                }
-            </Wrapper >
-            <Link to="/setsatchitem">
-                <PlusButtonFixed>
-                    <PlusWrapper>
-                        <PlusButton>
-                            <Plus>+</Plus>
-                        </PlusButton>
-                    </PlusWrapper>
-                </PlusButtonFixed>
-            </Link>
-        </>
-    );
+  return (
+    <>
+      <Wrapper>
+        <Card>
+          <ToAchieve
+            name={currentGoal.name}
+            price={currentGoal.price}
+            satchList={currentGoal.satchList}
+          />
+          <Encourage />
+          <ProgressBar satchTotalPrice={satchTotalPrice} goalPrice={currentGoal.price} />
+        </Card>
+        {currentGoal.satchList.length === 0 ? (
+          <NonSatchListWrapper>
+            <NonStachList />
+          </NonSatchListWrapper>
+        ) : (
+          <NonSatchListWrapper>
+            <SatchList satchList={currentGoal.satchList} currentGoal={currentGoal} />
+          </NonSatchListWrapper>
+        )}
+      </Wrapper>
+      <Link to="/setsatchitem">
+        <PlusButtonFixed>
+          <PlusWrapper>
+            <PlusButton>
+              <Plus>+</Plus>
+            </PlusButton>
+          </PlusWrapper>
+        </PlusButtonFixed>
+      </Link>
+    </>
+  );
 };
 
 export default Main;
