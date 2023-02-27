@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useGoalList from '../hooks/useGoalList';
+import Emoticon1 from '../assets/emoticon_01.png';
+import Emoticon2 from '../assets/emoticon_02.png';
+import Emoticon3 from '../assets/emoticon_03.png';
 
 const Wrapper = styled.div`
   padding: 40px 20px 36px;
@@ -135,11 +138,7 @@ const Alert = styled.span`
   font-size: 12px;
 `;
 
-const emoticions = [
-  '/src/assets/emoticon_01.png',
-  '/src/assets/emoticon_02.png',
-  '/src/assets/emoticon_03.png',
-];
+const emoticions = [Emoticon1, Emoticon2, Emoticon3];
 
 const SetTargetForm = () => {
   const randomEmoji = Math.floor(Math.random() * emoticions.length);

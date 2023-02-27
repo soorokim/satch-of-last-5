@@ -26,37 +26,37 @@ const Item = styled.div`
   width: 375px;
   height: 64px;
   margin-top: 14px;
-  background: #FFFFFF;
-  border: 1px solid #EDEDED;
+  background: #ffffff;
+  border: 1px solid #ededed;
   border-radius: 16px;
 `;
 const Text = styled.div`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-letter-spacing: 0.04em;
-color: #000000;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  color: #000000;
   margin-left: 20px;
 `;
 const ButtonBeside = styled.div`
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 `;
 const Price = styled.div`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 700;
-font-size: 16px;
-line-height: 24px;
-letter-spacing: 0.04em;
-color: #000000;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  color: #000000;
 `;
 
 const Button = styled.button`
   background-color: white;
-  width:15px;
+  width: 15px;
   margin-right: 15px;
 `;
 const ButtonIcon = styled.img`
@@ -71,38 +71,38 @@ const TotalSatch = styled.div`
 `;
 
 const TotalPrice = styled.span`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 30px;
-letter-spacing: 0.04em;
-color: #79BCF6;
-margin-right: 3px;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0.04em;
+  color: #79bcf6;
+  margin-right: 3px;
 `;
 const TodayTotalTitle = styled.span`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 24px;
-letter-spacing: 0.04em;
-color: #000000;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  color: #000000;
 `;
 
 const TotalPriceWrapper = styled.div`
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 `;
 const Basic = styled.span`
-font-family: 'LINE Seed Sans KR';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 20px;
-letter-spacing: 0.04em;
-color: #000000;
-margin-right: 5px;
+  font-family: 'LINE Seed Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.04em;
+  color: #000000;
+  margin-right: 5px;
 `;
 
 interface SatchListProps {
@@ -120,7 +120,6 @@ const TodaySatchList = ({ satchList, currentGoal }: SatchListProps) => {
 
   const satchTotalPrice = satchList.reduce((acc, cur: Satch) => acc + cur.price, 0);
 
-
   return (
     <Wrapper>
       <TotalSatch>
@@ -131,7 +130,13 @@ const TodaySatchList = ({ satchList, currentGoal }: SatchListProps) => {
           <Basic>원</Basic>
         </TotalPriceWrapper>
       </TotalSatch>
-      {open && <Dim onClick={() => { setOpen(false); }} />}
+      {open && (
+        <Dim
+          onClick={() => {
+            setOpen(false);
+          }}
+        />
+      )}
       <ItemListWrapper>
         {satchList.map((item) => (
           <Item key={item.id}>
@@ -145,9 +150,11 @@ const TodaySatchList = ({ satchList, currentGoal }: SatchListProps) => {
           </Item>
         ))}
       </ItemListWrapper>
-      {open && <SatchItemDetail selectedItem={target} currentGoal={currentGoal} setOpen={setOpen} />}
-    </Wrapper>)
-    ;
+      {open && (
+        <SatchItemDetail selectedItem={target} currentGoal={currentGoal} setOpen={setOpen} />
+      )}
+    </Wrapper>
+  );
 };
 
 export default TodaySatchList;
