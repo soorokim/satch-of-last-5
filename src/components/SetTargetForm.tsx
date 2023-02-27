@@ -104,6 +104,7 @@ const Today = styled.p`
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
+  margin-bottom: 30px;
 `;
 
 const SubmitBtn = styled.button`

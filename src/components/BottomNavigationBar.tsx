@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { currentGoalState } from '../atoms/goalList';
 
 const Spacer = styled.div`
   margin-top: 57px;
@@ -25,7 +27,7 @@ const Nav = styled.nav`
 const NavButton = styled.div`
   text-align: center;
   float: left;
-  width: 33.33%;
+  width: 50%;
 
   /* 세로길이 설정 */
   height: 57px;
@@ -84,23 +86,26 @@ const CalendarSvg = ({ isActive }: SvgIcon) => (
   </svg>
 );
 
-const HistorySvg = ({ isActive }: SvgIcon) => (
-  <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M17.48 6.09003C17.22 5.77003 16.75 5.72003 16.43 5.98003C16.11 6.24003 16.06 6.71003 16.32 7.03003C17.45 8.43003 18.08 10.09 18.14 11.83C18.3 16.31 14.78 20.09 10.29 20.24C5.80003 20.4 2.03003 16.88 1.87003 12.4C1.71003 7.92003 5.23003 4.14003 9.72003 3.99003C10.29 3.97003 10.89 4.02003 11.54 4.15003C11.58 4.16003 11.62 4.15003 11.66 4.15003C11.76 4.20003 11.88 4.23003 11.99 4.23003C12.16 4.23003 12.32 4.18003 12.46 4.06003C12.78 3.80003 12.83 3.33003 12.58 3.01003L10.6 0.540034C10.34 0.220034 9.87003 0.160034 9.55003 0.420034C9.23003 0.680034 9.18003 1.15003 9.43003 1.47003L10.26 2.50003C10.07 2.49003 9.87003 2.48003 9.68003 2.49003C4.37003 2.67003 0.200033 7.15003 0.390033 12.46C0.580033 17.77 5.05003 21.94 10.36 21.75C15.67 21.56 19.84 17.09 19.65 11.78C19.56 9.71003 18.82 7.74003 17.48 6.09003Z"
-      fill={isActive ? '#79BCF6' : '#999999'}
-    />
-  </svg>
-);
+// const HistorySvg = ({ isActive }: SvgIcon) => (
+//   <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+//     <path
+//       d="M17.48 6.09003C17.22 5.77003 16.75 5.72003 16.43 5.98003C16.11 6.24003 16.06 6.71003 16.32 7.03003C17.45 8.43003 18.08 10.09 18.14 11.83C18.3 16.31 14.78 20.09 10.29 20.24C5.80003 20.4 2.03003 16.88 1.87003 12.4C1.71003 7.92003 5.23003 4.14003 9.72003 3.99003C10.29 3.97003 10.89 4.02003 11.54 4.15003C11.58 4.16003 11.62 4.15003 11.66 4.15003C11.76 4.20003 11.88 4.23003 11.99 4.23003C12.16 4.23003 12.32 4.18003 12.46 4.06003C12.78 3.80003 12.83 3.33003 12.58 3.01003L10.6 0.540034C10.34 0.220034 9.87003 0.160034 9.55003 0.420034C9.23003 0.680034 9.18003 1.15003 9.43003 1.47003L10.26 2.50003C10.07 2.49003 9.87003 2.48003 9.68003 2.49003C4.37003 2.67003 0.200033 7.15003 0.390033 12.46C0.580033 17.77 5.05003 21.94 10.36 21.75C15.67 21.56 19.84 17.09 19.65 11.78C19.56 9.71003 18.82 7.74003 17.48 6.09003Z"
+//       fill={isActive ? '#79BCF6' : '#999999'}
+//     />
+//   </svg>
+// );
 
 const tab = [
   { Svg: HomeSvg, title: '홈', link: '/' },
   { Svg: CalendarSvg, title: '달력', link: '/calendar' },
-  { Svg: HistorySvg, title: '히스토리', link: '/history' },
+  // { Svg: HistorySvg, title: '히스토리', link: '/history' },
 ];
 
 const BottomNavigationBar = () => {
+  const currentGoal = useRecoilValue(currentGoalState);
   const [activeNav, setActiveNav] = useState(0);
+
+  if (!currentGoal) return null;
 
   return (
     <>
