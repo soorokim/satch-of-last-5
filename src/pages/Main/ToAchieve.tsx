@@ -43,14 +43,15 @@ const ToAchieve = ({
 
   return (
     <Wrapper>
-      {remainPrice < 0 ?
-        (<TextWrapper>
+      {remainPrice < 0 ? (
+        <TextWrapper>
           <div>
             <GoalName>축하합니다! 👏🏼</GoalName>
           </div>
           <GoalName>목표를 완수하였습니다.</GoalName>
-        </TextWrapper >)
-        : (<TextWrapper>
+        </TextWrapper>
+      ) : (
+        <TextWrapper>
           <div>
             <GoalName>{name}</GoalName>
             <Achieve> 이루기까지</Achieve>
@@ -58,9 +59,10 @@ const ToAchieve = ({
           <Achieve>총 </Achieve>
           <GoalName>{`${remainPrice.toLocaleString('ko-KR')}`}</GoalName>
           <Achieve>원 남았어요!</Achieve>
-        </TextWrapper >)}
-
-    </Wrapper >);
+        </TextWrapper>
+      )}
+    </Wrapper>
+  );
 };
 
 export default ToAchieve;
