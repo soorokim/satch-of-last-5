@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Goal, Satch } from '../atoms/goalList';
 import SatchItemDetail from '../pages/Main/SatchItemDetail';
+import ButtonImage from '../assets/button.png';
 
 const Wrapper = styled.div``;
 
@@ -58,6 +59,7 @@ const Button = styled.button`
   background-color: white;
   width: 15px;
   margin-right: 15px;
+  margin-top: 4px;
 `;
 const ButtonIcon = styled.img`
   width: 7px;
@@ -144,7 +146,7 @@ const TodaySatchList = ({ satchList, currentGoal }: SatchListProps) => {
             <ButtonBeside>
               <Price>{`+ ${item.price.toLocaleString('ko-KR')}원`}</Price>
               <Button onClick={() => handleTarget(item)}>
-                <ButtonIcon src="/src/assets/button.png" />
+                <ButtonIcon src={ButtonImage} />
               </Button>
             </ButtonBeside>
           </Item>
