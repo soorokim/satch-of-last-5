@@ -4,7 +4,9 @@ import _ from 'lodash';
 import { Goal, Satch } from '../atoms/goalList';
 import SatchItemDetail from '../pages/Main/SatchItemDetail';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+margin-bottom:40px;
+`;
 
 const Dim = styled.div`
   position: fixed;

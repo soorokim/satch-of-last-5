@@ -23,15 +23,15 @@ const Emoji = styled.img`
 const EncourageTitle = styled.div`
   width: 154px;
   height: 28px;
-  line-height: 28px;
+  line-height: 30px;
   background: #f1f1f5;
   border-radius: 4px 4px 4px 0px;
   margin-left: 12px;
   font-weight: 400;
   font-size: 16px;
-  line-height: 24px;
   color: #000000;
-`;
+  text-align: center;
+  `;
 
 const Encourage = () => (
   <Wrapper>
