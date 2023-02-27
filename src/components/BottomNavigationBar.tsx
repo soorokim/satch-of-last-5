@@ -95,7 +95,7 @@ const HistorySvg = ({ isActive }: SvgIcon) => (
 
 const tab = [
   { Svg: HomeSvg, title: '홈', link: '/' },
-  { Svg: CalendarSvg, title: '달력', link: '/more' },
+  { Svg: CalendarSvg, title: '달력', link: '/calendar' },
   { Svg: HistorySvg, title: '히스토리', link: '/history' },
 ];
 
