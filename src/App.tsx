@@ -9,6 +9,7 @@ import SetSatchItem from './pages/SetSatchItem/SetSatchItem';
 import SetGoals from './pages/SetGoals/SetGoals';
 import CalendarPage from './pages/CalendarPage';
 import Developing from './pages/Developing/Developing';
+import Oauth from './pages/Oauth/Oauth';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/setsatchitem" element={<SetSatchItem />} />
         <Route path="/setgoals" element={<SetGoals />} />
         <Route path="/" element={<Main />} />
+        <Route path="/oauth" element={<Oauth />} />
         <Route path="/initial" element={<InitialPage />} />
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
