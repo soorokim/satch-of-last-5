@@ -1,5 +1,8 @@
+import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import appConfig from '../../appConfig';
+import { authService } from '../../service';
 
 const Oauth = () => {
   const [search] = useSearchParams();
@@ -8,13 +11,29 @@ const Oauth = () => {
   useEffect(() => {
     const code = search.get('code');
 
-    if (code) {
-      alert('카카오 로그인에 성공했습니다!');
-      navigate('/setgoals');
-    }
+    const grant_type = 'authorization_code';
+    const client_id = import.meta.env.VITE_KAKAO_CLIENT_KEY;
+
+    axios
+      .post(
+        `https://kauth.kakao.com/oauth/token?grant_type=${grant_type}&client_id=${client_id}&redirect_uri=${
+          import.meta.env.VITE_SATCH_FRONTEND_URL
+        }/oauth&code=${code}`,
+        {
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+          },
+        },
+      )
+      .then((res) => {
+        authService.login(res.data.access_token, 'kakao').then((response) => {
+          appConfig.accessToken = response?.accessToken;
+          navigate('/setgoals');
+        });
+      });
   }, []);
 
-  return <div>hi</div>;
+  return <div>로그인 처리중 ...</div>;
 };
 
 export default Oauth;
