@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 
+const { Kakao } = window;
+
 const useKakaoSdk = () => {
   const [sdk, setSdk] = useState<Window['Kakao']['Auth']>();
 
   useEffect(() => {
-    const { Kakao } = window;
-
     if (!Kakao.isInitialized()) {
       try {
         Kakao.init(import.meta.env.VITE_KAKAO_SDK_APP_KEY);

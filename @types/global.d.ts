@@ -23,6 +23,8 @@ interface Window {
     isInitialized: () => boolean;
     Auth: {
       authorize: (settings?: AuthorizeSetting) => void;
+      setAccessToken: (token: string) => void;
     };
+    API: any;
   };
 }
