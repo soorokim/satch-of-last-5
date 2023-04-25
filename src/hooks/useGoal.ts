@@ -20,7 +20,6 @@ const useGoal = (goalId?: Goal['id']) => {
           ],
         };
 
-        console.log(copyData);
         return copyData;
       });
     },

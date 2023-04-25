@@ -79,7 +79,7 @@ const Main = () => {
 
   useEffect(() => {
     if (currentGoal === undefined) {
-        return null;
+      navigate('/setgoals');
     }
   }, [currentGoal]);
 
