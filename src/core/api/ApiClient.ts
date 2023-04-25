@@ -28,12 +28,22 @@ export default class ApiClient implements IApiClient {
           Authorization: `Bearer ${apiConfiguration.accessToken}`,
         }),
       },
+      withCredentials: apiConfiguration.withCredentials || false,
       timeout: 10 * 1000,
     });
   }
 
   constructor(apiConfiguration: ApiConfiguration) {
     this.client = this.createAxiosClient(apiConfiguration);
+    if (apiConfiguration.withCredentials) {
+      this.client.interceptors.response.use((res) => {
+        if (res.data.accessToken) {
+          this.client.defaults.headers.common.Authorization = `Bearer ${res.data.accessToken}`;
+        }
+
+        return res;
+      });
+    }
   }
 
   async post<TRequest, TResponse>(
