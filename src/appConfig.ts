@@ -1,14 +1,15 @@
 type AppConfig = {
-  accessToken?: string;
   authApiBase: string;
+  goalsApiBase: string;
+  satchsApiBase: string;
 };
 
 const { VITE_SATCH_BACKEND_URL } = import.meta.env;
 
-const appConfig = {
+const appConfig: AppConfig = {
   authApiBase: `${VITE_SATCH_BACKEND_URL}/auth`,
-  satchApiBase: `${VITE_SATCH_BACKEND_URL}/satch`,
-  itemApiBase: `${VITE_SATCH_BACKEND_URL}/item`,
-} as AppConfig;
+  goalsApiBase: `${VITE_SATCH_BACKEND_URL}/goals`,
+  satchsApiBase: `${VITE_SATCH_BACKEND_URL}/satchs`,
+};
 
 export default appConfig;

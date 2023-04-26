@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import useGoalList from '../hooks/useGoalList';
 import Emoticon1 from '../assets/emoticon_01.png';
 import Emoticon2 from '../assets/emoticon_02.png';
 import Emoticon3 from '../assets/emoticon_03.png';
+import { goalsService } from '../service';
 
 const Wrapper = styled.div`
   padding: 40px 20px 36px;
@@ -147,20 +147,21 @@ const SetTargetForm = () => {
   const [emojiUrl] = useState(() => emoticions[randomEmoji]);
   const [isValid, setIsValid] = useState(true);
   const today = new Date();
-  const { createGoal } = useGoalList();
   const navigate = useNavigate();
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (goal === '' || Number.isNaN(price) || price === 0 || price === undefined) {
       setIsValid(false);
     } else {
-      createGoal({
+      const res = await goalsService.create({
         name: goal,
-        emoticon: '',
         price,
       });
-      navigate('/');
+
+      if (res) {
+        navigate('/');
+      }
     }
   };
 

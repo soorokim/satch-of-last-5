@@ -1,13 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { useEffect } from 'react';
-import { currentGoalState, Satch } from '../../atoms/goalList';
-import NonStachList from '../../components/NonStachList';
-import ProgressBar from '../../components/ProgressBar';
-import SatchList from '../../components/SatchList';
-import ToAchieve from './ToAchieve';
-import Encourage from './Encourage';
+// import { useRecoilValue } from 'recoil';
+import { useEffect, useState } from 'react';
+// import { currentGoalState, Satch } from '../../atoms/goalList';
+// import NonStachList from '../../components/NonStachList';
+// import ProgressBar from '../../components/ProgressBar';
+// import SatchList from '../../components/SatchList';
+// import ToAchieve from './ToAchieve';
+// import Encourage from './Encourage';
+import { goalsService } from '../../service';
 
 const Wrapper = styled.div`
   margin-top: 40px;
@@ -19,21 +20,21 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const Card = styled.div`
-  width: 100%;
-  width: 335px;
-  height: 336px;
-  background: #ffffff;
-  border: 1px solid #ededed;
-  border-radius: 16px;
-`;
+// const Card = styled.div`
+//   width: 100%;
+//   width: 335px;
+//   height: 336px;
+//   background: #ffffff;
+//   border: 1px solid #ededed;
+//   border-radius: 16px;
+// `;
 
-const NonSatchListWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-  position: relative;
-`;
+// const NonSatchListWrapper = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   margin-top: 40px;
+//   position: relative;
+// `;
 
 const PlusButtonFixed = styled.div`
   position: sticky;
@@ -74,28 +75,33 @@ const Plus = styled.div`
 `;
 
 const Main = () => {
-  const currentGoal = useRecoilValue(currentGoalState);
+  const [, setCurrentGoal] = useState<any>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (currentGoal === undefined) {
-      navigate('/setgoals');
-    }
-  }, [currentGoal]);
+    const getCurrent = async () => {
+      const goal = await goalsService.getCurrent();
 
-  if (currentGoal === undefined) {
-    return null;
-  }
+      if (Object.keys(goal).length === 0) {
+        navigate('/setgoals');
+        return null;
+      }
 
-  const satchTotalPrice = currentGoal.satchList.reduce(
-    (acc: number, cur: Satch) => acc + cur.price,
-    0,
-  );
+      setCurrentGoal(goal);
+    };
+
+    getCurrent();
+  }, []);
+
+  // const satchTotalPrice = currentGoal.satchList.reduce(
+  //   (acc: number, cur: Satch) => acc + cur.price,
+  //   0,
+  // );
 
   return (
     <>
       <Wrapper>
-        <Card>
+        {/* <Card>
           <ToAchieve
             name={currentGoal.name}
             price={currentGoal.price}
@@ -112,7 +118,7 @@ const Main = () => {
           <NonSatchListWrapper>
             <SatchList satchList={currentGoal.satchList} currentGoal={currentGoal} />
           </NonSatchListWrapper>
-        )}
+        )} */}
       </Wrapper>
       <Link to="/setsatchitem">
         <PlusButtonFixed>
