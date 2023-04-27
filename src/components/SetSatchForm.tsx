@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { goalListState } from '../atoms/goalList';
-import useGoal from '../hooks/useGoal';
+import { goalState } from '../atoms/goalList';
 import TextUnderline from './TextUnderline';
+import { satchsService } from '../service';
 
 interface Edit {
   isEdit: boolean;
@@ -97,10 +97,7 @@ const Alert = styled.span`
 `;
 
 const SetSatchForm = ({ isEdit }: Edit, { editSatchId, name, price, update }: EditSatchInfo) => {
-  const goalList = useRecoilValue(goalListState);
-  const goalId = goalList[goalList.length - 1].id;
-  const { createSatch } = useGoal(goalId);
-  const { updateSatch } = useGoal(editSatchId);
+  const { id } = useRecoilValue(goalState);
 
   // 삿치템 생성
   const [date, setDate] = useState(new Date());
@@ -144,7 +141,7 @@ const SetSatchForm = ({ isEdit }: Edit, { editSatchId, name, price, update }: Ed
     }
   };
 
-  const onCreate = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onCreate = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (
       satchItem === '' ||
@@ -154,7 +151,8 @@ const SetSatchForm = ({ isEdit }: Edit, { editSatchId, name, price, update }: Ed
     ) {
       setIsValid(false);
     } else {
-      createSatch({
+      await satchsService.create({
+        goalId: id,
         name: satchItem,
         price: satchPrice,
         date,
@@ -163,7 +161,7 @@ const SetSatchForm = ({ isEdit }: Edit, { editSatchId, name, price, update }: Ed
     }
   };
 
-  const onEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onEdit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (
       satchItem === '' ||
@@ -173,7 +171,7 @@ const SetSatchForm = ({ isEdit }: Edit, { editSatchId, name, price, update }: Ed
     ) {
       setIsValid(false);
     } else {
-      updateSatch(editSatchId)({ name, price, date });
+      await satchsService.update({ goalId: id, satchId: editSatchId, data: { name, price, date } });
       // navigate('/');
     }
   };

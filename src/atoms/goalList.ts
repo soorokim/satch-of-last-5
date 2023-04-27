@@ -1,5 +1,4 @@
-import { atom, selector } from 'recoil';
-import localStorageEffect from '../utils/localSotrageEffect';
+import { atom } from 'recoil';
 
 export interface Satch {
   id: string; // 식별
@@ -18,23 +17,11 @@ export interface Goal {
   satchList: Satch[]; // 이 골을 달성하기 위해서 어떤 아이템들을 갖고있어?
 }
 
-const GOAL_LIST_KEY = 'goalList';
+const GOAL_KEY = 'goal';
 
-const goalListState = atom({
-  key: GOAL_LIST_KEY,
-  default: [] as Goal[],
-  effects: [localStorageEffect(GOAL_LIST_KEY)],
+const goalState = atom({
+  key: GOAL_KEY,
+  default: {} as Goal,
 });
 
-const CURRENT_GOAL_KEY = 'currentGoal';
-
-const currentGoalState = selector({
-  key: CURRENT_GOAL_KEY,
-  get: ({ get }) => {
-    const goalList = get(goalListState);
-
-    return goalList.find((goal) => goal?.endedAt === undefined);
-  },
-});
-
-export { goalListState, currentGoalState };
+export { goalState };

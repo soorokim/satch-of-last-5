@@ -30,7 +30,8 @@ const SatchList = ({ satchList, currentGoal }: SatchListProps) => {
         <NonSatchListWrapper>
           <NonStachList />
         </NonSatchListWrapper>
-      ) : (<TodaySatchList satchList={todaySatch} currentGoal={currentGoal} />
+      ) : (
+        <TodaySatchList satchList={todaySatch} currentGoal={currentGoal} />
       )}
       <NotTodaySatchList satchList={notTodaySatch} currentGoal={currentGoal} />
     </div>

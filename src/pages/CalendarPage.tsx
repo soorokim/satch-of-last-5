@@ -7,7 +7,7 @@ import Calendar, { ViewCallbackProperties } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { currentGoalState, Satch } from '../atoms/goalList';
+import { goalState, Satch } from '../atoms/goalList';
 
 const Wrapper = styled.div`
   margin-top: 52px;
@@ -171,7 +171,7 @@ const NextIcon = () => (
 );
 
 const CalendarPage = () => {
-  const currentGoal = useRecoilValue(currentGoalState);
+  const currentGoal = useRecoilValue(goalState);
   const [currentMonth, setCurrentMonth] = useState(dayjs().format('YYYY-MM'));
   const [monthString, setMonthString] = useState(dayjs().format('M월'));
 

@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Goal, Satch } from '../../atoms/goalList';
-import useGoal from '../../hooks/useGoal';
+import { satchsService } from '../../service';
 
 const slideUp = keyframes`
   from {
@@ -71,10 +71,9 @@ interface SatchProps {
 
 const SatchItemDetail = ({ selectedItem, currentGoal, setOpen }: SatchProps) => {
   const date = selectedItem && new Date(selectedItem.date).toISOString().slice(0, 10);
-  const { deleteSatch } = useGoal(currentGoal.id);
 
-  const handleDelete = (satchId: string) => {
-    deleteSatch(satchId);
+  const handleDelete = async (satchId: string) => {
+    await satchsService.delete({ goalId: currentGoal.id, satchId });
     setOpen(false);
   };
 

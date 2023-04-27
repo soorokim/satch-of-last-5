@@ -1,14 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-// import { useRecoilValue } from 'recoil';
-import { useEffect, useState } from 'react';
-// import { currentGoalState, Satch } from '../../atoms/goalList';
-// import NonStachList from '../../components/NonStachList';
-// import ProgressBar from '../../components/ProgressBar';
-// import SatchList from '../../components/SatchList';
-// import ToAchieve from './ToAchieve';
-// import Encourage from './Encourage';
-import { goalsService } from '../../service';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import NonStachList from '../../components/NonStachList';
+import ProgressBar from '../../components/ProgressBar';
+import SatchList from '../../components/SatchList';
+import ToAchieve from './ToAchieve';
+import Encourage from './Encourage';
+import { goalsService, satchsService } from '../../service';
+import { Goal, Satch, goalState } from '../../atoms/goalList';
 
 const Wrapper = styled.div`
   margin-top: 40px;
@@ -20,21 +20,21 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-// const Card = styled.div`
-//   width: 100%;
-//   width: 335px;
-//   height: 336px;
-//   background: #ffffff;
-//   border: 1px solid #ededed;
-//   border-radius: 16px;
-// `;
+const Card = styled.div`
+  width: 100%;
+  width: 335px;
+  height: 336px;
+  background: #ffffff;
+  border: 1px solid #ededed;
+  border-radius: 16px;
+`;
 
-// const NonSatchListWrapper = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   margin-top: 40px;
-//   position: relative;
-// `;
+const NonSatchListWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  position: relative;
+`;
 
 const PlusButtonFixed = styled.div`
   position: sticky;
@@ -75,50 +75,47 @@ const Plus = styled.div`
 `;
 
 const Main = () => {
-  const [, setCurrentGoal] = useState<any>();
+  const [goal, setGoal] = useRecoilState(goalState);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getCurrent = async () => {
-      const goal = await goalsService.getCurrent();
+    const getGoal = async () => {
+      const response = await goalsService.getCurrent();
 
-      if (Object.keys(goal).length === 0) {
+      if (Object.keys(response).length === 0) {
         navigate('/setgoals');
         return null;
       }
 
-      setCurrentGoal(goal);
+      const satchList = await satchsService.getList({ goalId: response.id });
+
+      setGoal({ ...response, satchList } as Goal);
     };
 
-    getCurrent();
+    getGoal();
   }, []);
 
-  // const satchTotalPrice = currentGoal.satchList.reduce(
-  //   (acc: number, cur: Satch) => acc + cur.price,
-  //   0,
-  // );
+  if (Object.keys(goal).length === 0) return null;
+
+  const satchTotalPrice = goal.satchList.reduce((acc: number, cur: Satch) => acc + cur.price, 0);
 
   return (
     <>
       <Wrapper>
-        {/* <Card>
-          <ToAchieve
-            name={currentGoal.name}
-            price={currentGoal.price}
-            satchList={currentGoal.satchList}
-          />
+        <Card>
+          <ToAchieve name={goal.name} price={goal.price} satchList={goal.satchList} />
           <Encourage />
-          <ProgressBar satchTotalPrice={satchTotalPrice} goalPrice={currentGoal.price} />
+          <ProgressBar satchTotalPrice={satchTotalPrice} goalPrice={goal.price} />
         </Card>
-        {currentGoal.satchList.length === 0 ? (
+        {goal.satchList.length === 0 ? (
           <NonSatchListWrapper>
             <NonStachList />
           </NonSatchListWrapper>
         ) : (
           <NonSatchListWrapper>
-            <SatchList satchList={currentGoal.satchList} currentGoal={currentGoal} />
+            <SatchList satchList={goal.satchList} currentGoal={goal} />
           </NonSatchListWrapper>
-        )} */}
+        )}
       </Wrapper>
       <Link to="/setsatchitem">
         <PlusButtonFixed>

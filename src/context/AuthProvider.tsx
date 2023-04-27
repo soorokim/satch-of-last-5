@@ -51,12 +51,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
           setHasAuth(true);
           navigate(origin);
-        } else {
-          navigate('/initial');
+          return;
         }
       } catch {
         console.log('refresh error');
       }
+      navigate('/initial');
     };
 
     refresh();
