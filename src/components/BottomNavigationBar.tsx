@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { currentGoalState } from '../atoms/goalList';
+import useAuth from '../hooks/useAuth';
 
 const Spacer = styled.div`
   margin-top: 57px;
@@ -102,10 +101,11 @@ const tab = [
 ];
 
 const BottomNavigationBar = () => {
-  const currentGoal = useRecoilValue(currentGoalState);
+  const { hasAuth } = useAuth();
   const [activeNav, setActiveNav] = useState(0);
 
-  if (!currentGoal) return null;
+  console.log(hasAuth);
+  if (!hasAuth) return null;
 
   return (
     <>

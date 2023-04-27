@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
 import App from './App';
-import BottomNavigationBar from './components/BottomNavigationBar';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -13,7 +12,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <BrowserRouter>
       <RecoilRoot>
         <App />
-        <BottomNavigationBar />
       </RecoilRoot>
     </BrowserRouter>
   </React.StrictMode>,

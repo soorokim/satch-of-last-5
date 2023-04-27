@@ -11,6 +11,7 @@ import CalendarPage from './pages/CalendarPage';
 import Developing from './pages/Developing/Developing';
 import Oauth from './pages/Oauth/Oauth';
 import AuthProvider from './context/AuthProvider';
+import BottomNavigationBar from './components/BottomNavigationBar';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
         </Routes>
+        <BottomNavigationBar />
       </Layout>
     </AuthProvider>
   );
