@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { authService } from '../service';
 
 interface AuthContextValue {
-  token?: string;
+  hasAuth?: boolean;
   onLogin: (vendorToken: string, vendor: string) => Promise<void>;
   onLogout: () => void;
 }
@@ -11,7 +11,7 @@ interface AuthContextValue {
 export const AuthContext = createContext<AuthContextValue>({} as AuthContextValue);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string>();
+  const [hasAuth, setHasAuth] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,7 +21,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (response) {
       const origin = location.state?.from?.pathname || '/';
 
-      setToken(response.accessToken);
+      setHasAuth(true);
       navigate(origin);
     } else {
       navigate('/initial');
@@ -29,29 +29,33 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const handleLogout = () => {
-    setToken(undefined);
+    setHasAuth(false);
   };
 
   const value = useMemo(
     () => ({
-      token,
+      hasAuth,
       onLogin: handleLogin,
       onLogout: handleLogout,
     }),
-    [token],
+    [hasAuth],
   );
 
   useEffect(() => {
     const refresh = async () => {
-      const response = await authService.refresh();
+      try {
+        const response = await authService.refresh();
 
-      if (response?.accessToken) {
-        const origin = location.state?.from?.pathname || '/';
+        if (response?.accessToken) {
+          const origin = location.state?.from?.pathname || '/';
 
-        setToken(response.accessToken);
-        navigate(origin);
-      } else {
-        navigate('/initial');
+          setHasAuth(true);
+          navigate(origin);
+        } else {
+          navigate('/initial');
+        }
+      } catch {
+        console.log('refresh error');
       }
     };
 
