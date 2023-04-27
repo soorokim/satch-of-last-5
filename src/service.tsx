@@ -3,22 +3,27 @@ import { ApiConfiguration } from './core/api/ApiConfiguration';
 import AuthService, { AuthApiClient } from './core/auth/AuthService';
 import GoalsService, { GoalsApiClient } from './core/goals/GoalsService';
 import KakaoOAuthService, { KakaoOAuthApiClient } from './core/kakaoOAuth/KakaoOAuthService';
+import SatchsService, { SatchsApiClient } from './core/satchs/SatchsService';
 
-// other services you might want to set up...
-
+// satch API
 const authApiConfig = new ApiConfiguration();
 
 authApiConfig.withCredentials = true;
-const authApiClient = new AuthApiClient(new ApiClient(authApiConfig));
+const apiClient = new ApiClient(authApiConfig);
 
+const authApiClient = new AuthApiClient(apiClient);
+
+export const authService = new AuthService(authApiClient);
+
+const goalApiClient = new GoalsApiClient(apiClient);
+
+export const goalsService = new GoalsService(goalApiClient);
+
+const satchsApiClient = new SatchsApiClient(apiClient);
+
+export const satchsService = new SatchsService(satchsApiClient);
+// kakao API
 const kakaoOAuthApiConfig = new ApiConfiguration();
 const kakaoOAuthApiClient = new KakaoOAuthApiClient(new ApiClient(kakaoOAuthApiConfig));
 
-const goalsApiConfig = new ApiConfiguration();
-
-goalsApiConfig.withCredentials = true;
-const goalApiClient = new GoalsApiClient(new ApiClient(goalsApiConfig));
-
-export const authService = new AuthService(authApiClient);
 export const kakaoOAuthService = new KakaoOAuthService(kakaoOAuthApiClient);
-export const goalsService = new GoalsService(goalApiClient);
