@@ -34,8 +34,9 @@ module.exports = {
     'react/jsx-one-expression-per-line': 0,
     'import/no-extraneous-dependencies': [
       'error',
-      { devDependencies: ['**/*.test.js', '**/*.spec.js', 'vite.config.ts'] },
+      { devDependencies: ['**/*.test.tsx', '**/*.test.ts', '**/*.spec.ts', 'vite.config.ts'] },
     ],
+    'no-undef': ['error', { devDependencies: ['**/*.test.tsx', '**/*.test.ts'] }],
     'prefer-const': 'error',
     'prefer-destructuring': 'error',
     'no-console': [
