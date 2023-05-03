@@ -2,7 +2,9 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    jest: true,
   },
+
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'airbnb', 'prettier'],
   plugins: ['import', '@typescript-eslint'],
   parser: '@typescript-eslint/parser',
@@ -34,9 +36,16 @@ module.exports = {
     'react/jsx-one-expression-per-line': 0,
     'import/no-extraneous-dependencies': [
       'error',
-      { devDependencies: ['**/*.test.tsx', '**/*.test.ts', '**/*.spec.ts', 'vite.config.ts'] },
+      {
+        devDependencies: [
+          '**/*.test.tsx',
+          '**/*.test.ts',
+          '**/*.spec.ts',
+          'vite.config.ts',
+          'config/**/*',
+        ],
+      },
     ],
-    'no-undef': ['error', { devDependencies: ['**/*.test.tsx', '**/*.test.ts'] }],
     'prefer-const': 'error',
     'prefer-destructuring': 'error',
     'no-console': [
