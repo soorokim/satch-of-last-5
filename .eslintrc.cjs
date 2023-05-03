@@ -107,6 +107,8 @@ module.exports = {
       },
     ],
     '@typescript-eslint/no-shadow': ['error'],
+    'react/require-default-props': 'off',
+    'react/prop-types': 'off',
   },
   settings: {
     'import/resolver': {
