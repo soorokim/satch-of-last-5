@@ -1,4 +1,4 @@
-import "@testing-library/jest-dom/extend-expect";
+import '@testing-library/jest-dom/extend-expect';
 
 window.matchMedia = (query) => ({
   matches: false,
@@ -11,7 +11,7 @@ window.matchMedia = (query) => ({
   removeListener: jest.fn(),
 });
 
-Object.defineProperty(URL, "createObjectURL", {
+Object.defineProperty(URL, 'createObjectURL', {
   writable: true,
   value: jest.fn(),
 });
