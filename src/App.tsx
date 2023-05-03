@@ -12,6 +12,7 @@ import Developing from './pages/Developing/Developing';
 import Oauth from './pages/Oauth/Oauth';
 import AuthProvider from './context/AuthProvider';
 import BottomNavigationBar from './components/BottomNavigationBar';
+import useAuth from './hooks/useAuth';
 
 export const LocationDisplay = () => {
   const location = useLocation();
@@ -20,6 +21,8 @@ export const LocationDisplay = () => {
 };
 
 function App() {
+  const { hasAuth } = useAuth();
+
   return (
     <AuthProvider>
       <Layout>
@@ -33,7 +36,7 @@ function App() {
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
         </Routes>
-        <BottomNavigationBar />
+        <BottomNavigationBar hasAuth={hasAuth} />
       </Layout>
       <LocationDisplay />
     </AuthProvider>
