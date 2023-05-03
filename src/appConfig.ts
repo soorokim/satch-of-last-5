@@ -4,7 +4,7 @@ type AppConfig = {
   satchsApiBase: string;
 };
 
-const { VITE_SATCH_BACKEND_URL } = import.meta.env;
+const { VITE_SATCH_BACKEND_URL } = process.env;
 
 const appConfig: AppConfig = {
   authApiBase: `${VITE_SATCH_BACKEND_URL}/auth`,

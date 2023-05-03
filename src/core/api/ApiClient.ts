@@ -21,7 +21,7 @@ export default class ApiClient implements IApiClient {
 
   protected createAxiosClient(apiConfiguration: ApiConfiguration): AxiosInstance {
     return Axios.create({
-      baseURL: import.meta.env.VITE_SATCH_BACKEND_URL,
+      baseURL: process.env.VITE_SATCH_BACKEND_URL,
       responseType: 'json' as const,
       headers: {
         'Content-Type': 'application/json',

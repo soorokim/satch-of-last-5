@@ -8,7 +8,7 @@ const useKakaoSdk = () => {
   useEffect(() => {
     if (!Kakao.isInitialized()) {
       try {
-        Kakao.init(import.meta.env.VITE_KAKAO_SDK_APP_KEY);
+        Kakao.init(process.env.VITE_KAKAO_SDK_APP_KEY);
         setSdk(Kakao.Auth);
       } catch {
         alert('카카오 SDK사용이 불가능합니다.');
@@ -20,7 +20,7 @@ const useKakaoSdk = () => {
 
   const auth = useCallback(() => {
     if (sdk) {
-      sdk.authorize({ redirectUri: `${import.meta.env.VITE_SATCH_FRONTEND_URL}/oauth` });
+      sdk.authorize({ redirectUri: `${process.env.VITE_SATCH_FRONTEND_URL}/oauth` });
     }
   }, [sdk]);
 

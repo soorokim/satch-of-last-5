@@ -21,11 +21,9 @@ export class KakaoOAuthApiClient implements IKakaoOAuthApiClient {
   async accessToken({ code }: AccessTokenRequest): Promise<AccessTokenData | undefined> {
     try {
       const grant_type = 'authorization_code';
-      const client_id = import.meta.env.VITE_KAKAO_CLIENT_KEY;
+      const client_id = process.env.VITE_KAKAO_CLIENT_KEY;
       const response = await this.kakaoOAuthApiClient.post<undefined, AccessTokenResponse>(
-        `https://kauth.kakao.com/oauth/token?grant_type=${grant_type}&client_id=${client_id}&redirect_uri=${
-          import.meta.env.VITE_SATCH_FRONTEND_URL
-        }/oauth&code=${code}`,
+        `https://kauth.kakao.com/oauth/token?grant_type=${grant_type}&client_id=${client_id}&redirect_uri=${process.env.VITE_SATCH_FRONTEND_URL}/oauth&code=${code}`,
         undefined,
       );
 
