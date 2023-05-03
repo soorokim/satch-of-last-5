@@ -37,13 +37,7 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       'error',
       {
-        devDependencies: [
-          '**/*.test.tsx',
-          '**/*.test.ts',
-          '**/*.spec.ts',
-          'vite.config.ts',
-          'config/**/*',
-        ],
+        devDependencies: ['src/__tests__/**/*', 'vite.config.ts', 'config/**/*'],
       },
     ],
     'prefer-const': 'error',
