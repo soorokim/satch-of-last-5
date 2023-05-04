@@ -2,8 +2,11 @@ import { ReactNode, createContext, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { authService } from '../service';
 
+/**
+ * TODO: Recoil로 변경해야함
+ */
 interface AuthContextValue {
-  hasAuth?: boolean;
+  hasAuth: boolean;
   onLogin: (vendorToken: string, vendor: string) => Promise<void>;
   onLogout: () => void;
 }

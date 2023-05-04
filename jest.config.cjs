@@ -5,6 +5,7 @@ module.exports = {
   setupFilesAfterEnv: ['./config/jest/setupTests.js'],
   testEnvironment: 'jsdom',
   modulePaths: ['<rootDir>/src'],
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/src/__tests__/utils/*'],
   transform: {
     '^.+\\.(ts|js|tsx|jsx)$': '@swc/jest',
     '^.+\\.css$': '<rootDir>/config/jest/cssTransform.cjs',

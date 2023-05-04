@@ -22,6 +22,7 @@ export const goalsService = new GoalsService(goalApiClient);
 const satchsApiClient = new SatchsApiClient(apiClient);
 
 export const satchsService = new SatchsService(satchsApiClient);
+
 // kakao API
 const kakaoOAuthApiConfig = new ApiConfiguration();
 const kakaoOAuthApiClient = new KakaoOAuthApiClient(new ApiClient(kakaoOAuthApiConfig));

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import useAuth from '../hooks/useAuth';
 
 const Spacer = styled.div`
   margin-top: 57px;
@@ -100,11 +99,13 @@ const tab = [
   // { Svg: HistorySvg, title: '히스토리', link: '/history' },
 ];
 
-const BottomNavigationBar = () => {
-  const { hasAuth } = useAuth();
+interface BottomNavigationBarProps {
+  hasAuth: boolean;
+}
+
+const BottomNavigationBar = ({ hasAuth }: BottomNavigationBarProps) => {
   const [activeNav, setActiveNav] = useState(0);
 
-  console.log(hasAuth);
   if (!hasAuth) return null;
 
   return (

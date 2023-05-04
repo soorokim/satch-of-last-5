@@ -79,19 +79,20 @@ interface ProgressBarProps {
 }
 
 const ProgressBar = ({ satchTotalPrice, goalPrice }: ProgressBarProps) => {
-  const percent = Math.round((satchTotalPrice / goalPrice) * 100);
+  const percent =
+    satchTotalPrice < goalPrice ? Math.round((satchTotalPrice / goalPrice) * 100) : 100;
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="progressBar">
       <ReachWrapper>
         <ReachTitle>도달률</ReachTitle>
         <ReachPercentWrapper>
-          <ReachPercent>{percent}</ReachPercent>
+          <ReachPercent data-testid="percent">{percent}</ReachPercent>
           <TenPercent> / 100</TenPercent>
         </ReachPercentWrapper>
       </ReachWrapper>
       <ProgressBarWrapper style={{ position: 'relative' }}>
-        <ProgressBarPercent width={percent > 100 ? 100 : percent} />
+        <ProgressBarPercent width={percent} />
         <ZeroPercentLabel>0</ZeroPercentLabel>
         <TenPercentLabel>100</TenPercentLabel>
       </ProgressBarWrapper>
