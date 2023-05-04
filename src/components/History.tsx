@@ -156,7 +156,7 @@ const progressingList = goalList.filter((v) => v.endedAt === undefined);
 const History = () => {
   const navigate = useNavigate();
 
-  const progreesingHandler = () => {
+  const progressingHandler = () => {
     navigate('/');
   };
   //  달성 아이템 아직 미정
@@ -176,7 +176,7 @@ const History = () => {
           <ProgreesingItem>
             <CircleImg src={Circle} />
             <ProgreesingTitle>{item.name}</ProgreesingTitle>
-            <Pointer onClick={progreesingHandler} src={pointerIcon} />
+            <Pointer onClick={progressingHandler} src={pointerIcon} />
           </ProgreesingItem>
         ))}
 
