@@ -84,10 +84,9 @@ const Main = () => {
 
       if (Object.keys(response).length === 0) {
         navigate('/setgoals');
-        return null;
+      } else {
+        setGoal({ ...response } as Goal);
       }
-
-      setGoal({ ...response } as Goal);
     };
 
     getGoal();

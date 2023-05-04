@@ -22,7 +22,8 @@
     "./jest.config.cjs",
     "./vite.config.ts",
     "@types",
-    "./config/**/*"
+    "./config/**/*",
+    "./public/*"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

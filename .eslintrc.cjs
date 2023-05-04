@@ -37,7 +37,7 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       'error',
       {
-        devDependencies: ['src/__tests__/**/*', 'vite.config.ts', 'config/**/*'],
+        devDependencies: ['src/__tests__/**/*', 'vite.config.ts', 'config/**/*', 'src/mocks/**'],
       },
     ],
     'prefer-const': 'error',
@@ -103,7 +103,10 @@ module.exports = {
     '@typescript-eslint/no-shadow': ['error'],
     'react/require-default-props': 'off',
     'react/prop-types': 'off',
+    'import/prefer-default-export': 'off',
+    'arrow-body-style': 'off',
   },
+  ignorePatterns: ['./public/*'],
   settings: {
     'import/resolver': {
       typescript: {},
