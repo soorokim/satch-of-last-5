@@ -3,10 +3,12 @@ import { render } from '@testing-library/react';
 import { JSXElementConstructor, ReactElement } from 'react';
 import userEvent from '@testing-library/user-event';
 
-type RoutePath = '/' | '/initial';
+// TODO 자동완성 가능하도록 변경
+type RoutePath = string;
+
 const renderWithRouter = (
   ui: ReactElement<any, string | JSXElementConstructor<any>>,
-  { route = '/' }: { route: RoutePath },
+  { route = '/' }: { route?: RoutePath },
 ) => {
   window.history.pushState({}, 'Test page', route);
 
