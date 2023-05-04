@@ -9,7 +9,7 @@
     "lint": "eslint src --fix --ext .ts,.tsx",
     "prepare": "husky install",
     "preview": "vite preview",
-    "test": "NODE_ENV=test jest",
+    "test": "jest",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
@@ -51,6 +51,7 @@
     "@typescript-eslint/parser": "^5.53.0",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "camelcase": "6",
+    "dotenv": "^16.0.3",
     "eslint": "^8.34.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
