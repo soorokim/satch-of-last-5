@@ -16,7 +16,11 @@ import useAuth from './hooks/useAuth';
 export const LocationDisplay = () => {
   const location = useLocation();
 
-  return <div data-testid="location-display">{location.pathname}</div>;
+  return (
+    <div data-testid="location-display" hidden>
+      {location.pathname}
+    </div>
+  );
 };
 
 function App() {
