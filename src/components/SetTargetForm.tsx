@@ -59,7 +59,7 @@ const NowDate = styled.div`
   text-align: center;
 `;
 
-const Title = styled.span`
+const Title = styled.label`
   display: block;
   text-align: start;
   margin-bottom: 12px;
@@ -140,12 +140,19 @@ const Alert = styled.span`
 
 const emoticions = [Emoticon1, Emoticon2, Emoticon3];
 
+/** [Refactoring]
+ * TODO: 테스트를 진행하다 보니 하나의 컴포넌트에서 너무 많은일을하고
+ * 그로 인해 테스트가 어렵고 하나의 파일이 변해야 할 이유가 너무나 많다.
+ * 기본적으로 하나의 파일은 하나의 이유로 변해야 한다는데 이 파일은 GoalInput과 PriceInput으로 나눌 수 있을것 같다.
+ * 그리고 SetTargetForm은 하나의 페이지로 만들어야 할 것같다.
+ * */
 const SetTargetForm = () => {
   const randomEmoji = Math.floor(Math.random() * emoticions.length);
   const [goal, setGoal] = useState('');
   const [price, setPrice] = useState(0);
   const [emojiUrl] = useState(() => emoticions[randomEmoji]);
   const [isValid, setIsValid] = useState(true);
+  // TODO: new Date -> dayjs로 통일 + dayjs 사용범위 정리해서 유틸만들기
   const today = new Date();
   const navigate = useNavigate();
 
@@ -173,7 +180,7 @@ const SetTargetForm = () => {
           <Emoticon src={`${emojiUrl}`} alt="Emoticon" />
         </EmoticonWrapper>
         <GoalForm>
-          <Title>목표명</Title>
+          <Title htmlFor="targetName">목표명</Title>
           {isValid ? (
             ''
           ) : (
@@ -185,14 +192,16 @@ const SetTargetForm = () => {
           )}
           <Input
             type="text"
+            id="targetName"
             onChange={(e: React.FormEvent<HTMLInputElement>) => setGoal(e.currentTarget.value)}
             autoFocus
           />
         </GoalForm>
         <PriceForm>
-          <Title>금액</Title>
+          <Title htmlFor="amount">금액</Title>
           <Input
             type="text"
+            id="amount"
             value={price.toLocaleString()}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
               setPrice(Number(e.currentTarget.value.replace(/,/g, '')))
