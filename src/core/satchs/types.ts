@@ -5,15 +5,6 @@ export interface Satch {
   date: Date | string; // 언제 사치한 아이템이야?
 }
 
-export interface GetSatchListRequest {
-  goalId: string;
-}
-export interface GetSatchListResponse {
-  success: boolean;
-  reason: string;
-  data: Satch[];
-}
-
 export type CreateSatchRequest = Omit<Satch, 'id'>;
 
 export interface CreateSatchResponse {

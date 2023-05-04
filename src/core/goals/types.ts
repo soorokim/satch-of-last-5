@@ -1,3 +1,5 @@
+import { Satch } from '../satchs/types';
+
 export interface CreateGoalRequest {
   name: string;
   price: number;
@@ -14,4 +16,5 @@ export interface GetCurrentGoalResponse {
   percent: number; // 달성률
   createdAt: Date | string; // 언제시작
   endedAt?: Date; // 언제 달성했어?
+  satchList: Satch[];
 }

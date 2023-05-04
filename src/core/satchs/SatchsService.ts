@@ -8,14 +8,11 @@ import {
   CreateSatchResponse,
   DeleteSatchRequest,
   DeleteSatchResponse,
-  GetSatchListRequest,
-  GetSatchListResponse,
   UpdateSatchRequest,
   UpdateSatchResponse,
 } from './types';
 
 export interface ISatchsApiClient {
-  getList: (payload: GetSatchListRequest) => Promise<any>;
   create: (payload: CreateSatchData) => Promise<any>;
   update: (payload: UpdateSatchRequest) => Promise<any>;
   delete: (payload: DeleteSatchRequest) => Promise<any>;
@@ -29,22 +26,6 @@ export class SatchsApiClient implements ISatchsApiClient {
   constructor(satchsApiClient: IApiClient) {
     this.apiBase = appConfig.satchsApiBase;
     this.satchsApiClient = satchsApiClient;
-  }
-
-  async getList({ goalId }: GetSatchListRequest): Promise<any> {
-    try {
-      const response = await this.satchsApiClient.get<GetSatchListResponse>(
-        `${this.apiBase}/${goalId}`,
-      );
-
-      if (response) {
-        if (response.success) {
-          return response.data;
-        }
-      }
-    } catch {
-      console.log('getStachListError');
-    }
   }
 
   async create({ goalId, ...satch }: CreateSatchData): Promise<any> {
@@ -120,10 +101,6 @@ export default class SatchsService {
     };
 
     return this.satchsApiClient.create(payload);
-  }
-
-  getList(payload: GetSatchListRequest): Promise<any> {
-    return this.satchsApiClient.getList(payload);
   }
 
   delete(payload: DeleteSatchRequest): Promise<any> {

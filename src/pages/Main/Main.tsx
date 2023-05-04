@@ -7,7 +7,7 @@ import ProgressBar from '../../components/ProgressBar';
 import SatchList from '../../components/SatchList';
 import ToAchieve from './ToAchieve';
 import Encourage from './Encourage';
-import { goalsService, satchsService } from '../../service';
+import { goalsService } from '../../service';
 import { Goal, Satch, goalState } from '../../atoms/goalList';
 
 const Wrapper = styled.div`
@@ -87,9 +87,7 @@ const Main = () => {
         return null;
       }
 
-      const satchList = await satchsService.getList({ goalId: response.id });
-
-      setGoal({ ...response, satchList } as Goal);
+      setGoal({ ...response } as Goal);
     };
 
     getGoal();

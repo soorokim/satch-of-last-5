@@ -1,5 +1,4 @@
 /* eslint-disable max-classes-per-file */
-/* eslint-disable no-shadow */
 import appConfig from '../../appConfig';
 import { IApiClient } from '../api/ApiClient';
 import { CreateGoalRequest, CreateGoalResponse, GetCurrentGoalResponse } from './types';
