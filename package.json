@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -p tsconfig.prod.json && vite build",
+    "dev:mock": "NODE_ENV=test vite",
+    "build": "tsc -p tsconfig.prod.json && NODE_ENV=production vite build",
     "lint": "eslint src --fix --ext .ts,.tsx",
     "prepare": "husky install",
-    "preview": "vite preview",
+    "preview": "NODE_ENV=production vite preview",
     "test": "jest",
     "lint-staged": "lint-staged"
   },
