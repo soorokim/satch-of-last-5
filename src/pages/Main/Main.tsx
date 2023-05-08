@@ -1,14 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import NonStachList from '../../components/NonStachList';
+import dayjs from 'dayjs';
+import _ from 'lodash';
 import ProgressBar from '../../components/ProgressBar';
-import SatchList from '../../components/SatchList';
-import ToAchieve from './ToAchieve';
-import Encourage from './Encourage';
-import { goalsService } from '../../service';
+import ToAchieve from '../../components/ToAchieve';
+import Encourage from '../../components/Encourage';
+import { goalsService, satchsService } from '../../service';
 import { Goal, Satch, goalState } from '../../atoms/goalList';
+import SatchItemDetail from './SatchItemDetail';
+import { getTodayDateString } from '../../utils/dateUtil';
+import SatchListHeader from '../../components/SatchListHeader';
+import SatchListItem from '../../components/SatchListItem';
+import NoSatchToday from '../../components/NoSatchItem';
 
 const Wrapper = styled.div`
   margin-top: 40px;
@@ -29,11 +34,11 @@ const Card = styled.div`
   border-radius: 16px;
 `;
 
-const NonSatchListWrapper = styled.div`
-  display: flex;
+const SatchListWrapper = styled.div`
+  /* display: flex; */
   justify-content: center;
-  margin-top: 40px;
-  position: relative;
+  margin: 40px 0;
+  /* position: relative; */
 `;
 
 const PlusButtonFixed = styled.div`
@@ -74,8 +79,63 @@ const Plus = styled.div`
   color: white;
 `;
 
+const SatchItemWrapper = styled.div`
+  margin-bottom: 30px;
+`;
+
+const Dim = styled.div`
+  position: fixed;
+  width: 335px;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(245, 245, 245, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 8;
+`;
+
+interface SatchWithDate {
+  date: string;
+  items: Satch[];
+  totalAmount: number;
+}
+
+const adapterSatchList = (
+  satchList: Satch[],
+): { satchListData: SatchWithDate[]; todaySatchData: SatchWithDate } => {
+  const todayString = getTodayDateString();
+  const satchListData = [] as SatchWithDate[];
+  const todaySatchData = { date: todayString, items: [], totalAmount: 0 } as SatchWithDate;
+  const groupBySatch = _.groupBy(satchList, (satch) => dayjs(satch.date).format('YYYY-MM-DD'));
+
+  Object.keys(groupBySatch).forEach((date) => {
+    if (todayString === date) {
+      todaySatchData.items = groupBySatch[date];
+      todaySatchData.totalAmount = groupBySatch[date].reduce((prev, curr) => prev + curr.price, 0);
+    }
+
+    satchListData.push({
+      date,
+      items: groupBySatch[date],
+      totalAmount: groupBySatch[date].reduce((prev, curr) => prev + curr.price, 0),
+    });
+  });
+
+  return { satchListData, todaySatchData };
+};
+
+const useSatchListData = (data: Satch[]) => {
+  const { satchListData, todaySatchData } = adapterSatchList(data);
+
+  return { satchListData, todaySatchData };
+};
+
 const Main = () => {
   const [goal, setGoal] = useRecoilState(goalState);
+  const [target, setTarget] = useState<Satch | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const { satchListData, todaySatchData } = useSatchListData(goal.satchList);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -96,6 +156,26 @@ const Main = () => {
 
   const satchTotalPrice = goal.satchList.reduce((acc: number, cur: Satch) => acc + cur.price, 0);
 
+  const onClickItem = (item: Satch) => {
+    setTarget(item);
+    setIsOpen(true);
+  };
+
+  const onClickDim = () => {
+    setIsOpen(false);
+  };
+
+  const onClickDelete = async () => {
+    if (target) {
+      await satchsService.delete({ goalId: goal.id, satchId: target.id });
+      setIsOpen(false);
+    }
+  };
+
+  const onClickModify = () => {
+    navigate('/developing');
+  };
+
   return (
     <>
       <Wrapper>
@@ -104,25 +184,46 @@ const Main = () => {
           <Encourage />
           <ProgressBar satchTotalPrice={satchTotalPrice} goalPrice={goal.price} />
         </Card>
-        {goal.satchList.length === 0 ? (
-          <NonSatchListWrapper>
-            <NonStachList />
-          </NonSatchListWrapper>
-        ) : (
-          <NonSatchListWrapper>
-            <SatchList satchList={goal.satchList} currentGoal={goal} />
-          </NonSatchListWrapper>
-        )}
+        <SatchListWrapper>
+          <SatchItemWrapper>
+            <SatchListHeader title="오늘의 삿치" amount={todaySatchData.totalAmount} />
+            {todaySatchData.items.length ? (
+              todaySatchData.items.map((item) => (
+                <SatchListItem item={item} onClick={onClickItem} />
+              ))
+            ) : (
+              <NoSatchToday />
+            )}
+          </SatchItemWrapper>
+          {satchListData.map(({ date, items, totalAmount }) => (
+            <SatchItemWrapper>
+              <SatchListHeader title={date} amount={totalAmount} />
+              {items.map((item) => (
+                <SatchListItem item={item} onClick={onClickItem} />
+              ))}
+            </SatchItemWrapper>
+          ))}
+        </SatchListWrapper>
       </Wrapper>
-      <Link to="/setsatchitem">
-        <PlusButtonFixed>
+      <PlusButtonFixed>
+        <Link to="/setsatchitem">
           <PlusWrapper>
             <PlusButton>
               <Plus>+</Plus>
             </PlusButton>
           </PlusWrapper>
-        </PlusButtonFixed>
-      </Link>
+        </Link>
+      </PlusButtonFixed>
+      {isOpen && (
+        <>
+          <SatchItemDetail
+            selectedItem={target}
+            onClickDelete={onClickDelete}
+            onClickModify={onClickModify}
+          />
+          <Dim onClick={onClickDim} />
+        </>
+      )}
     </>
   );
 };

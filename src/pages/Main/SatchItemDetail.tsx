@@ -1,8 +1,5 @@
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { Link } from 'react-router-dom';
-import { Goal, Satch } from '../../atoms/goalList';
-import { satchsService } from '../../service';
+import { Satch } from '../../atoms/goalList';
 
 const slideUp = keyframes`
   from {
@@ -65,24 +62,19 @@ const Button = styled.button<{ color: string; bgColor: string }>`
 
 interface SatchProps {
   selectedItem: Satch | null;
-  currentGoal: Goal;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onClickDelete: () => void;
+  onClickModify: () => void;
 }
 
-const SatchItemDetail = ({ selectedItem, currentGoal, setOpen }: SatchProps) => {
+const SatchItemDetail = ({ selectedItem, onClickDelete, onClickModify }: SatchProps) => {
   const date = selectedItem && new Date(selectedItem.date).toISOString().slice(0, 10);
-
-  const handleDelete = async (satchId: string) => {
-    await satchsService.delete({ goalId: currentGoal.id, satchId });
-    setOpen(false);
-  };
 
   if (!selectedItem) return null;
 
   return (
     <Wrapper>
       <StringWrapper>
-        <Title> 오늘의 삿치</Title>
+        <Title>오늘의 삿치</Title>
         <Content>{selectedItem?.name}</Content>
         <Title>금액</Title>
         <Content>{`${selectedItem?.price.toLocaleString('ko-KR')}원`}</Content>
@@ -90,12 +82,11 @@ const SatchItemDetail = ({ selectedItem, currentGoal, setOpen }: SatchProps) => 
         <Content>{date}</Content>
       </StringWrapper>
       <ButtonWrapper>
-        <Link to="/developing">
-          <Button color="#79BCF6" bgColor="#FFFFFF">
-            수정
-          </Button>
-        </Link>
-        <Button color="#FFFFFF" bgColor="#79BCF6" onClick={() => handleDelete(selectedItem?.id)}>
+        <Button color="#79BCF6" bgColor="#FFFFFF" onClick={onClickModify}>
+          수정
+        </Button>
+
+        <Button color="#FFFFFF" bgColor="#79BCF6" onClick={onClickDelete}>
           삭제
         </Button>
       </ButtonWrapper>

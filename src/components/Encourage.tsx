@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import GomImage from '../../assets/gom.png';
+import GomImage from '../assets/gom.png';
 
 const Wrapper = styled.div`
   display: flex;
