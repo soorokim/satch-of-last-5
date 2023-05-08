@@ -4,12 +4,14 @@ type AppConfig = {
   satchsApiBase: string;
 };
 
-const { VITE_SATCH_BACKEND_URL } = process.env;
+const { VITE_SATCH_FRONTEND_URL, VITE_SATCH_BACKEND_URL } = process.env;
+
+const baseUrl = process.env.NODE_ENV === 'test' ? VITE_SATCH_FRONTEND_URL : VITE_SATCH_BACKEND_URL;
 
 const appConfig: AppConfig = {
-  authApiBase: `${VITE_SATCH_BACKEND_URL}/auth`,
-  goalsApiBase: `${VITE_SATCH_BACKEND_URL}/goals`,
-  satchsApiBase: `${VITE_SATCH_BACKEND_URL}/satchs`,
+  authApiBase: `${baseUrl}/auth`,
+  goalsApiBase: `${baseUrl}/goals`,
+  satchsApiBase: `${baseUrl}/satchs`,
 };
 
 export default appConfig;

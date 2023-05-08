@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Goal, Satch } from '../../atoms/goalList';
+import { Goal, Satch } from '../atoms/goalList';
 
 const Wrapper = styled.div`
   display: flex;

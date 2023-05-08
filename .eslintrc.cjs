@@ -19,7 +19,10 @@ module.exports = {
     'import/extensions': [
       'error',
       'never',
-      { ignorePackage: false, pattern: { '*.css': 'always', '*.svg': 'always' } },
+      {
+        ignorePackage: false,
+        pattern: { '*.css': 'always', '*.svg': 'always', '*.png': 'always' },
+      },
     ],
     // import './test' 를 사용하지 못함
     'import/no-unresolved': 0,
