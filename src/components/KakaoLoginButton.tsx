@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import useKakaoSdk from '../hooks/useKakaoSdk';
 
 const StartBtn = styled.button`
   width: 100%;
@@ -20,8 +19,14 @@ const StartBtn = styled.button`
   }
 `;
 
-const KakaoLoginButton = () => {
-  const sdk = useKakaoSdk();
+interface KakaoLoginButtonProps {
+  sdk: {
+    requestLogin: () => void;
+  };
+}
+
+const KakaoLoginButton = ({ sdk }: KakaoLoginButtonProps) => {
+  if (!sdk) return null;
 
   const onClickLogin = () => {
     if (sdk) {

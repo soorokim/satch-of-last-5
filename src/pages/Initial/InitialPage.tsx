@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import KakaoLoginButton from '../../components/KakaoLoginButton';
 import InitialTem from '../../assets/initialicon.svg';
+import useKakaoSdk from '../../hooks/useKakaoSdk';
 
 const Wrap = styled.div`
   box-sizing: border-box;
@@ -37,23 +38,27 @@ const InitialEmo = styled.img`
   max-width: 375px;
 `;
 
-const InitialPage = () => (
-  <Wrap>
-    <InitialBox>
-      <InitialTitleBox>
-        <span>
-          내 <span style={{ fontWeight: '700' }}>삿치</span>의
-        </span>
-        <span>
-          <span style={{ fontWeight: '700' }}>목표</span>를
-        </span>
-        <span>정해주세요!</span>
-      </InitialTitleBox>
-    </InitialBox>
-    <InitialEmo src={InitialTem} />
+const InitialPage = () => {
+  const { sdk } = useKakaoSdk();
 
-    <KakaoLoginButton />
-  </Wrap>
-);
+  return (
+    <Wrap>
+      <InitialBox>
+        <InitialTitleBox>
+          <span>
+            내 <span style={{ fontWeight: '700' }}>삿치</span>의
+          </span>
+          <span>
+            <span style={{ fontWeight: '700' }}>목표</span>를
+          </span>
+          <span>정해주세요!</span>
+        </InitialTitleBox>
+      </InitialBox>
+      <InitialEmo src={InitialTem} />
+
+      <KakaoLoginButton sdk={sdk} />
+    </Wrap>
+  );
+};
 
 export default InitialPage;

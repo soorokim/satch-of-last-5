@@ -28,7 +28,7 @@ const useKakaoSdk = () => {
     }
   }, [sdk]);
 
-  return { requestLogin: auth };
+  return { sdk: { requestLogin: auth } };
 };
 
 export default useKakaoSdk;
