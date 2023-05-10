@@ -36,7 +36,7 @@ const SatchGoal = styled.div`
   margin-bottom: 38px;
 `;
 
-const Title = styled.span`
+const Title = styled.label`
   font-size: 18px;
   font-weight: 700;
   color: #191919;
@@ -185,13 +185,19 @@ const SetSatchForm = ({ isEdit }: Edit, { editSatchId, name, price, update }: Ed
         </TextUnderline>
       </Header>
       <SatchGoal>
-        <Title>삿치 목표명</Title>
-        <Input type="text" value={isEdit ? editSatch : satchItem} onChange={onSatchChange} />
-      </SatchGoal>
-      <SatchPrice>
-        <Title>금액</Title>
+        <Title htmlFor="satch-name-input">삿치 목표명</Title>
         <Input
           type="text"
+          id="satch-name-input"
+          value={isEdit ? editSatch : satchItem}
+          onChange={onSatchChange}
+        />
+      </SatchGoal>
+      <SatchPrice>
+        <Title htmlFor="satch-amount-input">금액</Title>
+        <Input
+          type="text"
+          id="satch-amount-input"
           value={isEdit ? editPrice.toLocaleString() : satchPrice.toLocaleString()}
           onChange={onPriceChange}
         />

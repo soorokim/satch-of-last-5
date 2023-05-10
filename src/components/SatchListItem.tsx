@@ -65,7 +65,7 @@ const SatchListItem = ({ item, onClick }: SatchItemProps) => {
       <ButtonBeside>
         <Price>{`+ ${item.price.toLocaleString('ko-KR')}원`}</Price>
         <Button onClick={handleOnClick}>
-          <ButtonIcon src={ButtonImage} />
+          <ButtonIcon src={ButtonImage} alt="detail" />
         </Button>
       </ButtonBeside>
     </Item>

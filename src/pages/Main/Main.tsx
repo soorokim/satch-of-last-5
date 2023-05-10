@@ -189,17 +189,17 @@ const Main = () => {
             <SatchListHeader title="오늘의 삿치" amount={todaySatchData.totalAmount} />
             {todaySatchData.items.length ? (
               todaySatchData.items.map((item) => (
-                <SatchListItem item={item} onClick={onClickItem} />
+                <SatchListItem key={item.id} item={item} onClick={onClickItem} />
               ))
             ) : (
               <NoSatchToday />
             )}
           </SatchItemWrapper>
           {satchListData.map(({ date, items, totalAmount }) => (
-            <SatchItemWrapper>
+            <SatchItemWrapper key={date}>
               <SatchListHeader title={date} amount={totalAmount} />
               {items.map((item) => (
-                <SatchListItem item={item} onClick={onClickItem} />
+                <SatchListItem key={item.id} item={item} onClick={onClickItem} />
               ))}
             </SatchItemWrapper>
           ))}
