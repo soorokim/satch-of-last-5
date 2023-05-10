@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import dayjs from 'dayjs';
 import _ from 'lodash';
+import { useQuery } from 'react-query';
 import ProgressBar from '../../components/ProgressBar';
 import ToAchieve from '../../components/ToAchieve';
 import Encourage from '../../components/Encourage';
@@ -14,6 +15,7 @@ import { getTodayDateString } from '../../utils/dateUtil';
 import SatchListHeader from '../../components/SatchListHeader';
 import SatchListItem from '../../components/SatchListItem';
 import NoSatchToday from '../../components/NoSatchItem';
+import { GetCurrentGoalResponse } from '../../core/goals/types';
 
 const Wrapper = styled.div`
   margin-top: 40px;
@@ -133,26 +135,32 @@ const useSatchListData = (data: Satch[]) => {
 
 const Main = () => {
   const [goal, setGoal] = useRecoilState(goalState);
+
   const [target, setTarget] = useState<Satch | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const { satchListData, todaySatchData } = useSatchListData(goal.satchList);
   const navigate = useNavigate();
+  const { isLoading, refetch } = useQuery<GetCurrentGoalResponse>(
+    'goals',
+    async () => await goalsService.getCurrent(),
+    {
+      onSuccess: (response) => {
+        setGoal(response as Goal);
+      },
+    },
+  );
 
   useEffect(() => {
-    const getGoal = async () => {
-      const response = await goalsService.getCurrent();
+    if (Object.keys(goal).length === 0) {
+      navigate('/setgoals');
+    }
+  }, [goal]);
 
-      if (Object.keys(response).length === 0) {
-        navigate('/setgoals');
-      } else {
-        setGoal({ ...response } as Goal);
-      }
-    };
+  if (isLoading) return null;
 
-    getGoal();
-  }, []);
-
-  if (Object.keys(goal).length === 0) return null;
+  if (Object.keys(goal).length === 0) {
+    return null;
+  }
 
   const satchTotalPrice = goal.satchList.reduce((acc: number, cur: Satch) => acc + cur.price, 0);
 
@@ -168,13 +176,7 @@ const Main = () => {
   const onClickDelete = async () => {
     if (target) {
       await satchsService.delete({ goalId: goal.id, satchId: target.id });
-      const response = await goalsService.getCurrent();
-
-      if (Object.keys(response).length === 0) {
-        navigate('/setgoals');
-      } else {
-        setGoal({ ...response } as Goal);
-      }
+      refetch();
 
       setIsOpen(false);
     }
