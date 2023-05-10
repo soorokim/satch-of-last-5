@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import { server } from '../../src/mocks/server';
+
 window.matchMedia = (query) => ({
   matches: false,
   media: query,
@@ -19,3 +21,9 @@ Object.defineProperty(URL, 'createObjectURL', {
 const path = require('path');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env.test') });
+
+beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }));
+
+afterEach(() => server.resetHandlers());
+
+afterAll(() => server.close());
