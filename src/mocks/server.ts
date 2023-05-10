@@ -43,7 +43,6 @@ const postGoal: Parameters<typeof rest.post>[1] = (req, res, ctx) => {
 };
 
 const getGoal: Parameters<typeof rest.get>[1] = (_, res, ctx) => {
-  console.log('here');
   return res(ctx.status(200), ctx.json(goal));
 };
 

@@ -113,13 +113,13 @@ const adapterSatchList = (
     if (todayString === date) {
       todaySatchData.items = groupBySatch[date];
       todaySatchData.totalAmount = groupBySatch[date].reduce((prev, curr) => prev + curr.price, 0);
+    } else {
+      satchListData.push({
+        date,
+        items: groupBySatch[date],
+        totalAmount: groupBySatch[date].reduce((prev, curr) => prev + curr.price, 0),
+      });
     }
-
-    satchListData.push({
-      date,
-      items: groupBySatch[date],
-      totalAmount: groupBySatch[date].reduce((prev, curr) => prev + curr.price, 0),
-    });
   });
 
   return { satchListData, todaySatchData };
@@ -168,6 +168,14 @@ const Main = () => {
   const onClickDelete = async () => {
     if (target) {
       await satchsService.delete({ goalId: goal.id, satchId: target.id });
+      const response = await goalsService.getCurrent();
+
+      if (Object.keys(response).length === 0) {
+        navigate('/setgoals');
+      } else {
+        setGoal({ ...response } as Goal);
+      }
+
       setIsOpen(false);
     }
   };
@@ -189,17 +197,17 @@ const Main = () => {
             <SatchListHeader title="오늘의 삿치" amount={todaySatchData.totalAmount} />
             {todaySatchData.items.length ? (
               todaySatchData.items.map((item) => (
-                <SatchListItem item={item} onClick={onClickItem} />
+                <SatchListItem key={item.id} item={item} onClick={onClickItem} />
               ))
             ) : (
               <NoSatchToday />
             )}
           </SatchItemWrapper>
           {satchListData.map(({ date, items, totalAmount }) => (
-            <SatchItemWrapper>
+            <SatchItemWrapper key={date}>
               <SatchListHeader title={date} amount={totalAmount} />
               {items.map((item) => (
-                <SatchListItem item={item} onClick={onClickItem} />
+                <SatchListItem key={item.id} item={item} onClick={onClickItem} />
               ))}
             </SatchItemWrapper>
           ))}
