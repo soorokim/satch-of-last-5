@@ -113,13 +113,13 @@ const adapterSatchList = (
     if (todayString === date) {
       todaySatchData.items = groupBySatch[date];
       todaySatchData.totalAmount = groupBySatch[date].reduce((prev, curr) => prev + curr.price, 0);
+    } else {
+      satchListData.push({
+        date,
+        items: groupBySatch[date],
+        totalAmount: groupBySatch[date].reduce((prev, curr) => prev + curr.price, 0),
+      });
     }
-
-    satchListData.push({
-      date,
-      items: groupBySatch[date],
-      totalAmount: groupBySatch[date].reduce((prev, curr) => prev + curr.price, 0),
-    });
   });
 
   return { satchListData, todaySatchData };
