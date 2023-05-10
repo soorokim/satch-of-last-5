@@ -168,6 +168,14 @@ const Main = () => {
   const onClickDelete = async () => {
     if (target) {
       await satchsService.delete({ goalId: goal.id, satchId: target.id });
+      const response = await goalsService.getCurrent();
+
+      if (Object.keys(response).length === 0) {
+        navigate('/setgoals');
+      } else {
+        setGoal({ ...response } as Goal);
+      }
+
       setIsOpen(false);
     }
   };
