@@ -9,8 +9,7 @@ import AuthProvider from '../../context/AuthProvider';
 type RoutePath = string;
 const renderWithGlobalState = (
   ui: ReactElement<any, string | JSXElementConstructor<any>>,
-  { route = '/' }: { route?: RoutePath },
-  initialState?: ({ set }: any) => void,
+  { route = '/', initialState }: { route?: RoutePath; initialState?: ({ set }: any) => void },
 ) => {
   window.history.pushState({}, 'Test page', route);
   return {
