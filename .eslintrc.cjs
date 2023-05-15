@@ -5,8 +5,14 @@ module.exports = {
     jest: true,
   },
 
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'airbnb', 'prettier'],
-  plugins: ['import', '@typescript-eslint'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'airbnb',
+    'plugin:@tanstack/eslint-plugin-query/recommended',
+    'prettier',
+  ],
+  plugins: ['import', '@typescript-eslint', 'react-hooks', '@tanstack/query'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
@@ -108,6 +114,8 @@ module.exports = {
     'react/prop-types': 'off',
     'import/prefer-default-export': 'off',
     'arrow-body-style': 'off',
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
   },
   ignorePatterns: ['./public/*'],
   settings: {
