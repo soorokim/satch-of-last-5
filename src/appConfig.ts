@@ -4,9 +4,10 @@ type AppConfig = {
   satchsApiBase: string;
 };
 
-const { VITE_SATCH_FRONTEND_URL, VITE_SATCH_BACKEND_URL } = process.env;
-
-const baseUrl = process.env.NODE_ENV === 'test' ? VITE_SATCH_FRONTEND_URL : VITE_SATCH_BACKEND_URL;
+const baseUrl =
+  process.env.NODE_ENV === 'test'
+    ? process.env.VITE_SATCH_FRONTEND_URL
+    : process.env.VITE_SATCH_BACKEND_URL;
 
 const appConfig: AppConfig = {
   authApiBase: `${baseUrl}/auth`,
