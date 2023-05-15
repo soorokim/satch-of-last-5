@@ -8,6 +8,7 @@
     "dev:mock": "NODE_ENV=test vite",
     "build": "tsc -p tsconfig.prod.json && NODE_ENV=production vite build",
     "lint": "eslint src --fix --ext .ts,.tsx",
+    "serve": "vite preview --port 3000 --host",
     "prepare": "husky install",
     "preview": "NODE_ENV=production vite preview",
     "test": "jest",

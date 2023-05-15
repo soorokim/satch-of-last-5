@@ -137,6 +137,7 @@ const Main = () => {
   const [target, setTarget] = useState<Satch | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const { satchListData, todaySatchData } = useSatchListData(satchList);
+
   const navigate = useNavigate();
 
   useEffect(() => {
