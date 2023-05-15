@@ -175,8 +175,6 @@ const CalendarPage = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().format('YYYY-MM'));
   const [monthString, setMonthString] = useState(dayjs().format('M월'));
 
-  if (!currentGoal) return null;
-
   const satchData = useMemo(() => {
     const groupedData = groupBy(currentGoal.satchList, (stach: Satch) =>
       stach.date.toString().substring(0, 10),
@@ -208,6 +206,8 @@ const CalendarPage = () => {
     setCurrentMonth(dayjs(activeStartDate).format('YYYY-MM'));
     setMonthString(dayjs(activeStartDate).format('M월'));
   };
+
+  if (!currentGoal) return null;
 
   return (
     <Wrapper>

@@ -1,20 +1,20 @@
 import { rest } from 'msw';
 import { v4 as uuidv4 } from 'uuid';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { Goal, Satch } from '../atoms/goalList';
 
-export function handlers() {
+export function handlers(baseUrl = '') {
   return [
-    rest.post('/auth/login', postLogin),
-    rest.get('/auth/refresh', getRefresh),
-    rest.post('/goals', postGoal),
-    rest.get('/goals', getGoal),
-    rest.post('/satchs/:goalId', postSatch),
-    rest.patch('/satchs/:goalId/:satchId', patchSatch),
-    rest.delete('/satchs/:goaId/:satchId', deleteSatch),
+    rest.post(`${baseUrl}/auth/login`, postLogin),
+    rest.get(`${baseUrl}/auth/refresh`, getRefresh),
+    rest.post(`${baseUrl}/goals`, postGoal),
+    rest.get(`${baseUrl}/goals`, getGoal),
+    rest.get(`${baseUrl}/satchs/:goalId`, getSatchList),
+    rest.post(`${baseUrl}/satchs/:goalId`, postSatch),
+    rest.patch(`${baseUrl}/satchs/:goalId/:satchId`, patchSatch),
+    rest.delete(`${baseUrl}/satchs/:goaId/:satchId`, deleteSatch),
   ];
 }
-
 const postLogin: Parameters<typeof rest.post>[1] = (_, res, ctx) => {
   return res(
     ctx.status(200),
@@ -51,6 +51,10 @@ const postGoal: Parameters<typeof rest.post>[1] = (req, res, ctx) => {
 
 const getGoal: Parameters<typeof rest.get>[1] = (_, res, ctx) => {
   return res(ctx.status(200), ctx.json(goal));
+};
+
+const getSatchList: Parameters<typeof rest.get>[1] = (_, res, ctx) => {
+  return res(ctx.json(goal.satchList));
 };
 
 const postSatch: Parameters<typeof rest.post>[1] = (req, res, ctx) => {

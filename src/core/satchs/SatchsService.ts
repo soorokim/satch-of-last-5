@@ -8,14 +8,17 @@ import {
   CreateSatchResponse,
   DeleteSatchRequest,
   DeleteSatchResponse,
+  GetSatchListRequest,
+  GetSatchListResponse,
   UpdateSatchRequest,
   UpdateSatchResponse,
 } from './types';
 
 export interface ISatchsApiClient {
-  create: (payload: CreateSatchData) => Promise<any>;
-  update: (payload: UpdateSatchRequest) => Promise<any>;
-  delete: (payload: DeleteSatchRequest) => Promise<any>;
+  getList: (payload: GetSatchListRequest) => Promise<GetSatchListResponse | undefined>;
+  create: (payload: CreateSatchData) => Promise<CreateSatchResponse | undefined>;
+  update: (payload: UpdateSatchRequest) => Promise<UpdateSatchResponse | undefined>;
+  delete: (payload: DeleteSatchRequest) => Promise<DeleteSatchResponse | undefined>;
 }
 
 export class SatchsApiClient implements ISatchsApiClient {
@@ -28,57 +31,51 @@ export class SatchsApiClient implements ISatchsApiClient {
     this.satchsApiClient = satchsApiClient;
   }
 
-  async create({ goalId, ...satch }: CreateSatchData): Promise<any> {
+  async getList({ goalId }: GetSatchListRequest) {
+    try {
+      const response = await this.satchsApiClient.get<GetSatchListResponse>(
+        `${this.apiBase}/${goalId}`,
+      );
+
+      return response;
+    } catch {
+      console.log('getStachListError');
+    }
+  }
+
+  async create({ goalId, ...satch }: CreateSatchData) {
     try {
       const response = await this.satchsApiClient.post<CreateSatchRequest, CreateSatchResponse>(
         `${this.apiBase}/${goalId}`,
         { ...satch },
       );
 
-      if (response) {
-        if (response.success) {
-          return response.data;
-        }
-
-        console.log(response.reason);
-      }
+      return response;
     } catch {
       console.log('getStachListError');
     }
   }
 
-  async update({ goalId, ...rest }: UpdateSatchRequest): Promise<any> {
+  async update({ goalId, ...rest }: UpdateSatchRequest) {
     try {
       const response = await this.satchsApiClient.patch<UpdateSatchRequest, UpdateSatchResponse>(
         `${this.apiBase}/${goalId}`,
         { goalId, ...rest },
       );
 
-      if (response) {
-        if (response.success) {
-          return response.data;
-        }
-      }
-
-      console.log(response.reason);
+      return response;
     } catch {
       console.log('getStachListError');
     }
   }
 
-  async delete({ goalId, satchId }: DeleteSatchRequest): Promise<any> {
+  async delete({ goalId, satchId }: DeleteSatchRequest) {
     try {
       const response = await this.satchsApiClient.delete<DeleteSatchResponse>(
         `${this.apiBase}/${goalId}/${satchId}`,
       );
 
-      if (response) {
-        if (response.success) {
-          return response.success;
-        }
-
-        console.log(response.reason);
-      }
+      return response;
     } catch {
       console.log('getStachListError');
     }
@@ -103,11 +100,15 @@ export default class SatchsService {
     return this.satchsApiClient.create(payload);
   }
 
-  delete(payload: DeleteSatchRequest): Promise<any> {
+  getList(payload: GetSatchListRequest) {
+    return this.satchsApiClient.getList(payload);
+  }
+
+  delete(payload: DeleteSatchRequest) {
     return this.satchsApiClient.delete(payload);
   }
 
-  update(payload: UpdateSatchRequest): Promise<any> {
+  update(payload: UpdateSatchRequest) {
     return this.satchsApiClient.update(payload);
   }
 }

@@ -4,14 +4,15 @@ export interface Satch {
   price: number; // 가격
   date: Date | string; // 언제 사치한 아이템이야?
 }
+export interface GetSatchListRequest {
+  goalId: string;
+}
+
+export type GetSatchListResponse = Satch[];
 
 export type CreateSatchRequest = Omit<Satch, 'id'>;
 
-export interface CreateSatchResponse {
-  success: boolean;
-  reason: string;
-  data: Satch;
-}
+export type CreateSatchResponse = Satch;
 
 export interface UpdateSatchRequest {
   goalId: string;
@@ -19,18 +20,12 @@ export interface UpdateSatchRequest {
   data: Partial<Omit<Satch, 'id'>>;
 }
 
-export interface UpdateSatchResponse {
-  success: boolean;
-  reason: string;
-  data: Satch;
-}
+export type UpdateSatchResponse = Satch;
 
 export interface DeleteSatchRequest {
   goalId: string;
   satchId: string;
 }
 
-export interface DeleteSatchResponse {
-  success: boolean;
-  reason: string;
-}
+type IsSuccess = boolean;
+export type DeleteSatchResponse = IsSuccess;

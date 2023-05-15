@@ -133,9 +133,10 @@ const useSatchListData = (data: Satch[]) => {
 
 const Main = () => {
   const [goal, setGoal] = useRecoilState(goalState);
+  const [satchList, setSatchList] = useState([] as Satch[]);
   const [target, setTarget] = useState<Satch | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const { satchListData, todaySatchData } = useSatchListData(goal.satchList);
+  const { satchListData, todaySatchData } = useSatchListData(satchList);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -150,7 +151,19 @@ const Main = () => {
     };
 
     getGoal();
-  }, []);
+  }, [navigate, setGoal]);
+
+  useEffect(() => {
+    const getSatchList = async () => {
+      const response = await satchsService.getList({ goalId: goal.id });
+
+      setSatchList(response ?? []);
+    };
+
+    if (goal.id) {
+      getSatchList();
+    }
+  });
 
   if (Object.keys(goal).length === 0) return null;
 
