@@ -91,7 +91,7 @@ const SatchItemDetail = ({ selectedItem, currentGoal, setOpen }: SatchProps) => 
         <Content>{date}</Content>
       </StringWrapper>
       <ButtonWrapper>
-        <Link to="/developing">
+        <Link to={`/setsatchitem?id=${selectedItem.id}`}>
           <Button color="#79BCF6" bgColor="#FFFFFF">
             수정
           </Button>
