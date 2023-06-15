@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
 import useGoalList from '../hooks/useGoalList';
 import Emoticon1 from '../assets/emoticon_01.png';
 import Emoticon2 from '../assets/emoticon_02.png';
 import Emoticon3 from '../assets/emoticon_03.png';
 
+interface SatchGoalsForm {
+  goal: string;
+  price: number;
+}
+
 const Wrapper = styled.div`
   padding: 40px 20px 36px;
 `;
 const Container = styled.div`
+  position: relative;
   width: 100%;
   max-width: 375px;
   border: 1px solid #dbdbdb;
@@ -41,31 +48,23 @@ const EmoticonWrapper = styled.div`
 
 const Emoticon = styled.img``;
 
-const GoalForm = styled.div`
-  position: relative;
+const SatchTargetInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 37px;
-`;
-
-const PriceForm = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 28px;
-`;
-
-const NowDate = styled.div`
-  text-align: center;
+  margin-bottom: 20px;
 `;
 
 const Title = styled.span`
   display: block;
   text-align: start;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
   font-weight: 700;
   font-size: 18px;
   color: #191919;
+`;
+
+const PriceWrapper = styled.div`
+  position: relative;
 `;
 
 const Input = styled.input`
@@ -81,9 +80,19 @@ const Input = styled.input`
 const PriceUnit = styled.span`
   position: absolute;
   right: 0;
-  bottom: 10px;
+  bottom: 15px;
   color: #191919;
   font-weight: 700;
+`;
+
+const Warning = styled.p`
+  margin-top: 10px;
+  font-size: medium;
+  color: red;
+`;
+
+const NowDate = styled.div`
+  text-align: center;
 `;
 
 const OathText = styled.div`
@@ -111,6 +120,8 @@ const Today = styled.p`
 `;
 
 const SubmitBtn = styled.button`
+  position: absolute;
+  left: 0;
   width: 100%;
   height: 52px;
   font-family: 'LINE Seed Sans KR';
@@ -127,41 +138,30 @@ const SubmitBtn = styled.button`
   }
   &:hover {
     outline: none;
-    /* border-color: inherit; */
   }
-`;
-
-const Alert = styled.span`
-  position: absolute;
-  left: 70px;
-  color: red;
-  font-size: 12px;
 `;
 
 const emoticions = [Emoticon1, Emoticon2, Emoticon3];
 
 const SetTargetForm = () => {
-  const randomEmoji = Math.floor(Math.random() * emoticions.length);
-  const [goal, setGoal] = useState('');
-  const [price, setPrice] = useState(0);
-  const [emojiUrl] = useState(() => emoticions[randomEmoji]);
-  const [isValid, setIsValid] = useState(true);
-  const today = new Date();
   const { createGoal } = useGoalList();
+  const randomEmoji = Math.floor(Math.random() * emoticions.length);
+  const [emojiUrl] = useState(() => emoticions[randomEmoji]);
+  const today = new Date();
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SatchGoalsForm>({ mode: 'onChange' });
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (goal === '' || Number.isNaN(price) || price === 0 || price === undefined) {
-      setIsValid(false);
-    } else {
-      createGoal({
-        name: goal,
-        emoticon: '',
-        price,
-      });
-      navigate('/');
-    }
+  const onValid = ({ goal, price }: SatchGoalsForm) => {
+    createGoal({
+      name: goal,
+      emoticon: '',
+      price,
+    });
+    navigate('/');
   };
 
   return (
@@ -171,45 +171,42 @@ const SetTargetForm = () => {
         <EmoticonWrapper>
           <Emoticon src={`${emojiUrl}`} alt="Emoticon" />
         </EmoticonWrapper>
-        <GoalForm>
-          <Title>목표명</Title>
-          {isValid ? (
-            ''
-          ) : (
-            <Alert>
-              목표와 금액은 필수입니다!
-              <br />
-              금액은 꼭 숫자를 입력해주세요.
-            </Alert>
-          )}
-          <Input
-            type="text"
-            onChange={(e: React.FormEvent<HTMLInputElement>) => setGoal(e.currentTarget.value)}
-            autoFocus
-          />
-        </GoalForm>
-        <PriceForm>
-          <Title>금액</Title>
-          <Input
-            type="text"
-            value={price.toLocaleString()}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setPrice(Number(e.currentTarget.value.replace(/,/g, '')))
-            }
-          />
-          <PriceUnit>원</PriceUnit>
-        </PriceForm>
-        <OathText>
-          유혹이 다가올 때마다 그 물건을&nbsp;
-          <Emphasis>샀다 치고</Emphasis> 이곳에 기록하여 목표에 꼭 도달할 수 있도록 하겠습니다.
-        </OathText>
-        <NowDate>
-          <Today>{today.toISOString().slice(0, 10).replaceAll('-', '.')}</Today>
-        </NowDate>
+        <form onSubmit={handleSubmit(onValid)}>
+          <SatchTargetInfo>
+            <Title>목표 이름</Title>
+            <Input {...register('goal', { required: '목표를 꼭 입력해주세요.' })} />
+            <Warning>{errors?.goal?.message}</Warning>
+          </SatchTargetInfo>
+          <SatchTargetInfo>
+            <Title>목표 금액</Title>
+            <PriceWrapper>
+              <Input
+                {...register('price', {
+                  required: '목표 금액을 꼭 입력해주세요.',
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: '목표 금액은 숫자만 입력 가능합니다!',
+                  },
+                  min: {
+                    value: 1,
+                    message: '목표 금액은 0원보다 큰 금액이어야 합니다!',
+                  },
+                })}
+              />
+              <PriceUnit>원</PriceUnit>
+            </PriceWrapper>
+            {errors.price && <Warning>{errors.price.message}</Warning>}
+          </SatchTargetInfo>
+          <OathText>
+            유혹이 다가올 때마다 그 물건을&nbsp;
+            <Emphasis>샀다 치고</Emphasis> 이곳에 기록하여 목표에 꼭 도달할 수 있도록 하겠습니다.
+          </OathText>
+          <NowDate>
+            <Today>{today.toISOString().slice(0, 10).replaceAll('-', '.')}</Today>
+          </NowDate>
+          <SubmitBtn>등록하기</SubmitBtn>
+        </form>
       </Container>
-      <SubmitBtn type="button" onClick={onClick}>
-        등록하기
-      </SubmitBtn>
     </Wrapper>
   );
 };
