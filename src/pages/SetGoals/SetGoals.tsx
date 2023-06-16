@@ -136,10 +136,12 @@ const SetGoals = () => {
   } = useForm<SatchGoalsForm>({ mode: 'onChange' });
 
   const onValid = ({ goal, price }: SatchGoalsForm) => {
+    const goalPrice = Number(price);
+
     createGoal({
       name: goal,
       emoticon: '',
-      price,
+      price: goalPrice,
     });
     navigate('/');
   };
@@ -184,7 +186,10 @@ const SetGoals = () => {
           <NowDate>
             <Today>{today.toISOString().slice(0, 10).replaceAll('-', '.')}</Today>
           </NowDate>
-          <SubmitBtn text="등록하기" additionalStyles="position: absolute; left: 0;" />
+          <SubmitBtn
+            text="등록하기"
+            additionalStyles="position: absolute; left: 0; margin-top: 38px;"
+          />
         </form>
       </Container>
     </Wrapper>
