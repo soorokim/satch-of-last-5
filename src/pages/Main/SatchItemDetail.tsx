@@ -91,7 +91,15 @@ const SatchItemDetail = ({ selectedItem, currentGoal, setOpen }: SatchProps) => 
         <Content>{date}</Content>
       </StringWrapper>
       <ButtonWrapper>
-        <Link to={`/setsatchitem?id=${selectedItem.id}`}>
+        <Link
+          to={`/setsatchitem/id=${selectedItem.id}`}
+          state={{
+            id: selectedItem.id,
+            satchItem: selectedItem.name,
+            satchPrice: selectedItem.price,
+            satchDate: selectedItem.date,
+          }}
+        >
           <Button color="#79BCF6" bgColor="#FFFFFF">
             수정
           </Button>
