@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { UseFormRegister, UseFormHandleSubmit, FormState } from 'react-hook-form';
-import * as PropTypes from 'prop-types';
 import TextUnderline from './TextUnderline';
 import SubmitBtn from './SubmitBtn';
 
@@ -15,9 +14,9 @@ interface SatchProps {
   handleSubmit: UseFormHandleSubmit<SatchItemProps, undefined>;
   formState: FormState<SatchItemProps>;
   onValid: ({ name, price, date }: SatchItemProps) => void;
-  satchItem?: string;
-  satchPrice?: number;
-  satchDate?: Date;
+  satchItem: string | undefined;
+  satchPrice: number | undefined;
+  satchDate: Date | undefined;
 }
 
 const Container = styled.div`
@@ -97,71 +96,65 @@ const SetSatchForm = ({
   satchPrice,
   satchDate,
 }: SatchProps) => (
-    <Container>
-      {satchItem ? (
-        <Header>
-          삿치템{' '}
-          <TextUnderline fontSize="24px" fontWeight="700">
-            수정하기
-          </TextUnderline>
-        </Header>
-      ) : (
-        <Header>
-          오늘의{' '}
-          <TextUnderline fontSize="24px" fontWeight="700">
-            삿치템!
-          </TextUnderline>
-        </Header>
-      )}
-      <form onSubmit={handleSubmit(onValid)}>
-        <SatchInput>
-          <Title>삿치템명</Title>
+  <Container>
+    {satchItem ? (
+      <Header>
+        삿치템{' '}
+        <TextUnderline fontSize="24px" fontWeight="700">
+          수정하기
+        </TextUnderline>
+      </Header>
+    ) : (
+      <Header>
+        오늘의{' '}
+        <TextUnderline fontSize="24px" fontWeight="700">
+          삿치템!
+        </TextUnderline>
+      </Header>
+    )}
+    <form onSubmit={handleSubmit(onValid)}>
+      <SatchInput>
+        <Title>삿치템명</Title>
+        <Input
+          defaultValue={satchItem}
+          {...register('name', { required: '삿치템을 꼭 입력해주세요!' })}
+        />
+        <Warning>{errors?.name?.message}</Warning>
+      </SatchInput>
+      <SatchInput>
+        <Title>금액</Title>
+        <SatchInputWrapper>
           <Input
-            defaultValue={satchItem}
-            {...register('name', { required: '삿치템을 꼭 입력해주세요!' })}
+            defaultValue={satchPrice}
+            type="text"
+            {...register('price', {
+              required: '목표 금액을 꼭 입력해주세요.',
+              pattern: {
+                value: /^[0-9]+$/,
+                message: '목표 금액은 숫자만 입력 가능합니다!',
+              },
+              min: {
+                value: 1,
+                message: '목표 금액은 0원보다 큰 금액이어야 합니다!',
+              },
+            })}
           />
-          <Warning>{errors?.name?.message}</Warning>
-        </SatchInput>
-        <SatchInput>
-          <Title>금액</Title>
-          <SatchInputWrapper>
-            <Input
-              defaultValue={satchPrice}
-              type="text"
-              {...register('price', {
-                required: '목표 금액을 꼭 입력해주세요.',
-                pattern: {
-                  value: /^[0-9]+$/,
-                  message: '목표 금액은 숫자만 입력 가능합니다!',
-                },
-                min: {
-                  value: 1,
-                  message: '목표 금액은 0원보다 큰 금액이어야 합니다!',
-                },
-              })}
-            />
-            <PriceUnit>원</PriceUnit>
-          </SatchInputWrapper>
-          <Warning>{errors?.price?.message}</Warning>
-        </SatchInput>
-        <SatchDate>
-          <Title>날짜</Title>
-          <DateWarning>{errors?.date?.message}</DateWarning>
-          <Input
-            defaultValue={satchDate ? `${satchDate  }` : new Date().toISOString().substring(0, 10)}
-            type="date"
-            {...register('date', { required: '날짜를 꼭 입력해주세요!' })}
-          />
-        </SatchDate>
-        <SubmitBtn text={satchItem ? '수정하기' : '등록하기'} />
-      </form>
-    </Container>
-  );
-
-SetSatchForm.propTypes = {
-  satchItem: PropTypes.string.isRequired,
-  satchPrice: PropTypes.number.isRequired,
-  satchDate: PropTypes.string.isRequired,
-};
+          <PriceUnit>원</PriceUnit>
+        </SatchInputWrapper>
+        <Warning>{errors?.price?.message}</Warning>
+      </SatchInput>
+      <SatchDate>
+        <Title>날짜</Title>
+        <DateWarning>{errors?.date?.message}</DateWarning>
+        <Input
+          defaultValue={satchDate ? `${satchDate}` : new Date().toISOString().substring(0, 10)}
+          type="date"
+          {...register('date', { required: '날짜를 꼭 입력해주세요!' })}
+        />
+      </SatchDate>
+      <SubmitBtn text={satchItem ? '수정하기' : '등록하기'} />
+    </form>
+  </Container>
+);
 
 export default SetSatchForm;

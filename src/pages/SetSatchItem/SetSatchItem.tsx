@@ -35,6 +35,9 @@ const SetSatchItem = () => {
       formState={formState}
       handleSubmit={handleSubmit}
       onValid={onValid}
+      satchItem={undefined}
+      satchPrice={undefined}
+      satchDate={undefined}
     />
   );
 };
