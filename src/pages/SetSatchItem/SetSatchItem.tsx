@@ -16,7 +16,7 @@ const SetSatchItem = () => {
   const goalList = useRecoilValue(goalListState);
   const goalId = goalList[goalList.length - 1].id;
   const { createSatch } = useGoal(goalId);
-  const { register, handleSubmit, formState } = useForm<SatchProps>();
+  const { register, handleSubmit, formState } = useForm<SatchProps>({ mode: 'onChange' });
 
   const onValid = ({ name, price, date }: SatchProps) => {
     const satchPrice = Number(price);

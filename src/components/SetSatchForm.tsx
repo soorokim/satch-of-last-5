@@ -75,14 +75,14 @@ const SatchDate = styled.div`
 
 const Warning = styled.p`
   position: absolute;
-  top: 50px;
+  top: 85px;
   color: red;
   font-size: medium;
 `;
 
 const DateWarning = styled.p`
   position: absolute;
-  top: 75px;
+  top: 73px;
   color: red;
   font-size: medium;
 `;
