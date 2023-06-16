@@ -19,7 +19,6 @@ const Button = styled.button<SubmitBtnProps>`
   font-size: 16px;
   background-color: #79bcf6;
   color: #ffffff;
-  margin-top: 38px;
   border: unset;
   outline: none;
   &:focus {
@@ -31,7 +30,9 @@ const Button = styled.button<SubmitBtnProps>`
   ${(props) => props.additionalStyles};
 `;
 
-const SubmitBtn = ({ text, additionalStyles }: SubmitBtnProps) => <Button additionalStyles={additionalStyles}>{text}</Button>;
+const SubmitBtn = ({ text, additionalStyles }: SubmitBtnProps) => (
+  <Button additionalStyles={additionalStyles}>{text}</Button>
+);
 
 SubmitBtn.defaultProps = defaultProps;
 export default SubmitBtn;
