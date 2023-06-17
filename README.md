@@ -2,8 +2,7 @@
 
 ![satch_logo](https://github.com/hheeseung/javascript-es6/assets/87454393/75a01489-e3b2-49a1-8093-8538b207f150)
 
-충동적인 소비를 줄이기 위해 샀다 치고 기록하자!
-링크: https://satch-of-last-5.vercel.app/
+충동적인 소비를 줄이기 위해 샀다 치고 기록하자!<br>링크: https://satch-of-last-5.vercel.app/
 
 ## 프로젝트 소개
 
