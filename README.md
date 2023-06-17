@@ -70,7 +70,7 @@
 - 각자 맡은 역할을 기반으로 기능 구현 진행
 - 게더타운을 활용해서 시간 맞춰 모여서 개발
 - MVP 완성 후 데모 진행, 피드백
-- 회고 진행
+- 회고 진행<br>
   ![day 5](https://github.com/soorokim/satch-of-last-5/assets/87454393/d5a488d8-f7a7-4ae8-9323-9ac55f7ebb50)
 
 📌 [팀 피그잼 링크](https://www.figma.com/file/E0mSS5Zo5fSxUoI9QiAKsM/%ED%85%8C%EC%98%A4%EC%9D%98-%EC%8A%A4%ED%94%84%EB%A6%B0%ED%8A%B8-14%EA%B8%B0---6%EC%A1%B0?type=whiteboard&node-id=0-1&t=gia1qJbbMftbcHV8-0)
