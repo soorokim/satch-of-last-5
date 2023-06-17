@@ -52,18 +52,18 @@
 
 - 팀 결정 및 온보딩 프로세스
 - 팀 캔버스 그리기
-  ![day1](https://github.com/hheeseung/javascript-es6/assets/87454393/3811379d-7e44-4f81-9d8b-8969134ca2c1)
+  ![day1](https://github.com/soorokim/satch-of-last-5/assets/87454393/9f96307d-1583-4c2e-81b2-d73af51a3cbe)
 
 ### Day 2
 
 - 서로의 아이디어를 확장, 발산하며 구체화하기
 - 워드 클라우드, 지도 그리기
-  ![day2](https://github.com/hheeseung/javascript-es6/assets/87454393/1ffc7569-d707-4485-82c0-3043158069b9)
+  ![day2](https://github.com/soorokim/satch-of-last-5/assets/87454393/579781ba-47bc-436d-84de-8c61f202af97)
 
 ### Day 3
 
 - 사용자 행동을 중심으로 개발을 진행하는 BDD 방법론을 사용해서 설계 후 역할 분담하기
-  ![day3](https://github.com/hheeseung/javascript-es6/assets/87454393/73320b1e-81f6-491b-b8c7-01e6bad4f22f)
+  ![day3](https://github.com/soorokim/satch-of-last-5/assets/87454393/a8885cd1-586c-47ba-abd2-9584b66c1146)
 
 ### Day 4~Day 5
 
@@ -71,6 +71,6 @@
 - 게더타운을 활용해서 시간 맞춰 모여서 개발
 - MVP 완성 후 데모 진행, 피드백
 - 회고 진행
-  ![day 5](https://github.com/hheeseung/javascript-es6/assets/87454393/6331c15f-1d01-4c91-b405-12e42366e399)
+  ![day 5](https://github.com/soorokim/satch-of-last-5/assets/87454393/d5a488d8-f7a7-4ae8-9323-9ac55f7ebb50)
 
 📌 [팀 피그잼 링크](https://www.figma.com/file/E0mSS5Zo5fSxUoI9QiAKsM/%ED%85%8C%EC%98%A4%EC%9D%98-%EC%8A%A4%ED%94%84%EB%A6%B0%ED%8A%B8-14%EA%B8%B0---6%EC%A1%B0?type=whiteboard&node-id=0-1&t=gia1qJbbMftbcHV8-0)
