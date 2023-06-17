@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useForm } from 'react-hook-form';
 import SetSatchForm from '../../components/SetSatchForm';
-import { goalListState } from '../../atoms/goalList';
+import { currentGoalState } from '../../atoms/goalList';
 import useGoal from '../../hooks/useGoal';
 
 interface SatchProps {
@@ -13,8 +13,8 @@ interface SatchProps {
 
 const SetSatchItem = () => {
   const navigate = useNavigate();
-  const goalList = useRecoilValue(goalListState);
-  const goalId = goalList[goalList.length - 1].id;
+  const currentGoal = useRecoilValue(currentGoalState);
+  const goalId = currentGoal?.id;
   const { createSatch } = useGoal(goalId);
   const { register, handleSubmit, formState } = useForm<SatchProps>({ mode: 'onChange' });
 

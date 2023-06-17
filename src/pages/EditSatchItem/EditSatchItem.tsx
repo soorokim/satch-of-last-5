@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import useGoal from '../../hooks/useGoal';
 import SetSatchForm from '../../components/SetSatchForm';
-import { goalListState } from '../../atoms/goalList';
+import { currentGoalState } from '../../atoms/goalList';
 
 interface SatchProps {
   name: string;
@@ -16,8 +16,8 @@ const EditSatchItem = () => {
   const {
     state: { id, satchItem, satchPrice, satchDate },
   } = useLocation();
-  const goalList = useRecoilValue(goalListState);
-  const goalId = goalList[goalList.length - 1].id;
+  const currentGoal = useRecoilValue(currentGoalState);
+  const goalId = currentGoal?.id;
   const { updateSatch } = useGoal(goalId);
 
   const { register, handleSubmit, formState } = useForm<SatchProps>({ mode: 'onChange' });
