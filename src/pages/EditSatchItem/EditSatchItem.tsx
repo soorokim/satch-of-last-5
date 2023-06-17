@@ -19,7 +19,6 @@ const EditSatchItem = () => {
   const currentGoal = useRecoilValue(currentGoalState);
   const goalId = currentGoal?.id;
   const { updateSatch } = useGoal(goalId);
-
   const { register, handleSubmit, formState } = useForm<SatchProps>({ mode: 'onChange' });
 
   const onValid = ({ name, price, date }: SatchProps) => {
