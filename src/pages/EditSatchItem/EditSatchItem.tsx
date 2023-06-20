@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useRecoilValue } from 'recoil';
+import useGoal from '../../hooks/useGoal';
 import SetSatchForm from '../../components/SetSatchForm';
 import { currentGoalState } from '../../atoms/goalList';
-import useGoal from '../../hooks/useGoal';
 
 interface SatchProps {
   name: string;
@@ -11,19 +11,22 @@ interface SatchProps {
   date: Date;
 }
 
-const SetSatchItem = () => {
+const EditSatchItem = () => {
   const navigate = useNavigate();
+  const {
+    state: { id, satchItem, satchPrice, satchDate },
+  } = useLocation();
   const currentGoal = useRecoilValue(currentGoalState);
   const goalId = currentGoal?.id;
-  const { createSatch } = useGoal(goalId);
+  const { updateSatch } = useGoal(goalId);
   const { register, handleSubmit, formState } = useForm<SatchProps>({ mode: 'onChange' });
 
   const onValid = ({ name, price, date }: SatchProps) => {
-    const satchPrice = Number(price);
+    const numberPrice = Number(price);
 
-    createSatch({
+    updateSatch(id)({
       name,
-      price: satchPrice,
+      price: numberPrice,
       date,
     });
     navigate('/');
@@ -35,11 +38,11 @@ const SetSatchItem = () => {
       formState={formState}
       handleSubmit={handleSubmit}
       onValid={onValid}
-      satchItem={undefined}
-      satchPrice={undefined}
-      satchDate={undefined}
+      satchItem={satchItem}
+      satchPrice={satchPrice}
+      satchDate={satchDate}
     />
   );
 };
 
-export default SetSatchItem;
+export default EditSatchItem;

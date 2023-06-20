@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { goalListState } from '../atoms/goalList';
-import useGoal from '../hooks/useGoal';
+import { UseFormRegister, UseFormHandleSubmit, FormState } from 'react-hook-form';
 import TextUnderline from './TextUnderline';
+import SubmitBtn from './SubmitBtn';
 
-interface Edit {
-  isEdit: boolean;
-}
-
-interface EditSatchInfo {
-  editSatchId: string;
+interface SatchItemProps {
   name: string;
   price: number;
-  update: Date;
+  date: Date;
+}
+
+interface SatchProps {
+  register: UseFormRegister<SatchItemProps>;
+  handleSubmit: UseFormHandleSubmit<SatchItemProps, undefined>;
+  formState: FormState<SatchItemProps>;
+  onValid: ({ name, price, date }: SatchItemProps) => void;
+  satchItem: string | undefined;
+  satchPrice: number | undefined;
+  satchDate: Date | undefined;
 }
 
 const Container = styled.div`
@@ -30,7 +32,8 @@ const Header = styled.header`
   margin-bottom: 38px;
 `;
 
-const SatchGoal = styled.div`
+const SatchInput = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 38px;
@@ -53,17 +56,14 @@ const Input = styled.input`
   color: #767676;
 `;
 
-const SatchPrice = styled.div`
+const SatchInputWrapper = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 38px;
 `;
 
 const PriceUnit = styled.span`
   position: absolute;
   right: 0;
-  bottom: 10px;
+  top: 20px;
   color: #191919;
   font-weight: 700;
 `;
@@ -73,155 +73,88 @@ const SatchDate = styled.div`
   margin-bottom: 268px;
 `;
 
-const SubmitBtn = styled.button`
-  width: 100%;
-  height: 52px;
-  border-radius: 100px;
-  font-weight: 700;
-  font-size: 16px;
-  background-color: #79bcf6;
-  color: #ffffff;
-  &:focus {
-    outline: none;
-  }
-  &:hover {
-    border-color: inherit;
-  }
-`;
-
-const Alert = styled.span`
+const Warning = styled.p`
   position: absolute;
-  margin-top: 20px;
+  top: 85px;
   color: red;
-  font-size: 12px;
+  font-size: medium;
 `;
 
-const SetSatchForm = ({ isEdit }: Edit, { editSatchId, name, price, update }: EditSatchInfo) => {
-  const goalList = useRecoilValue(goalListState);
-  const goalId = goalList[goalList.length - 1].id;
-  const { createSatch } = useGoal(goalId);
-  const { updateSatch } = useGoal(editSatchId);
+const DateWarning = styled.p`
+  position: absolute;
+  top: 73px;
+  color: red;
+  font-size: medium;
+`;
 
-  // 삿치템 생성
-  const [date, setDate] = useState(new Date());
-  const [editable] = useState(true);
-  const [satchItem, setSatchItem] = useState('');
-  const [satchPrice, setSatchPrice] = useState(0);
-  const [isValid, setIsValid] = useState(true);
-  const navigate = useNavigate();
-  // 삿치템 수정
-  const [editSatch, setEditSatch] = useState(name);
-  const [editPrice, setEditPrice] = useState(price);
-  const [editDate, setEditDate] = useState(update);
-
-  const onSatchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-
-    if (!isEdit) {
-      setSatchItem(value);
-    } else {
-      setEditSatch(value);
-    }
-  };
-
-  const onPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-
-    if (!isEdit) {
-      setSatchPrice(Number(value.replace(/,/g, '')));
-    } else {
-      setEditPrice(Number(value.replace(/,/g, '')));
-    }
-  };
-
-  const onDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-
-    if (!isEdit) {
-      setDate(new Date(value));
-    } else {
-      setEditDate(new Date(value));
-    }
-  };
-
-  const onCreate = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (
-      satchItem === '' ||
-      Number.isNaN(satchPrice) ||
-      satchPrice === 0 ||
-      satchPrice === undefined
-    ) {
-      setIsValid(false);
-    } else {
-      createSatch({
-        name: satchItem,
-        price: satchPrice,
-        date,
-      });
-      navigate('/');
-    }
-  };
-
-  const onEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (
-      satchItem === '' ||
-      Number.isNaN(satchPrice) ||
-      satchPrice === 0 ||
-      satchPrice === undefined
-    ) {
-      setIsValid(false);
-    } else {
-      updateSatch(editSatchId)({ name, price, date });
-      // navigate('/');
-    }
-  };
-
-  return (
-    <Container>
+const SetSatchForm = ({
+  register,
+  handleSubmit,
+  formState: { errors },
+  onValid,
+  satchItem,
+  satchPrice,
+  satchDate,
+}: SatchProps) => (
+  <Container>
+    {satchItem ? (
+      <Header>
+        삿치템{' '}
+        <TextUnderline fontSize="24px" fontWeight="700">
+          수정하기
+        </TextUnderline>
+      </Header>
+    ) : (
       <Header>
         오늘의{' '}
         <TextUnderline fontSize="24px" fontWeight="700">
           삿치템!
         </TextUnderline>
       </Header>
-      <SatchGoal>
-        <Title>삿치 목표명</Title>
-        <Input type="text" value={isEdit ? editSatch : satchItem} onChange={onSatchChange} />
-      </SatchGoal>
-      <SatchPrice>
-        <Title>금액</Title>
+    )}
+    <form onSubmit={handleSubmit(onValid)}>
+      <SatchInput>
+        <Title>삿치템명</Title>
         <Input
-          type="text"
-          value={isEdit ? editPrice.toLocaleString() : satchPrice.toLocaleString()}
-          onChange={onPriceChange}
+          defaultValue={satchItem}
+          {...register('name', { required: '삿치템을 꼭 입력해주세요!' })}
         />
-        <PriceUnit>원</PriceUnit>
-      </SatchPrice>
+        <Warning>{errors?.name?.message}</Warning>
+      </SatchInput>
+      <SatchInput>
+        <Title>금액</Title>
+        <SatchInputWrapper>
+          <Input
+            defaultValue={satchPrice}
+            type="text"
+            {...register('price', {
+              required: '목표 금액을 꼭 입력해주세요.',
+              pattern: {
+                value: /^[0-9]+$/,
+                message: '목표 금액은 숫자만 입력 가능합니다!',
+              },
+              min: {
+                value: 1,
+                message: '목표 금액은 0원보다 큰 금액이어야 합니다!',
+              },
+            })}
+          />
+          <PriceUnit>원</PriceUnit>
+        </SatchInputWrapper>
+        <Warning>{errors?.price?.message}</Warning>
+      </SatchInput>
       <SatchDate>
         <Title>날짜</Title>
+        <DateWarning>{errors?.date?.message}</DateWarning>
         <Input
+          defaultValue={satchDate ? `${satchDate}` : new Date().toISOString().substring(0, 10)}
           type="date"
-          value={
-            isEdit ? editDate.toISOString().substring(0, 10) : date.toISOString().substring(0, 10)
-          }
-          onChange={onDateChange}
-          readOnly={!editable}
+          {...register('date', { required: '날짜를 꼭 입력해주세요!' })}
         />
-        {isValid ? (
-          ''
-        ) : (
-          <Alert>
-            삿치템과 금액은 필수입니다!
-            <br />
-            금액은 꼭 숫자를 입력해주세요.
-          </Alert>
-        )}
       </SatchDate>
-      <SubmitBtn onClick={isEdit ? onEdit : onCreate}>등록하기</SubmitBtn>
-    </Container>
-  );
-};
+      <SubmitBtn text={satchItem ? '수정하기' : '등록하기'} />
+    </form>
+  </Container>
+);
 
 export default SetSatchForm;
