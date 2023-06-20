@@ -147,7 +147,7 @@ const SetSatchForm = ({
         <Title>날짜</Title>
         <DateWarning>{errors?.date?.message}</DateWarning>
         <Input
-          defaultValue={satchDate ? `${satchDate}` : new Date().toISOString().substring(0, 10)}
+          defaultValue={satchDate ? `${satchDate}` : ''}
           type="date"
           {...register('date', { required: '날짜를 꼭 입력해주세요!' })}
         />
